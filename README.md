@@ -13,9 +13,9 @@ This project is for CS30700, Software Engineering I.
 ### Install node on your local machine. 
 
 *Mac: Install using Homebrew (https://brew.sh) or your preferred package manager. 
-.* `brew install node`
-*Windows: Install using windows provided instructions and download:
-.* [Download nodejs here](https://nodejs.org/en/download/)
+ * `brew install node`
+* Windows: Install using windows provided instructions and download:
+ * [Download nodejs here](https://nodejs.org/en/download/)
 
 
 ### Install Angular in your environment
@@ -23,9 +23,9 @@ This project is for CS30700, Software Engineering I.
 * Create a working “Angular” folder on your environment. In your terminal environment, change directory into that folder before running the following commands. 
 
 * Mac and Windows
-.* In terminal interface (Powershell or Bash) run the commands
-..* `npm install angular` 
-..* `npm install -g @angular/cli`
+ * In terminal interface (Powershell or Bash) run the commands
+  * `npm install angular` 
+  * `npm install -g @angular/cli`
 
 
 ## Text editor suggestion for windows: 
