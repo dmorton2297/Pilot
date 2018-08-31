@@ -12,7 +12,7 @@ This project is for CS30700, Software Engineering I.
 
 ### Install node on your local machine. 
 
-*Mac: Install using Homebrew (https://brew.sh) or your preferred package manager. 
+* Mac: Install using Homebrew (https://brew.sh) or your preferred package manager. 
  * `brew install node`
 * Windows: Install using windows provided instructions and download:
  * [Download nodejs here](https://nodejs.org/en/download/)
