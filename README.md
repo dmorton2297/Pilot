@@ -1,27 +1,39 @@
 # Pilot
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
+This project is for CS30700, Software Engineering I.
 
-## Development server
+## Technologies
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+|Frontend|Backend|Database|
+|:------:|:-----:|:------:|
+|Angular |Laravel|MySql   |
 
-## Code scaffolding
+## Setup Frontend environment
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+###Install node on your local machine. 
 
-## Build
+*Mac: Install using Homebrew (https://brew.sh) or your preferred package manager. 
+.*`brew install node`
+*Windows: Install using windows provided instructions and download:
+.*[Download nodejs here](https://nodejs.org/en/download/)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+###Install Angular in your environment
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+*Create a working “Angular” folder on your environment. In your terminal environment, change directory into that folder before running the following commands. 
 
-## Running end-to-end tests
+*Mac and Windows
+.*In terminal interface (Powershell or Bash) run the commands
+..*`npm install angular` 
+..*`npm install -g @angular/cli`
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
+##Text editor suggestion for windows: 
+*Install Visual Studio Code and PowerShell on your machine. You will be able to use the integrated terminal the VS Code and PowerShell is similar enough to bash where it won’t feel to foreign.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+##Mac Text Editor Suggestion: 
+*Sublime text or VS Code both work well.
+
+
+
+
