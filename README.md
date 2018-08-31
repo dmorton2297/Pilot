@@ -32,7 +32,7 @@ This project is for CS30700, Software Engineering I.
 * Install Visual Studio Code and PowerShell on your machine. You will be able to use the integrated terminal the VS Code and PowerShell is similar enough to bash where it won’t feel to foreign.
 
 ## Mac Text Editor Suggestion: 
-* Sublime text or VS Code both work well.
+* Sublime text or VS Code both work well. Visual code has solid plugins for Angular.
 
 
 
