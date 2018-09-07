@@ -1,7 +1,9 @@
 # Pilot
 
 **Project Title**: Pilot Project Management
+
 **Team Members**: Darren Visak, Blake Thomas, Michael Judd, Dan Morton
+
 **Project Background and Motivation:**
 The overall problem we are trying to solve with this application is the facilitation of project management in software development teams. 
 
