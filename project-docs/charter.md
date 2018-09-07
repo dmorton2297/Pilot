@@ -27,10 +27,10 @@ To improve overall workflow, SCRUM methodologies (namely, the scrum board) will 
 **Deliverables**
 * User authentication and registration - Google sign-in API Implementation* 
 * Role Based Authentication for application user (Admin, User, Team Level Roles)
-    * Team Management and Creation  
-    Task creation and backlog management
-    Estimation, Priority, Acceptance Criteria, Linked Tasks
-    * Task assignment to users and teams
-    * Virtual scrum implementation at user and team level
-    * Dashboard (Burndown and task statistics)alias ls="ls -la"
+* Team Management and Creation  
+    * Task creation and backlog management
+    * Estimation, Priority, Acceptance Criteria, Linked Tasks
+* Task assignment to users and teams
+* Virtual scrum implementation at user and team level
+* Dashboard (Burndown and task statistics)
 
