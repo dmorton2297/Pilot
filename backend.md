@@ -1,4 +1,4 @@
-# In Pilot/server, run the following commands.
+## In Pilot/server, run the following commands.
 
 * `composer install`
 * `chmod -R 777 ./server`
