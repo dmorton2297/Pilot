@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAcceptanceCriteriaTable extends Migration
+class CreateTeamTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateAcceptanceCriteriaTable extends Migration
      */
     public function up()
     {
-        Schema::create('acriteria', function (Blueprint $table) {
+        Schema::create('team', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->string('description');
-            $table->string('body');
-            $table->unsignedInteger('taskid');
-            $table->foreign('taskid')->references('id')->on('task')
-            ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateAcceptanceCriteriaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('acriteria');
+        Schema::dropIfExists('team');
     }
 }
