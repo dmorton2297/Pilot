@@ -17,10 +17,13 @@ const appRoutes: Routes = [
 ];
 
 
+import { CreateTaskComponent } from './create-task/create-task.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    CreateTaskComponent,
     NavigationComponent
   ],
   imports: [
@@ -34,6 +37,7 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
+
   providers: [],
   bootstrap: [AppComponent]
 })
