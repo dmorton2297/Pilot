@@ -19,12 +19,19 @@ const appRoutes: Routes = [
 
 import { ScrumBoardComponent } from './scrum-board/scrum-board.component';
 
+import { CreateTaskComponent } from './create-task/create-task.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+<<<<<<< HEAD
     NavigationComponent,
     ScrumBoardComponent
+=======
+    CreateTaskComponent,
+    NavigationComponent
+>>>>>>> feat/createtask
   ],
   imports: [
   BrowserModule,
@@ -37,6 +44,7 @@ import { ScrumBoardComponent } from './scrum-board/scrum-board.component';
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
+
   providers: [],
   bootstrap: [AppComponent]
 })
