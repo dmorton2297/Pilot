@@ -14,6 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
+  { path: 'scrum', component: ScrumBoardComponent }
 ];
 
 import { ScrumBoardComponent } from './scrum-board/scrum-board.component';
