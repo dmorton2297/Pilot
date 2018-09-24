@@ -25,13 +25,10 @@ import { CreateTaskComponent } from './create-task/create-task.component';
   declarations: [
     AppComponent,
     LoginComponent,
-<<<<<<< HEAD
     NavigationComponent,
-    ScrumBoardComponent
-=======
+    ScrumBoardComponent,
     CreateTaskComponent,
     NavigationComponent
->>>>>>> feat/createtask
   ],
   imports: [
   BrowserModule,
