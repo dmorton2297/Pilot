@@ -16,12 +16,14 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
 ];
 
+import { ScrumBoardComponent } from './scrum-board/scrum-board.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NavigationComponent
+    NavigationComponent,
+    ScrumBoardComponent
   ],
   imports: [
   BrowserModule,
