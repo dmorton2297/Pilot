@@ -1,6 +1,11 @@
 mat-form-field {
-    width: 100%;
+    width: 96%;
   }
+
+drop-down {
+  width: 10px;
+  height: 10px;
+}
 
 .button-row button,
 .button-row a {

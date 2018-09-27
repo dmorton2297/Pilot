@@ -1,15 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import {HttpModule} from '@angular/http';
+import { HttpModule}  from '@angular/http';
 
 
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {NavigationComponent} from './navigation/navigation.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NavigationComponent } from './navigation/navigation.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -27,8 +27,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import {MatListModule} from '@angular/material/list';
-import {MatIconModule} from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 import { CreateTaskComponent } from './create-task/create-task.component';
 import { ModifyTaskComponent } from './modify-task/modify-task.component';
