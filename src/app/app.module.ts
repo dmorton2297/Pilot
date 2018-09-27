@@ -12,7 +12,8 @@ import {NavigationComponent} from './navigation/navigation.component';
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'createtask', component: CreateTaskComponent }
+  { path: 'createtask', component: CreateTaskComponent },
+  { path: 'modifytask/:id', component: ModifyTaskComponent }
 ];
 
 import { FormsModule }   from '@angular/forms';
