@@ -9,8 +9,8 @@
           <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
             <!-- General Information -->
             <mat-form-field> <input matInput type="text" formControlName="name" placeholder="Task Name" required> </mat-form-field>
-            <mat-form-field> <input matInput type="text" formControlName="desc" placeholder="Task Description" required> </mat-form-field>
-            <mat-form-field> <input matInput type="number" formControlName="estimation" placeholder="Time Estimation (hours)"> </mat-form-field>
+            <mat-form-field> <input matInput type="text" formControlName="description" placeholder="Task Description" required> </mat-form-field>
+            <mat-form-field> <input matInput type="number" formControlName="estimate" placeholder="Time estimate (hours)"> </mat-form-field>
             <mat-form-field>
               <mat-select formControlName="priority" placeholder="Priority Level" required>
                     <mat-option *ngFor="let p of priorities" [value]="p">{{p}}</mat-option>

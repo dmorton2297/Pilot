@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
+import {Http} from '@angular/http';
+
 
 @Component({
   selector: 'app-create-task',
@@ -10,12 +12,12 @@ import { FormArray } from '@angular/forms';
 })
 export class CreateTaskComponent {
     taskForm = this.fb.group({
-        id: [''],
         name: ['', Validators.required],
-        desc: ['', Validators.required],
-        status: [''],
-        estimation: [''],
+        description: ['', Validators.required],
         priority: ['', Validators.required],
+        status: [''],
+        funcreq: [''],
+        estimate: [''],
         teamID: [''],
         creatorID: [''],
         assignedUser: ['', Validators.required],
@@ -30,7 +32,7 @@ export class CreateTaskComponent {
   priorities = ['Low', 'Medium', 'High'];
   users = ['myself', 'darren']; 
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private http: Http) { }
 
   get criterian() {
     return this.taskForm.get('criterian') as FormArray;
@@ -42,12 +44,41 @@ export class CreateTaskComponent {
 
   onSubmit() {
     // TODO: Push task to database.
+    let request : TaskRequest = {
+      name: this.taskForm.get('name').value as string,
+      description: this.taskForm.get('description').value as string,
+      priority: 0,
+      status: 0,
+      funcreq: 0,
+      estimate: this.taskForm.get('estimate').value as number,
+      timespent: 0,
+      creatorid: 0,
+      teamid: 0,
+      assigneduserid: 0
+    }
+    this.http.post('http://localhost:8000/api/savetask', request).subscribe();
     this.taskForm.reset();
     // TODO: Go to previous page.
   }
 
   onCancel() {
     this.taskForm.reset();
+
+    
     // TODO: Return to previous page
   }
+}
+
+interface TaskRequest {
+  name: string,
+  description: string,
+  priority: number,
+  status: number,
+  funcreq: any,
+  estimate: number,
+  timespent: number,
+  teamid: number,
+  creatorid: number,
+  assigneduserid: number,
+
 }
