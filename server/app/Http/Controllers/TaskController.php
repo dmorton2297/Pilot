@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
+
 
 class TaskController extends Controller
 {
@@ -34,7 +38,32 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $name = $request -> input('name');
+        $description = $request -> input('description');
+        $priority = $request -> input('priority');
+        $status = $request -> input('status');
+        $funcreq = $request -> input('funcreq');
+        $estimate = $request -> input('estimate');
+        $timespent = $request -> input('timespent');
+        $teamid = $request -> input('teamid');
+        $creatorid = $request -> input('creatorid');
+
+        DB::table('task')->insert(
+            ['name' => $name,
+             'description' => $description,
+             'priority' => $priority,
+             'status' => $status,
+             'funcreq' => $funcreq,
+             'estimate' => $estimate,
+             'timespent' => $timespent,
+             'teamid' => $teamid,
+             'creatorid' => $creatorid,
+             'created_at' => Carbon::now()->toDateTimeString(),
+             'updated_at' => Carbon::now()->toDateTimeString()
+            ]
+        );
+
+        return $name;
     }
 
     /**

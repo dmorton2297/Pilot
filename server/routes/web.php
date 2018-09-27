@@ -14,3 +14,7 @@
 Route::get('/home', function () {
     return 'hello';
 });
+
+Route::post('createtask', function() {
+    return 'test';
+});
