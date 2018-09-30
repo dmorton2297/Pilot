@@ -12,14 +12,21 @@ import {NavigationComponent} from './navigation/navigation.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-
-
+import { HttpModule}  from '@angular/http';
+import { ModifyTaskComponent } from './modify-task/modify-task.component';
+import { FormsModule }   from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'createtask', component: CreateTaskComponent },
   { path: 'scrum', component: ScrumBoardComponent },
+  { path: 'modifytask/:id', component: ModifyTaskComponent }
 ];
 
 
@@ -31,16 +38,29 @@ const appRoutes: Routes = [
     LoginComponent,
     CreateTaskComponent,
     NavigationComponent,
-    ScrumBoardComponent
+    ScrumBoardComponent,
+    ModifyTaskComponent
   ],
   imports: [
   BrowserModule,
+  HttpModule,
   MatCardModule,
   MatButtonModule,
   MatSelectModule,
   MatFormFieldModule,
   MatToolbarModule,
   BrowserAnimationsModule,
+  BrowserModule,
+  MatCardModule,
+  MatMenuModule,
+  MatInputModule,
+  BrowserAnimationsModule,
+  MatSelectModule,
+  MatButtonModule,
+  MatListModule,
+  FormsModule,
+  MatIconModule,
+  ReactiveFormsModule,
   RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
