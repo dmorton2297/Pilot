@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Task;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller
+use App\Repositories\TaskRepository;
 
 
 class TaskController extends Controller
@@ -40,6 +41,20 @@ class TaskController extends Controller
         ]);
 		
 	}
-	
-  
+//Display a single task	
+	public function get(Request $request)
+	{
+		return view('tasks.task', [
+			'tasks' => $this->tasks->getTask($request->task()),
+		]);
+	}  
+//Delete a task
+	public function remove(Request $request, Task $task)
+	{
+		$this->authorize('remove', $task);
+		
+		$task->delete();
+		
+		return redirect('/tasks');
+	}
 }
