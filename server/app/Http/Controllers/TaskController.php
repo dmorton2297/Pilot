@@ -21,6 +21,18 @@ class TaskController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $userId
+     * @return \Illuminate\Http\Response
+     */
+    public function userIndex($userId) {
+        $tasks = DB::table('task')->where('creatorid', $userId)->get();
+
+        return $tasks;
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
