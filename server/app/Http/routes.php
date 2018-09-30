@@ -18,6 +18,10 @@ Route::get('/task/{id}', 'TaskController@show');
  */
 Route::post('/task', 'TaskController@store');
 
+/**
+ * Edit An Existing Task
+ */
+Route::put('/task/{id}', 'TaskController@update');
 
 /**
  * Delete An Existing Task

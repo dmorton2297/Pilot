@@ -22,7 +22,7 @@ class TaskController extends Controller
     {
 		$tasks = DB::table('task')->get();
 		
-        return view('tasks.index', ['tasks' => $tasks]);
+        return $tasks;
     }
 
     /**
@@ -34,7 +34,7 @@ class TaskController extends Controller
     public function userIndex($userId) {
         $tasks = DB::table('task')->where('creatorid', $userId)->get();
 
-        return view('tasks.index', ['tasks' => $tasks]);
+        return $tasks;
     }
 
     /**
