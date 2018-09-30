@@ -6,16 +6,12 @@ use Illuminate\Http\Request;
 /**
  * Display All Tasks
  */
-Route::get('/', function () {
-    //
-});
+Route::get('/task', 'TaskController@index');
 
 /**
  * Add A New Task
  */
-Route::post('/task', function (Request $request) {
-    //
-});
+Route::post('/task', 'TaskController@store');
 
 /**
  * Delete An Existing Task
