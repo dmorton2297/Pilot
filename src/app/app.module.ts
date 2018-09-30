@@ -20,6 +20,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import {MatTableModule} from '@angular/material/table';
+
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -49,6 +51,7 @@ const appRoutes: Routes = [
   MatSelectModule,
   MatFormFieldModule,
   MatToolbarModule,
+  MatTableModule,
   BrowserAnimationsModule,
   BrowserModule,
   MatCardModule,

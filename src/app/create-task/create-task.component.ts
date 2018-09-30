@@ -78,14 +78,15 @@ export class CreateTaskComponent {
 }
 
 interface TaskRequest {
-  name: string,
-  description: string,
-  priority: number,
-  status: number,
-  funcreq: any,
-  estimate: number,
-  timespent: number,
-  teamid: number,
-  creatorid: number,
-  assigneduserid: number,
+  
+name: string,
+description: string,
+priority: number,
+status: number,
+funcreq: any,
+estimate: number,
+timespent: number,
+teamid: number,
+creatorid: number,
+assigneduserid: number,
 }
