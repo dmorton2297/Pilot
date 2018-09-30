@@ -20,13 +20,13 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-       return view('tasks.index', [
-            'tasks' => $this->tasks->forUser($request->user()),
-        ]);
+		$tasks = DB::table('task')->get();
+		
+        return view('tasks.index', ['tasks' => $tasks]);
     }
 
     /**
-     * Display the specified resource.
+     * Display all tasks under a specified user.
      *
      * @param  int  $userId
      * @return \Illuminate\Http\Response
@@ -34,7 +34,7 @@ class TaskController extends Controller
     public function userIndex($userId) {
         $tasks = DB::table('task')->where('creatorid', $userId)->get();
 
-        return $tasks;
+        return view('tasks.index', ['tasks' => $tasks]);
     }
 
     /**
@@ -91,7 +91,9 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+        $task = DB::table('task')->where('id', $id);
+		
+		return $task;
     }
 
     /**
@@ -114,7 +116,27 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+		$name = $request -> input('name');
+        $description = $request -> input('description');
+        $priority = $request -> input('priority');
+        $status = $request -> input('status');
+        $funcreq = $request -> input('funcreq');
+        $estimate = $request -> input('estimate');
+        $timespent = $request -> input('timespent');
+        DB::table('task')
+			->where('id', $id)
+			->update(
+			['name' => $name,
+             'description' => $description,
+             'priority' => $priority,
+             'status' => $status,
+             'funcreq' => $funcreq,
+             'estimate' => $estimate,
+             'timespent' => $timespent,
+             'updated_at' => Carbon::now()->toDateTimeString()
+			]);
+			
+		return $name;
     }
 
     /**
@@ -125,15 +147,8 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('task')->where('id','=',$id)->delete();
+		
     }
-		public function remove(Request $request, Task $task)
-	{
-	/*	$this->authorize('remove', $task);
-		
-		$task->delete();
-		
-		return redirect('/tasks');
-	*/
-	}
+	
 }

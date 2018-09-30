@@ -9,16 +9,17 @@ use Illuminate\Http\Request;
 Route::get('/task', 'TaskController@index');
 
 /**
- * Get a single task
+ * Get a specified task
  */
-Route::get('/task/{id}', 'TaskController@get');
+Route::get('/task/{id}', 'TaskController@show');
 
 /**
  * Add A New Task
  */
 Route::post('/task', 'TaskController@store');
 
+
 /**
  * Delete An Existing Task
  */
-Route::delete('/task/{id}', 'TaskController@remove');
+Route::delete('/task/{id}', 'TaskController@destroy');
