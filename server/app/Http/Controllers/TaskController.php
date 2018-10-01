@@ -81,7 +81,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $task = DB::table('task')->where('id', $id);
+        $task = DB::table('task')->where('id', $id)->get();
 		
 		return $task;
     }

@@ -18,4 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::post('savetask', 'TaskController@store');
 Route::get('getusertasks/{userId}', 'TaskController@userIndex');
+Route::get('gettask/{id}', 'TaskController@show');
+Route::post('modifytask', 'TaskController@update');
 
