@@ -4,6 +4,7 @@ import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-modify-task',
@@ -28,15 +29,19 @@ export class ModifyTaskComponent {
       ])
 });
 
-  public priorities : string[] = ['Low', 'Medium', 'High'];
+  public priorities : string[] = ['Low', 'Medium', 'High']; //** **/
   public users : string[] = ['John', 'Sarah', 'Matt']; 
   public req : string[] = ['Req1', 'Req2', 'Req3', 'Req4'];
   public filler_criteria : string[] = ["Criteria 1", "Criteria 2"];
-  public task : TaskRequest;
+  public task : Task;
+  public taskId : string;
 
-  constructor(private fb: FormBuilder, private http: Http, private location: Location) { 
-    this.http.get('http://localhost:8000/api/gettask/{id}').subscribe((res) => {
-      this.task = res.json() as TaskRequest;
+  constructor(private fb: FormBuilder, private http: Http, private location: Location, private activatedRoute: ActivatedRoute) { 
+    
+    this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
+    window.alert(this.taskId);
+    this.http.get('http://localhost:8000/api/gettask/' + this.taskId).subscribe((res) => {
+      this.task = res.json() as Task;
       console.log(this.task);
     
       this.taskForm.controls['name'].setValue(this.task.name);
@@ -70,7 +75,8 @@ export class ModifyTaskComponent {
   }
 
   onSubmit() {
-    let request : TaskRequest = {
+    let request : Task = {
+      id: this.taskId,
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
       priority: 0,
@@ -82,8 +88,7 @@ export class ModifyTaskComponent {
       teamid: 0,
       assigneduserid: 0
     }
-
-    this.http.put('http://localhost:8000/api/task/{id}', request).subscribe();
+    this.http.post('http://localhost:8000/api/modifytask', request).subscribe();
     window.alert("Task modified!");
    // this.location.back();
   }
@@ -92,9 +97,9 @@ export class ModifyTaskComponent {
     if(!window.confirm('Are you sure you want to delete this task?')){
       return;
     } 
-    // TODO: Post request to database
+   // this.http.post('http://localhost:8000/api/deletetask', 0).subscribe();
     this.taskForm.reset();
-   // this.location.back();
+    // this.location.back();
   }
 
   onCancel() {
@@ -105,7 +110,8 @@ export class ModifyTaskComponent {
   }
 }
 
-interface TaskRequest {
+interface Task {
+  id: string,
   name: string,
   description: string,
   priority: number,
