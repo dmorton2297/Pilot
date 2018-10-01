@@ -40,7 +40,7 @@ import { ModifyTaskComponent } from './modify-task/modify-task.component';
     CreateTaskComponent,
     NavigationComponent,
     ModifyTaskComponent
-  ],
+    ],
   imports: [
   BrowserModule,
   HttpModule,

@@ -3,13 +3,14 @@ import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
   styleUrls: ['./create-task.component.css']
 })
+
 export class CreateTaskComponent {
     taskForm = this.fb.group({
         name: ['', Validators.required],
@@ -27,13 +28,14 @@ export class CreateTaskComponent {
       ])
 });
 
-  // TODO: The ID's will need to be grabbed to be put into the task.
+  // TODO: The ID's will need to be pulled from the database.
   // TODO: The user arrays will need to be pulled from the database.
+  // TODO: The requirments will need to be pulled from the database.
   priorities = ['Low', 'Medium', 'High'];
-  users = ['myself', 'darren']; 
+  users = ['John', 'Sarah', 'Matt']; 
   req = ['Req1', 'Req2', 'Req3', 'Req4'];
 
-  constructor(private fb: FormBuilder, private http: Http) { }
+  constructor(private fb: FormBuilder, private http: Http, private location: Location) {}
 
   get criterian() {
     return this.taskForm.get('criterian') as FormArray;
@@ -53,13 +55,21 @@ export class CreateTaskComponent {
   }
 
   onSubmit() {
-    // TODO: Push task to database.
+
+    // Remove empty criteria
+    for (var i = 0; i < this.criterian.length; i++) {
+      if (this.criterian[i] == '') {
+        this.criterian.removeAt(i);
+      }
+    }
+
+    // Send POST request
     let request : TaskRequest = {
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
       priority: 0,
       status: 0,
-      funcreq: 0,
+      funcreq: this.taskForm.get('funcreq').value as string,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
       creatorid: 0,
@@ -67,13 +77,17 @@ export class CreateTaskComponent {
       assigneduserid: 0
     }
     this.http.post('http://localhost:8000/api/savetask', request).subscribe();
+    window.alert('Task created!');
     this.taskForm.reset();
-    // TODO: Go to previous page.
+    this.location.back();
   }
 
   onCancel() {
-    this.taskForm.reset();
-    // TODO: Return to previous page
+    if(window.confirm('Are you sure you want to cancel?')){
+      this.taskForm.reset();
+      this.location.back();
+    }
+    return;
   }
 }
 

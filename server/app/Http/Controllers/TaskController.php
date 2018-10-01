@@ -17,7 +17,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = DB::table('task')->get();
+	
+        return $tasks;
     }
 
     /**
@@ -74,7 +76,9 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+        $task = DB::table('task')->where('id', $id);
+		
+		return $task;
     }
 
     /**
@@ -97,7 +101,27 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $name = $request -> input('name');
+        $description = $request -> input('description');
+        $priority = $request -> input('priority');
+        $status = $request -> input('status');
+        $funcreq = $request -> input('funcreq');
+        $estimate = $request -> input('estimate');
+        $timespent = $request -> input('timespent');
+        DB::table('task')
+			->where('id', $id)
+			->update(
+			['name' => $name,
+             'description' => $description,
+             'priority' => $priority,
+             'status' => $status,
+             'funcreq' => $funcreq,
+             'estimate' => $estimate,
+             'timespent' => $timespent,
+             'updated_at' => Carbon::now()->toDateTimeString()
+			]);
+			
+		return $name;
     }
 
     /**
