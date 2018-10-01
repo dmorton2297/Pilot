@@ -2,7 +2,15 @@
     <mat-tab label="Backlog"> 
         <mat-card>
             <mat-card class="heading-container">
-              <h1 class="heading">User Backlog</h1>
+              <div class="row">
+                <div class="col-md-8">
+                    <h1 class="heading">User Backlog</h1>
+                </div>
+                <div class="col-md-4">
+                    <button mat-button id="create-task" (click)="onCreateTask()">Create Task</button>
+                </div>
+              </div>
+              
             </mat-card>
           
           

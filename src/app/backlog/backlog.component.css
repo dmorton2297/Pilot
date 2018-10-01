@@ -2,14 +2,6 @@ table {
     width: 100%;
   }
 
-#0 {
-    background-color: lightcoral;
-}
-
-#1 {
-
-}
-
-#2 {
-
-}
+  #create-task {
+      float: right;
+  }
