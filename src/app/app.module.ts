@@ -21,14 +21,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
+
 import { BacklogComponent } from './backlog/backlog.component';
 
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'backlog', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'createtask', component: CreateTaskComponent },
-  { path: 'scrum', component: ScrumBoardComponent },
   { path: 'modifytask/:id', component: ModifyTaskComponent },
   { path: 'backlog', component: BacklogComponent}
 ];
@@ -50,6 +51,7 @@ const appRoutes: Routes = [
   BrowserModule,
   HttpModule,
   MatCardModule,
+  MatTabsModule,
   MatButtonModule,
   MatSelectModule,
   MatFormFieldModule,
