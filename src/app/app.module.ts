@@ -1,37 +1,38 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpModule}  from '@angular/http';
-
-
-
+import { CreateTaskComponent } from './create-task/create-task.component';
+import { ScrumBoardComponent } from './scrum-board/scrum-board.component';
+import {MatCardModule} from '@angular/material/card';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { NavigationComponent } from './navigation/navigation.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {NavigationComponent} from './navigation/navigation.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import { HttpModule}  from '@angular/http';
+import { ModifyTaskComponent } from './modify-task/modify-task.component';
+import { FormsModule }   from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import {MatTableModule} from '@angular/material/table';
+
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'createtask', component: CreateTaskComponent },
+  { path: 'scrum', component: ScrumBoardComponent },
   { path: 'modifytask/:id', component: ModifyTaskComponent }
 ];
 
-import { FormsModule }   from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 
 
-import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-
-import { CreateTaskComponent } from './create-task/create-task.component';
-import { ModifyTaskComponent } from './modify-task/modify-task.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ModifyTaskComponent } from './modify-task/modify-task.component';
     LoginComponent,
     CreateTaskComponent,
     NavigationComponent,
+    ScrumBoardComponent,
     ModifyTaskComponent
     ],
   imports: [
@@ -46,7 +48,10 @@ import { ModifyTaskComponent } from './modify-task/modify-task.component';
   HttpModule,
   MatCardModule,
   MatButtonModule,
+  MatSelectModule,
+  MatFormFieldModule,
   MatToolbarModule,
+  MatTableModule,
   BrowserAnimationsModule,
   BrowserModule,
   MatCardModule,

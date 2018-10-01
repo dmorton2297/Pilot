@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./modify-task.component.css']
 })
 
-export class ModifyTaskComponent implements OnInit {
+export class ModifyTaskComponent {
     taskForm = this.fb.group({
         name: ['', Validators.required],
         description: ['', Validators.required],
@@ -26,33 +26,30 @@ export class ModifyTaskComponent implements OnInit {
         criterian: this.fb.array([
          this.fb.control('')
       ])
-
 });
 
-  ngOnInit(): void {
-    
-  }
-
-  priorities = ['Low', 'Medium', 'High'];
-  users = ['John', 'Sarah', 'Matt']; 
-  req = ['Req1', 'Req2', 'Req3', 'Req4'];
-  filler_criteria = ["Criteria 1", "Criteria 2"]
+  public priorities : string[] = ['Low', 'Medium', 'High'];
+  public users : string[] = ['John', 'Sarah', 'Matt']; 
+  public req : string[] = ['Req1', 'Req2', 'Req3', 'Req4'];
+  public filler_criteria : string[] = ["Criteria 1", "Criteria 2"];
+  public task : TaskRequest;
 
   constructor(private fb: FormBuilder, private http: Http, private location: Location) { 
-
-    // TODO: GET Request
-
-    this.taskForm.controls['name'].setValue("Task Name");
-    this.taskForm.controls['description'].setValue("Task Description");
-    this.taskForm.controls['priority'].setValue(this.priorities[0]);
-    this.taskForm.controls['status'].setValue(3);
-    this.taskForm.controls['funcreq'].setValue(this.req);
-    this.taskForm.controls['estimate'].setValue(3);
-    this.taskForm.controls['teamID'].setValue(1);
-    this.taskForm.controls['creatorID'].setValue(1);
-    this.taskForm.controls['assignedUser'].setValue(this.users[0]);
-    this.taskForm.controls['assignedUserID'].setValue(1);
-//  this.taskForm.controls['criterian'].setValue();
+    this.http.get('http://localhost:8000/api/gettask/{id}').subscribe((res) => {
+      this.task = res.json() as TaskRequest;
+      console.log(this.task);
+    
+      this.taskForm.controls['name'].setValue(this.task.name);
+      this.taskForm.controls['description'].setValue(this.task.description);
+      this.taskForm.controls['priority'].setValue(this.priorities[this.task.priority]);
+      this.taskForm.controls['status'].setValue(this.task.status);
+      this.taskForm.controls['funcreq'].setValue(this.task.funcreq);
+      this.taskForm.controls['estimate'].setValue(this.task.estimate);
+      this.taskForm.controls['teamID'].setValue(this.task.teamid);
+      this.taskForm.controls['creatorID'].setValue(this.task.creatorid);
+      this.taskForm.controls['assignedUserID'].setValue(this.task.assigneduserid); 
+      
+    });    
   }
 
   get criterian() {
@@ -73,7 +70,6 @@ export class ModifyTaskComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO: Push updates to database.
     let request : TaskRequest = {
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
@@ -86,25 +82,26 @@ export class ModifyTaskComponent implements OnInit {
       teamid: 0,
       assigneduserid: 0
     }
-    this.http.post('http://localhost:8000/api/savetask', request).subscribe();
+
+    this.http.put('http://localhost:8000/api/task/{id}', request).subscribe();
     window.alert("Task modified!");
-    this.location.back();
+   // this.location.back();
   }
 
   onDelete() {
     if(!window.confirm('Are you sure you want to delete this task?')){
       return;
     } 
-    // TODO: Remove from database
+    // TODO: Post request to database
     this.taskForm.reset();
-    this.location.back();
+   // this.location.back();
   }
 
   onCancel() {
     if(!window.confirm('Are you sure you want to cancel?')){
       return;
     } 
-    this.location.back();
+   // this.location.back();
   }
 }
 

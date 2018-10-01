@@ -55,36 +55,34 @@ export class CreateTaskComponent {
   }
 
   onSubmit() {
-
-    // Remove empty criteria
     for (var i = 0; i < this.criterian.length; i++) {
       if (this.criterian[i] == '') {
         this.criterian.removeAt(i);
       }
     }
 
-    // Send POST request
     let request : TaskRequest = {
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
       priority: 0,
       status: 0,
       funcreq: this.taskForm.get('funcreq').value as string,
-      estimate: this.taskForm.get('estimate').value as number,
+      estimate: 0,
       timespent: 0,
       creatorid: 0,
       teamid: 0,
       assigneduserid: 0
     }
+
     this.http.post('http://localhost:8000/api/savetask', request).subscribe();
     window.alert('Task created!');
     this.taskForm.reset();
-    this.location.back();
+    //this.location.back();
   }
 
   onCancel() {
     if(window.confirm('Are you sure you want to cancel?')){
-      this.taskForm.reset();
+   //   this.taskForm.reset();
       this.location.back();
     }
     return;
