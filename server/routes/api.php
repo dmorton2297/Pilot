@@ -23,5 +23,7 @@ Route::get('gettask/{id}', 'TaskController@show');
 Route::post('modifytask/{id}', 'TaskController@update');
 Route::post('deletetask/{id}', 'TaskController@destroy');
 
+Route::post('savereq', 'FunctionalRequirementController@store');
+
 
 

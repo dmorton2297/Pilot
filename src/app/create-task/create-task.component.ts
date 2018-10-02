@@ -58,13 +58,6 @@ export class CreateTaskComponent {
       }
     }
 
-    var temp: number;
-    for (var i = 0; i < this.users.length; i++) {
-      if (this.users[i] == this.taskForm.get('assignedUser').value as string) {
-        temp = i;
-      }
-    }
-
     let request : TaskRequest = {
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
@@ -73,17 +66,15 @@ export class CreateTaskComponent {
       funcreq: 0,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
-      creatorid: 0,
+      creatorid: 1,
       teamid: 0,
-      assigneduserid: temp
-     // criterian: this.taskForm.get('criterian').value as string[],
-     // assigneduser: this.taskForm.get('assignedUser').value as string
+      assigneduserid: 0
     }
 
     this.http.post('http://localhost:8000/api/savetask', request).subscribe();
     window.alert('Task created!');
-    //  this.taskForm.reset();
-    // this.location.back();
+    this.taskForm.reset();
+    this.location.back();
   }
 
   onCancel() {
@@ -106,6 +97,4 @@ interface TaskRequest {
   teamid: number,
   creatorid: number,
   assigneduserid: number
- // assigneduser: string,
- // criterian: any
 }

@@ -50,8 +50,6 @@ export class ModifyTaskComponent {
     this.taskForm.patchValue({creatorID: this.task[0].creatorid});
     this.taskForm.patchValue({assignedUserID: this.task[0].assigneduserid}); 
     this.taskForm.patchValue({assignedUser: this.users[this.task[0].assigneduserid]});
-    //  this.taskForm.patchValue({assignedUser: this.task[0].name}); 
-    //  this.taskForm.patchValue({criterian: this.task[0].criterian});
     });    
   }
 
@@ -85,8 +83,6 @@ export class ModifyTaskComponent {
       creatorid: 0,
       teamid: 0,
       assigneduserid: 0
-      // criterian: this.taskForm.get('criterian').value as string[],
-      // assigneduser: this.taskForm.get('assignedUser').value as string
     }
     ;
     this.http.post('http://localhost:8000/api/modifytask/' + this.taskId, request, this.taskId).subscribe();
@@ -124,6 +120,4 @@ interface Task {
   teamid: number,
   creatorid: number,
   assigneduserid: number
-  // assigneduser: string,
-  // criterian: any
 }

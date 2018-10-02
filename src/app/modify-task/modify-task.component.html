@@ -28,7 +28,7 @@
 
       <!-- Function requirement drop down box -->
       <mat-form-field>
-        <mat-select formControlName="funcreq" placeholder="Function Requirement" multiple> 
+        <mat-select formControlName="funcreq" type="text" placeholder="Function Requirement" multiple> 
              <mat-option *ngFor="let f of req" [value]="f">{{f}}</mat-option>
          </mat-select>  
       </mat-form-field> 

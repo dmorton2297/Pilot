@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { FuncReqFormComponent } from './func-req-form/func-req-form.component';
 
 
 const appRoutes: Routes = [
@@ -28,9 +29,9 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'createtask', component: CreateTaskComponent },
   { path: 'scrum', component: ScrumBoardComponent },
-  { path: 'modifytask/:id', component: ModifyTaskComponent }
+  { path: 'modifytask/:id', component: ModifyTaskComponent },
+  { path: 'funcreq', component: FuncReqFormComponent }
 ];
-
 
 
 
@@ -41,7 +42,8 @@ const appRoutes: Routes = [
     CreateTaskComponent,
     NavigationComponent,
     ScrumBoardComponent,
-    ModifyTaskComponent
+    ModifyTaskComponent,
+    FuncReqFormComponent
     ],
   imports: [
   BrowserModule,
