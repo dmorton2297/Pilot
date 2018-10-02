@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-modify-task',
@@ -29,7 +29,7 @@ export class ModifyTaskComponent {
       ])
 });
 
-  public priorities : string[] = ['Low', 'Medium', 'High']; //** **/
+  public priorities : string[] = ['1', '2', '3'];
   public users : string[] = ['John', 'Sarah', 'Matt']; 
   public req : string[] = ['Req1', 'Req2', 'Req3', 'Req4'];
   public filler_criteria : string[] = ["Criteria 1", "Criteria 2"];
@@ -37,23 +37,21 @@ export class ModifyTaskComponent {
   public taskId : string;
 
   constructor(private fb: FormBuilder, private http: Http, private location: Location, private activatedRoute: ActivatedRoute) { 
-    
     this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
-    window.alert(this.taskId);
     this.http.get('http://localhost:8000/api/gettask/' + this.taskId).subscribe((res) => {
-      this.task = res.json() as Task;
-      console.log(this.task);
-    
-      this.taskForm.controls['name'].setValue(this.task.name);
-      this.taskForm.controls['description'].setValue(this.task.description);
-      this.taskForm.controls['priority'].setValue(this.priorities[this.task.priority]);
-      this.taskForm.controls['status'].setValue(this.task.status);
-      this.taskForm.controls['funcreq'].setValue(this.task.funcreq);
-      this.taskForm.controls['estimate'].setValue(this.task.estimate);
-      this.taskForm.controls['teamID'].setValue(this.task.teamid);
-      this.taskForm.controls['creatorID'].setValue(this.task.creatorid);
-      this.taskForm.controls['assignedUserID'].setValue(this.task.assigneduserid); 
-      
+    this.task = res.json() as Task;
+    this.taskForm.patchValue({name: this.task[0].name});
+    this.taskForm.patchValue({description: this.task[0].description});
+    this.taskForm.patchValue({priority: this.priorities[this.task[0].priority - 1]});
+    this.taskForm.patchValue({status: this.task[0].status});
+    this.taskForm.patchValue({funcreq: this.task[0].funcreq});
+    this.taskForm.patchValue({estimate: this.task[0].estimate});
+    this.taskForm.patchValue({teamID: this.task[0].teamid});
+    this.taskForm.patchValue({creatorID: this.task[0].creatorid});
+    this.taskForm.patchValue({assignedUserID: this.task[0].assigneduserid}); 
+    this.taskForm.patchValue({assignedUser: this.users[this.task[0].assigneduserid]});
+    //  this.taskForm.patchValue({assignedUser: this.task[0].name}); 
+    //  this.taskForm.patchValue({criterian: this.task[0].criterian});
     });    
   }
 
@@ -79,7 +77,7 @@ export class ModifyTaskComponent {
       id: this.taskId,
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
-      priority: 0,
+      priority: this.taskForm.get('priority').value as number,
       status: 0,
       funcreq: 0,
       estimate: this.taskForm.get('estimate').value as number,
@@ -87,26 +85,30 @@ export class ModifyTaskComponent {
       creatorid: 0,
       teamid: 0,
       assigneduserid: 0
+      // criterian: this.taskForm.get('criterian').value as string[],
+      // assigneduser: this.taskForm.get('assignedUser').value as string
     }
-    this.http.post('http://localhost:8000/api/modifytask', request).subscribe();
+    ;
+    this.http.post('http://localhost:8000/api/modifytask/' + this.taskId, request, this.taskId).subscribe();
     window.alert("Task modified!");
-   // this.location.back();
+    // this.location.back();
   }
 
   onDelete() {
     if(!window.confirm('Are you sure you want to delete this task?')){
       return;
     } 
-   // this.http.post('http://localhost:8000/api/deletetask', 0).subscribe();
+
+    this.http.post('http://localhost:8000/api/deletetask/' + this.taskId, this.taskId).subscribe();
     this.taskForm.reset();
-    // this.location.back();
+    //this.location.back();
   }
 
   onCancel() {
     if(!window.confirm('Are you sure you want to cancel?')){
       return;
     } 
-   // this.location.back();
+    //this.location.back();
   }
 }
 
@@ -121,5 +123,7 @@ interface Task {
   timespent: number,
   teamid: number,
   creatorid: number,
-  assigneduserid: number,
+  assigneduserid: number
+  // assigneduser: string,
+  // criterian: any
 }

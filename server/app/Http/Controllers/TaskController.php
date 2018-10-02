@@ -103,6 +103,7 @@ class TaskController extends Controller
         $funcreq = $request -> input('funcreq');
         $estimate = $request -> input('estimate');
         $timespent = $request -> input('timespent');
+
         DB::table('task')
 			->where('id', $id)
 			->update(
@@ -119,7 +120,6 @@ class TaskController extends Controller
 		return $name;
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
@@ -129,7 +129,6 @@ class TaskController extends Controller
     public function destroy($id)
     {
         DB::table('task')->where('id','=',$id)->delete();
-		
     }
 	
 }

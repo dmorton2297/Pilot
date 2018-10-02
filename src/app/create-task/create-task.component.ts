@@ -28,12 +28,9 @@ export class CreateTaskComponent {
       ])
 });
 
-  // TODO: The ID's will need to be pulled from the database.
-  // TODO: The user arrays will need to be pulled from the database.
-  // TODO: The requirments will need to be pulled from the database.
-  priorities = ['Low', 'Medium', 'High'];
-  users = ['John', 'Sarah', 'Matt']; 
-  req = ['Req1', 'Req2', 'Req3', 'Req4'];
+  public priorities = ['1', '2', '3'];
+  public users = ['John', 'Sarah', 'Matt']; 
+  public req = ['Req1', 'Req2', 'Req3', 'Req4'];
 
   constructor(private fb: FormBuilder, private http: Http, private location: Location) {}
 
@@ -61,28 +58,37 @@ export class CreateTaskComponent {
       }
     }
 
+    var temp: number;
+    for (var i = 0; i < this.users.length; i++) {
+      if (this.users[i] == this.taskForm.get('assignedUser').value as string) {
+        temp = i;
+      }
+    }
+
     let request : TaskRequest = {
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
-      priority: 0,
+      priority: this.taskForm.get('priority').value as number,
       status: 0,
-      funcreq: this.taskForm.get('funcreq').value as string,
-      estimate: 0,
+      funcreq: 0,
+      estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
       creatorid: 0,
       teamid: 0,
-      assigneduserid: 0
+      assigneduserid: temp
+     // criterian: this.taskForm.get('criterian').value as string[],
+     // assigneduser: this.taskForm.get('assignedUser').value as string
     }
 
     this.http.post('http://localhost:8000/api/savetask', request).subscribe();
     window.alert('Task created!');
-    this.taskForm.reset();
-    //this.location.back();
+    //  this.taskForm.reset();
+    // this.location.back();
   }
 
   onCancel() {
     if(window.confirm('Are you sure you want to cancel?')){
-   //   this.taskForm.reset();
+      this.taskForm.reset();
       this.location.back();
     }
     return;
@@ -99,5 +105,7 @@ interface TaskRequest {
   timespent: number,
   teamid: number,
   creatorid: number,
-  assigneduserid: number,
+  assigneduserid: number
+ // assigneduser: string,
+ // criterian: any
 }

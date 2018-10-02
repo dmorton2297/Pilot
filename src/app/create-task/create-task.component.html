@@ -14,7 +14,7 @@
 
             <!-- Priority level drop down box -->
             <mat-form-field>
-            <mat-select formControlName="priority" placeholder="Priority Level" required>
+            <mat-select formControlName="priority"  placeholder="Priority Level" required>
                     <mat-option *ngFor="let p of priorities" [value]="p">{{p}}</mat-option>
                 </mat-select>
             </mat-form-field> 
@@ -59,9 +59,9 @@
         </form>
       </mat-card-content>
       
-<!-- Debugging
+
       <p>
         Form Value: {{ taskForm.value | json }}
-      </p> -->
+      </p>
 
   </mat-card>
