@@ -31,10 +31,21 @@ class TaskController extends Controller
      * @param  int  $userId
      * @return \Illuminate\Http\Response
      */
-    public function userIndex($userId) {
+    public function userIndex($userId) 
+    {
         $tasks = DB::table('task')->where('creatorid', $userId)->get();
 
         return $tasks;
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $taskId = $request -> input('taskId');
+        $status = $request -> input('status');
+
+        DB::table('task')->where('id', $taskId)->update(['status' => $status]);
+
+        return 200;
     }
 
     /**
