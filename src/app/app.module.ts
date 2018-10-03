@@ -8,23 +8,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTableModule} from '@angular/material/table';
 import {NavigationComponent} from './navigation/navigation.component';
 import {MatButtonModule} from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
-import { HttpModule}  from '@angular/http';
-import { ModifyTaskComponent } from './modify-task/modify-task.component';
-import { FormsModule }   from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import {MatTableModule} from '@angular/material/table';
-import {MatTabsModule} from '@angular/material/tabs';
-
 import { BacklogComponent } from './backlog/backlog.component';
+import { ModifyTaskComponent } from './modify-task/modify-task.component';
 
+
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular5-social-login";
+import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -34,6 +26,17 @@ const appRoutes: Routes = [
   { path: 'backlog', component: BacklogComponent}
 ];
 
+export function getGoogleConfigs() {
+  let config = new AuthServiceConfig(
+    [
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider("941718367028-f0550rgrm90usorok0jd3vsd9vopjqi4.apps.googleusercontent.com")
+      },
+    ]
+  );
+  return config;
+}
 
 
 
@@ -57,6 +60,7 @@ const appRoutes: Routes = [
   MatFormFieldModule,
   MatToolbarModule,
   MatTableModule,
+  SocialLoginModule,
   BrowserAnimationsModule,
   BrowserModule,
   MatCardModule,
@@ -74,8 +78,17 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
+<<<<<<< HEAD
 
   providers: [],
+=======
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: getGoogleConfigs
+    }
+  ],
+>>>>>>> feat/authent
   bootstrap: [AppComponent]
 })
 export class AppModule { }
