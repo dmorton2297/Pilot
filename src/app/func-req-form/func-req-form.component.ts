@@ -18,6 +18,7 @@ export class FuncReqFormComponent {
   });
 
   public tasks : Task[] = [];
+  
   constructor(private fb: FormBuilder, private http: Http, private location: Location) { 
     this.http.get('http://localhost:8000/api/getusertasks/0').subscribe((res) => {
         this.tasks = res.json() as Task[];
@@ -34,7 +35,6 @@ export class FuncReqFormComponent {
       window.alert('Requirement Added');
       this.reqForm.reset();
     }
-
 
   onBack() {
     this.location.back();

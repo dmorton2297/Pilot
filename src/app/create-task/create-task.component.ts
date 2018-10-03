@@ -4,6 +4,8 @@ import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-create-task',
@@ -31,13 +33,16 @@ export class CreateTaskComponent {
   public priorities = ['1', '2', '3'];
   public users = ['John', 'Sarah', 'Matt']; 
   public req : FunctionalRequirement[];
+  public teamId = 0;
+  public taskId : string;
 
-  constructor(private fb: FormBuilder, private http: Http, private location: Location) {
-    this.http.get('http://localhost:8000/api/getfuncreqs/').subscribe((res) => {
+  constructor(private fb: FormBuilder, private http: Http, private location: Location, private activatedRoute: ActivatedRoute) {
+    this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
       console.log(res.json());
       this.req = res.json() as FunctionalRequirement[];
     });
   }
+
 
   get criterian() {
     return this.taskForm.get('criterian') as FormArray;
@@ -71,15 +76,19 @@ export class CreateTaskComponent {
       funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
-      creatorid: 1,
+      creatorid: 0,
       teamid: 0,
       assigneduserid: 0
     }
 
-    this.http.post('http://localhost:8000/api/savetask', request).subscribe();
+    this.http.post('http://localhost:8000/api/savetask', request).subscribe((res) => {
+      console.log(res);
+    });
+
+    /** *************** */
+    this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
+
     window.alert('Task created!');
-  //  this.taskForm.reset();
-  //  this.location.back();
   }
 
   onCancel() {
@@ -89,6 +98,12 @@ export class CreateTaskComponent {
     }
     return;
   }
+}
+
+interface Criteria {
+  description: string,
+  body: string,
+  taskid: number
 }
 
 interface FunctionalRequirement {

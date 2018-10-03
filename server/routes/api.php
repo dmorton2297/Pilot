@@ -25,7 +25,9 @@ Route::post('deletetask/{id}', 'TaskController@destroy');
 Route::get('getSelectedReqs/{id}', 'TaskController@showReqs');
 
 Route::post('savereq', 'FunctionalRequirementController@store');
-Route::get('getfuncreqs', 'FunctionalRequirementController@index');
+Route::get('getfuncreqs/{id}', 'FunctionalRequirementController@teamIndex');
+
+Route::post('savecriteria', 'CriteriaController@store');
 
 
 
