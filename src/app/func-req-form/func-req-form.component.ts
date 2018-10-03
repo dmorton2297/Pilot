@@ -13,7 +13,8 @@ import { Location } from '@angular/common';
 export class FuncReqFormComponent {
     reqForm = this.fb.group({
       name: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      teamid: ['']
   });
 
   public tasks : Task[] = [];
@@ -27,6 +28,7 @@ export class FuncReqFormComponent {
     let request : FunctionalRequirement = {
       name: this.reqForm.get('name').value as string,
       description: this.reqForm.get('description').value as string,
+      teamid: 0
     }
       this.http.post('http://localhost:8000/api/savereq', request).subscribe();
       window.alert('Requirement Added');
@@ -41,7 +43,8 @@ export class FuncReqFormComponent {
 
 interface FunctionalRequirement {
   name: string,
-  description: string
+  description: string,
+  teamid: number
 }
 
 interface Task {

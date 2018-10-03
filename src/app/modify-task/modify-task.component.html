@@ -28,8 +28,9 @@
 
       <!-- Function requirement drop down box -->
       <mat-form-field>
-        <mat-select formControlName="funcreq" type="text" placeholder="Function Requirement" multiple> 
-             <mat-option *ngFor="let f of req" [value]="f">{{f}}</mat-option>
+        <mat-select formControlName="funcreq" [(ngModel)]="funcreq" type="text" placeholder="Function Requirement" multiple> 
+             <mat-option *ngFor="let f of test" [value]="f">{{f.name}}</mat-option>
+             <mat-option *ngFor="let f of req" [value]="f">{{f.name}}</mat-option>
          </mat-select>  
       </mat-form-field> 
 
@@ -61,10 +62,10 @@
   </form>
 </mat-card-content>
 
-<!--
+
 <p>
   Form Value: {{ taskForm.value | json }}
 </p> 
--->
+
 
 </mat-card>

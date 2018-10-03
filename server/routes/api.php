@@ -22,8 +22,10 @@ Route::get('getusertasks/{userId}', 'TaskController@userIndex');
 Route::get('gettask/{id}', 'TaskController@show');
 Route::post('modifytask/{id}', 'TaskController@update');
 Route::post('deletetask/{id}', 'TaskController@destroy');
+Route::get('getSelectedReqs/{id}', 'TaskController@showReqs');
 
 Route::post('savereq', 'FunctionalRequirementController@store');
+Route::get('getfuncreqs', 'FunctionalRequirementController@index');
 
 
 

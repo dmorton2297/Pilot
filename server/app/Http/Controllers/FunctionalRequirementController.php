@@ -15,8 +15,8 @@ class FunctionalRequirementController extends Controller
      */
     public function index()
     {
-        $req = DB::table('funcreqs')->get();
-        return $req;
+        $reqs = DB::table('funcreqs')->get();
+        return $reqs;
     }
 
       /**
@@ -26,7 +26,9 @@ class FunctionalRequirementController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function teamIndex($teamId) {
-    
+        $reqs = DB::table('funcreqs')->where('teamid', $teamId)->get();
+
+        return $reqs;
     }
 
     /**

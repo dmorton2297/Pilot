@@ -30,9 +30,14 @@ export class CreateTaskComponent {
 
   public priorities = ['1', '2', '3'];
   public users = ['John', 'Sarah', 'Matt']; 
-  public req = ['Req1', 'Req2', 'Req3', 'Req4'];
+  public req : FunctionalRequirement[];
 
-  constructor(private fb: FormBuilder, private http: Http, private location: Location) {}
+  constructor(private fb: FormBuilder, private http: Http, private location: Location) {
+    this.http.get('http://localhost:8000/api/getfuncreqs/').subscribe((res) => {
+      console.log(res.json());
+      this.req = res.json() as FunctionalRequirement[];
+    });
+  }
 
   get criterian() {
     return this.taskForm.get('criterian') as FormArray;
@@ -63,7 +68,7 @@ export class CreateTaskComponent {
       description: this.taskForm.get('description').value as string,
       priority: this.taskForm.get('priority').value as number,
       status: 0,
-      funcreq: 0,
+      funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
       creatorid: 1,
@@ -73,8 +78,8 @@ export class CreateTaskComponent {
 
     this.http.post('http://localhost:8000/api/savetask', request).subscribe();
     window.alert('Task created!');
-    this.taskForm.reset();
-    this.location.back();
+  //  this.taskForm.reset();
+  //  this.location.back();
   }
 
   onCancel() {
@@ -84,6 +89,12 @@ export class CreateTaskComponent {
     }
     return;
   }
+}
+
+interface FunctionalRequirement {
+  name: string,
+  description: string,
+  teamid: number
 }
 
 interface TaskRequest {

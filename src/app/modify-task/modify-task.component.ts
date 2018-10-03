@@ -29,12 +29,16 @@ export class ModifyTaskComponent {
       ])
 });
 
-  public priorities : string[] = ['1', '2', '3'];
   public users : string[] = ['John', 'Sarah', 'Matt']; 
-  public req : string[] = ['Req1', 'Req2', 'Req3', 'Req4'];
   public filler_criteria : string[] = ["Criteria 1", "Criteria 2"];
+
+  public priorities : string[] = ['1', '2', '3'];
   public task : Task;
+  public req : FunctionalRequirment[];
   public taskId : string;
+  public teamId = 0;
+
+  public selectedReqs: FunctionalRequirment[];
 
   constructor(private fb: FormBuilder, private http: Http, private location: Location, private activatedRoute: ActivatedRoute) { 
     this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -44,13 +48,19 @@ export class ModifyTaskComponent {
     this.taskForm.patchValue({description: this.task[0].description});
     this.taskForm.patchValue({priority: this.priorities[this.task[0].priority - 1]});
     this.taskForm.patchValue({status: this.task[0].status});
-    this.taskForm.patchValue({funcreq: this.task[0].funcreq});
     this.taskForm.patchValue({estimate: this.task[0].estimate});
     this.taskForm.patchValue({teamID: this.task[0].teamid});
     this.taskForm.patchValue({creatorID: this.task[0].creatorid});
     this.taskForm.patchValue({assignedUserID: this.task[0].assigneduserid}); 
     this.taskForm.patchValue({assignedUser: this.users[this.task[0].assigneduserid]});
-    });    
+    });  
+    this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
+      this.selectedReqs = res.json() as FunctionalRequirment[];
+      this.taskForm.patchValue({funcreq: this.selectedReqs});
+    });
+    this.http.get('http://localhost:8000/api/getfuncreqs/').subscribe((res) => {
+      this.req = res.json() as FunctionalRequirment[];
+    });
   }
 
   get criterian() {
@@ -106,6 +116,12 @@ export class ModifyTaskComponent {
     } 
     //this.location.back();
   }
+}
+
+interface FunctionalRequirment {
+  id: string,
+  name: string,
+  description: string
 }
 
 interface Task {
