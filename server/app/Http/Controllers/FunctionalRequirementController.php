@@ -41,10 +41,12 @@ class FunctionalRequirementController extends Controller
     {
         $name = $request -> input('name');
         $description = $request -> input('description');
+        $teamid = $request -> input('teamid');
 
         DB::table('funcreqs')->insert(
             ['name' => $name,
              'description' => $description,
+             'teamid' => $teamid,
              'created_at' => Carbon::now()->toDateTimeString(),
              'updated_at' => Carbon::now()->toDateTimeString()
             ]
