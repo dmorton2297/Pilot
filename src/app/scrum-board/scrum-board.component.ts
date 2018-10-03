@@ -38,6 +38,47 @@ export class ScrumBoardComponent implements OnInit {
     }
   }
 
+  sortTableName() {
+	  
+	   this.tasks.sort((a, b) => {
+		if(a.name < b.name) {return -1;}
+		if(a.name > b.name) {return 1;}
+		return 0;
+	  });
+	  
+	  this.notStartedTasks.sort((a, b) => {
+		if(a.name < b.name) {return -1;}
+		if(a.name > b.name) {return 1;}
+		return 0;
+	  });
+	  
+	  this.startedTasks.sort((a, b) => {
+		if(a.name < b.name) {return -1;}
+		if(a.name > b.name) {return 1;}
+		return 0;
+	  });
+	  
+	  this.completedTasks.sort((a, b) => {
+		if(a.name < b.name) {return -1;}
+		if(a.name > b.name) {return 1;}
+		return 0;
+	  });
+  }
+  
+  sortTablePriority() {
+  	  this.tasks.sort((a, b) => a.priority - b.priority);
+
+	  this.notStartedTasks.sort((a, b) => a.priority - b.priority);
+	  
+	  this.startedTasks.sort((a, b) => a.priority - b.priority);
+	  
+	  this.completedTasks.sort((a, b) => a.priority - b.priority);
+  
+  }
+  
+   sortTableStatus() {
+	   this.tasks.sort((a, b) => a.status - b.status);
+   }
 }
 
 interface Task {
