@@ -5,6 +5,8 @@ import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material';
+
 
 @Component({
   selector: 'app-modify-task',
@@ -38,7 +40,7 @@ export class ModifyTaskComponent {
   public taskId : string;
   public teamId = 0;
 
-  constructor(private fb: FormBuilder, private http: Http, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) { 
+  constructor(private fb: FormBuilder, private http: Http, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) { 
     this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
 
     /* Getting task form values */
@@ -99,8 +101,10 @@ export class ModifyTaskComponent {
       assigneduserid: 0
     }
     this.http.post('http://localhost:8000/api/modifytask/' + this.taskId, request, this.taskId).subscribe();
-    window.alert("Task modified!");
-  }
+    this.snackBar.open('Task modified', 'Ok', {
+      duration: 3000
+      });
+    }
 
   onDelete() {
     if(!window.confirm('Are you sure you want to delete this task?')){

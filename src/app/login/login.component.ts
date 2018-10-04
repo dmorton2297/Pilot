@@ -1,5 +1,11 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Http } from '@angular/http'
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'google-signin',
@@ -8,7 +14,7 @@ import { Http } from '@angular/http'
 })
 export class LoginComponent implements OnInit {
 
-  constructor(ngZone: NgZone) { 
+  constructor(ngZone: NgZone, private http: Http, private auth: AuthService, private router: Router) { 
     const _self = this;
     window['onSignIn'] = (user) => ngZone.run(() => this.onSignIn(user));
   }
@@ -25,8 +31,11 @@ export class LoginComponent implements OnInit {
       email: profile.getEmail() as string
     }
 
-    window.alert(userRequest.name);
-    
+    //window.alert(profile.getName())
+    //window.alert(profile.getEmail())
+    this.http.post('http://localhost:8000/api/saveuser', userRequest).subscribe((res) => {
+      this.router.navigateByUrl('/');
+    });
     //send user info to backend https://developers.google.com/identity/sign-in/web/backend-auth 
 
   }
@@ -34,7 +43,6 @@ export class LoginComponent implements OnInit {
 }
 
 interface UserRequest {
-
   name: string
   email: string
 }

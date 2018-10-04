@@ -60,6 +60,10 @@ class UserController extends Controller
                 'updated_at' => $updatedAt
             ]
             );
+
+
+
+        
     }
 
     /**
