@@ -19,7 +19,7 @@ class CreateTaskTable extends Migration
             $table->string('description');
             $table->integer('priority');
             $table->integer('status');
-            $table->integer('funcreq')->nullable();
+            $table->text('funcreq')->nullable();
             $table->integer('estimate');
             $table->integer('timespent');
             $table->integer('teamid')->nullable();
