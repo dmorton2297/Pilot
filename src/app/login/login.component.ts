@@ -8,7 +8,7 @@ import { Http } from '@angular/http'
 })
 export class LoginComponent implements OnInit {
 
-  constructor(ngZone: NgZone) { 
+  constructor(ngZone: NgZone, private http: Http) { 
     const _self = this;
     window['onSignIn'] = (user) => ngZone.run(() => this.onSignIn(user));
   }
@@ -24,7 +24,9 @@ export class LoginComponent implements OnInit {
       name: profile.getName() as string,
       email: profile.getEmail() as string
     }
-    
+    //window.alert(profile.getName())
+    //window.alert(profile.getEmail())
+    this.http.post('http://localhost:8000/api/saveuser', userRequest).subscribe();
     //send user info to backend https://developers.google.com/identity/sign-in/web/backend-auth 
 
   }
@@ -32,7 +34,6 @@ export class LoginComponent implements OnInit {
 }
 
 interface UserRequest {
-
   name: string
   email: string
 }
