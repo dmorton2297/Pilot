@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,4 +23,5 @@ Route::get('getusertasks/{userId}', 'TaskController@userIndex');
 Route::get('gettask/{id}', 'TaskController@show');
 Route::post('modifytask', 'TaskController@update');
 Route::post('changestatus', 'TaskController@changeStatus');
+Route::post('saveuser', 'UserController@store');
 
