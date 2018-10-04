@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('savetask', 'TaskController@store');
+Route::get('getusertasks/{userId}', 'TaskController@userIndex');
+Route::get('gettask/{id}', 'TaskController@show');
+Route::post('modifytask', 'TaskController@update');
+Route::post('changestatus', 'TaskController@changeStatus');
+

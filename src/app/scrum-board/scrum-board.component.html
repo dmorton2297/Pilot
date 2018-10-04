@@ -1,46 +1,70 @@
-  <div style="border-style: solid; border-width: 2px; height: 80%;">
-	<h1>My Scrum Board</h1>
-		<div class = "task-list" style ="display:inline-block; width: 23.33%;"> 
-			<h2> Not Started </h2>
-			<ul class = task style = "height:120px;width:300px;border-style:solid;border-width:3px"> 
-				<h2>Task name</h2>
-				Description:<br>
-				Status:<br>
-				Assigned to:
-				
-			</ul>
-		</div>
-		<div class = "task-list" style ="display:inline-block; width: 23.33%; ">
-			<h2> Started </h2>
-			<ul class = task style = "height:120px;width:300px;border-style:solid;border-width:3px"> 
-				<h2>Task name </h2>
-				Description:<br>
-				Status:<br>
-				Assigned to:
-			</ul>
-		</div>
-		<div class = "task-list" style ="display:inline-block; width: 23.33%;">
-			<h2> Completed </h2>
-			<ul class = task style = "height:120px;width:300px;border-style:solid;border-width:3px"> 
-				<h2>Task name </h2>
-				Description:<br>
-				Status:<br>
-				Assigned to:
-			</ul>
-		</div>
+<mat-card>
+	<mat-card class="heading-container">
+			<h1 class="heading">Scrum Board</h1>
+	</mat-card>
+
+	<mat-card>
+		<div class="table-container">
+			<table mat-table [dataSource]="notStartedTasks" class="mat-elevation-z0" id="not-started">
+					<ng-container matColumnDef="card" class="card-container">
+						<th mat-header-cell *matHeaderCellDef> Not Started </th>
+						<td mat-cell *matCellDef="let element"> 
+							<mat-card class="scrum-card">
+								<mat-card-title>{{element.name}}</mat-card-title>
+								<mat-card-subtitle>{{element.description}}</mat-card-subtitle>
+								<div class="row">
+										<div class="col-md-6"></div>
+										<div class="col-md-3">
+												<button mat-button>Progress</button>
+										</div>
+								</div>
+							</mat-card>
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
 		
-		<div style ="display:inline-block;height: 60px; border-style: solid; border-width: 1px; float:right; margin-right:70px;">
-			<div style="display:inline-block;border-style: solid; border-width: 1px;">
-				V
-			</div>
-			<div style="display:inline-block;border-style: solid; border-width: 1px;">
-				My tasks
-			</div>
-			<div style="border-style: solid; border-width: 1px;">
-				Team 1
-			</div>
-			<div style="border-style: solid; border-width: 1px;">
-				Team 2
-			</div>
+			<table mat-table [dataSource]="startedTasks" class="mat-elevation-z0" id="started">
+					<ng-container matColumnDef="card" class="card-container">
+						<th mat-header-cell *matHeaderCellDef> Started </th>
+						<td mat-cell *matCellDef="let element"> 
+							<mat-card class="scrum-card">
+								<mat-card-title>{{element.name}}</mat-card-title>
+								<mat-card-subtitle>{{element.description}}</mat-card-subtitle>
+								<div class="row">
+									<div class="col-md-6"></div>
+									<div class="col-md-3">
+											<button mat-button>Progress</button>
+									</div>
+								</div>
+							</mat-card>
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+		
+			<table mat-table [dataSource]="completedTasks" class="mat-elevation-z0" id="completed">
+					<ng-container matColumnDef="card" class="card-container">
+						<th mat-header-cell *matHeaderCellDef> Completed </th>
+						<td mat-cell *matCellDef="let element"> 
+							<mat-card class="scrum-card">
+								<mat-card-title>{{element.name}}</mat-card-title>
+								<mat-card-subtitle>{{element.description}}</mat-card-subtitle>
+								<div class="row">
+										<div class="col-md-6"></div>
+										<div class="col-md-3">
+												<button mat-button>Delete</button>
+										</div>
+								</div>
+							</mat-card>
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
 		</div>
-  </div>
+	</mat-card>
+	
+</mat-card>

@@ -1,0 +1,38 @@
+table {
+    width: 33%;
+}
+
+.heading {
+    margin-bottom: 20px;
+}
+
+.heading-container {
+    width: 100%;
+}
+
+.scrum-card {
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+
+.table-container {
+    display: flex;
+}
+
+#fill-space {
+    width: 50%;
+}
+
+#not-started {
+    background-color: lightcoral;
+}
+
+#started {
+    background-color: lightgoldenrodyellow;
+}
+
+#completed {
+    background-color: lightgreen;
+}
