@@ -23,6 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { FuncReqFormComponent } from './func-req-form/func-req-form.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 import { BacklogComponent } from './backlog/backlog.component';
 
@@ -71,11 +73,14 @@ export function getGoogleConfigs() {
   BrowserModule,
   HttpModule,
   MatCardModule,
+  MatSnackBarModule,
+
   MatTabsModule,
   MatButtonModule,
   MatSelectModule,
   MatFormFieldModule,
   MatToolbarModule,
+  
   MatTableModule,
   SocialLoginModule,
   BrowserAnimationsModule,

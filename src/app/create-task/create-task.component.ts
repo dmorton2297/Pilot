@@ -4,7 +4,9 @@ import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material';
+
 
 
 @Component({
@@ -36,7 +38,7 @@ export class CreateTaskComponent {
   public teamId = 0;
   public taskId : string;
 
-  constructor(private fb: FormBuilder, private http: Http, private location: Location, private activatedRoute: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private http: Http, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
     this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
       console.log(res.json());
       this.req = res.json() as FunctionalRequirement[];
@@ -73,7 +75,7 @@ export class CreateTaskComponent {
       description: this.taskForm.get('description').value as string,
       priority: this.taskForm.get('priority').value as number,
       status: 0,
-      funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
+      funcreq: 0,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
       creatorid: 0,
@@ -88,15 +90,18 @@ export class CreateTaskComponent {
     /** *************** */
     this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
 
-    window.alert('Task created!');
+    this.snackBar.open('Task created', 'Ok', {
+      duration: 3000
+    });
   }
 
   onCancel() {
-    if(window.confirm('Are you sure you want to cancel?')){
       this.taskForm.reset();
-      this.location.back();
-    }
-    return;
+      this.router.navigateByUrl('/');
+  }
+
+  openSnackBar(maessage: string) {
+    
   }
 }
 

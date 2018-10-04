@@ -24,6 +24,8 @@ export class LoginComponent implements OnInit {
       name: profile.getName() as string,
       email: profile.getEmail() as string
     }
+
+    window.alert(userRequest.name);
     
     //send user info to backend https://developers.google.com/identity/sign-in/web/backend-auth 
 

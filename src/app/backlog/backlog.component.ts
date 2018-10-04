@@ -10,7 +10,10 @@ import { Router } from '@angular/router';
 export class BacklogComponent {
 
   public tasks: Task[] = [];
-  public displayedColumns: String[] = ['id', 'name', 'description', 'priority', 'status', 'created'];
+  public displayedColumns: String[] = ['id', 'name', 'description', 'priority', 'status', 'created', 'actions'];
+
+  public sortByName = true;
+  public sortByPriority = false;
 
   @Output() signalEvent = new EventEmitter<string>();
 
@@ -29,6 +32,11 @@ export class BacklogComponent {
   loadData() {
     this.http.get('http://localhost:8000/api/getusertasks/0').subscribe((res) => {
       this.tasks = res.json() as Task[];
+      if (this.sortByName) {
+        this.sortTableName();
+      } else if (this.sortByPriority) {
+        this.sortTablePriority();
+      }
     });
   }
 
@@ -55,14 +63,36 @@ export class BacklogComponent {
     });
   }
 
+  onDeletePressed(id) {
+    this.http.get('http://localhost:8000/api/deletetask/' + id).subscribe();
+    this.updateSignal();
+  }
+
+  onModifyPressed(id) {
+    this.router.navigateByUrl('/modifytask/' + id);
+  }
+
+  onSortNamePressed(){
+    this.sortByName = true;
+    this.sortByPriority = false;
+    this.updateSignal();
+  }
+
+  onSortPrioPressed(){
+    this.sortByName = false;
+    this.sortByPriority = true;
+    this.updateSignal();
+  }
   
 	sortTableName() {
-	  
-	 this.tasks.sort((a, b) => {
+    var temp = this.tasks;
+	 temp.sort((a, b) => {
 	  if(a.name < b.name) {return -1;}
 	  if(a.name > b.name) {return 1;}
 	  return 0;
-	 });
+   });
+   
+   this.tasks = temp;
     }
    
     sortTablePriority() {
