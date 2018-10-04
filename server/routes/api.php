@@ -25,9 +25,8 @@ Route::get('gettask/{id}', 'TaskController@show');
 Route::post('changestatus', 'TaskController@changeStatus');
 Route::post('saveuser', 'UserController@store');
 Route::post('modifytask/{id}', 'TaskController@update');
-Route::post('deletetask/{id}', 'TaskController@destroy');
+Route::get('deletetask/{id}', 'TaskController@destroy');
 Route::get('getSelectedReqs/{id}', 'TaskController@showReqs');
-
 Route::post('savereq', 'FunctionalRequirementController@store');
 Route::get('getfuncreqs/{id}', 'FunctionalRequirementController@teamIndex');
 

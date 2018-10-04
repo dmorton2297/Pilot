@@ -36,9 +36,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         //
         $name = $request -> input('name');
         $email = $request -> input('email');
+        $test = DB::table('users')->where('email', $email)->get();
+        if ($test) {
+            return;
+        }
+
         $createdAt = Carbon::now()->toDateTimeString();
         $updatedAt = Carbon::now()->toDateTimeString();
         $verifiedAt = Carbon::now()->toDateTimeString();
