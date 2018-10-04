@@ -27,13 +27,15 @@ import { BacklogComponent } from './backlog/backlog.component';
 
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular5-social-login";
 import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
+import { MainComponent } from './main/main.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'createtask', component: CreateTaskComponent },
   { path: 'modifytask/:id', component: ModifyTaskComponent },
-  { path: 'backlog', component: BacklogComponent}
+  { path: 'backlog', component: MainComponent },
+
 ];
 
 export function getGoogleConfigs() {
@@ -58,7 +60,8 @@ export function getGoogleConfigs() {
     NavigationComponent,
     ScrumBoardComponent,
     ModifyTaskComponent,
-    BacklogComponent
+    BacklogComponent,
+    MainComponent
   ],
   imports: [
   BrowserModule,

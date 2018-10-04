@@ -4,61 +4,67 @@
 	</mat-card>
 
 	<mat-card>
-		<div class="row">
-				<div class="col-lg-4" *ngIf="notStartedTasks">
-					<h3>Not Started</h3>
-					<table mat-table [dataSource]="notStartedTasks" class="mat-elevation-z0">
-						<ng-container matColumnDef="card" class="card-container">
-							<th mat-header-cell *matHeaderCellDef> Tasks </th>
-							<td mat-cell *matCellDef="let element"> 
-								<mat-card class="scrum-card">
-									<mat-card-title>{{element.name}}</mat-card-title>
-									<mat-card-subtitle>{{element.description}}</mat-card-subtitle>
-	
-								</mat-card>
-							</td>
-						</ng-container>
-						<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-						<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-					</table>
-				</div>
+		<div class="table-container">
+			<table mat-table [dataSource]="notStartedTasks" class="mat-elevation-z0" id="not-started">
+					<ng-container matColumnDef="card" class="card-container">
+						<th mat-header-cell *matHeaderCellDef> Not Started </th>
+						<td mat-cell *matCellDef="let element"> 
+							<mat-card class="scrum-card">
+								<mat-card-title>{{element.name}}</mat-card-title>
+								<mat-card-subtitle>{{element.description}}</mat-card-subtitle>
+								<div class="row">
+										<div class="col-md-6"></div>
+										<div class="col-md-3">
+												<button mat-button>Progress</button>
+										</div>
+								</div>
+							</mat-card>
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
 		
-				<div class="col-lg-4" *ngIf="startedTasks">
-					<h3>Started</h3>
-					<table mat-table [dataSource]="startedTasks" class="mat-elevation-z0">
-							<ng-container matColumnDef="card" class="card-container">
-								<th mat-header-cell *matHeaderCellDef> Tasks </th>
-								<td mat-cell *matCellDef="let element"> 
-									<mat-card class="scrum-card">
-										<mat-card-title>{{element.name}}</mat-card-title>
-										<mat-card-subtitle>{{element.description}}</mat-card-subtitle>
+			<table mat-table [dataSource]="startedTasks" class="mat-elevation-z0" id="started">
+					<ng-container matColumnDef="card" class="card-container">
+						<th mat-header-cell *matHeaderCellDef> Started </th>
+						<td mat-cell *matCellDef="let element"> 
+							<mat-card class="scrum-card">
+								<mat-card-title>{{element.name}}</mat-card-title>
+								<mat-card-subtitle>{{element.description}}</mat-card-subtitle>
+								<div class="row">
+									<div class="col-md-6"></div>
+									<div class="col-md-3">
+											<button mat-button>Progress</button>
+									</div>
+								</div>
+							</mat-card>
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
 		
-									</mat-card>
-								</td>
-							</ng-container>
-							<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-							<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-						</table>
-				</div>
-		
-				<div class="col-lg-4" *ngIf="completedTasks">
-					<h3>Complete</h3>
-					<table mat-table [dataSource]="completedTasks" class="mat-elevation-z0">
-							<ng-container matColumnDef="card" class="card-container">
-								<th mat-header-cell *matHeaderCellDef> Tasks </th>
-								<td mat-cell *matCellDef="let element"> 
-									<mat-card class="scrum-card">
-										<mat-card-title>{{element.name}}</mat-card-title>
-										<mat-card-subtitle>{{element.description}}</mat-card-subtitle>
-		
-									</mat-card>
-								</td>
-							</ng-container>
-							<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-							<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-						</table>
-				</div>
-			</div>
+			<table mat-table [dataSource]="completedTasks" class="mat-elevation-z0" id="completed">
+					<ng-container matColumnDef="card" class="card-container">
+						<th mat-header-cell *matHeaderCellDef> Completed </th>
+						<td mat-cell *matCellDef="let element"> 
+							<mat-card class="scrum-card">
+								<mat-card-title>{{element.name}}</mat-card-title>
+								<mat-card-subtitle>{{element.description}}</mat-card-subtitle>
+								<div class="row">
+										<div class="col-md-6"></div>
+										<div class="col-md-3">
+												<button mat-button>Delete</button>
+										</div>
+								</div>
+							</mat-card>
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+		</div>
 	</mat-card>
 	
 </mat-card>
