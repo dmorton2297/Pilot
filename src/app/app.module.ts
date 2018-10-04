@@ -10,6 +10,8 @@ import { RouterModule, Routes } from '@angular/router';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {NavigationComponent} from './navigation/navigation.component';
 import {MatButtonModule} from '@angular/material/button';
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular5-social-login";
+import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,6 +22,17 @@ const appRoutes: Routes = [
 import { ScrumBoardComponent } from './scrum-board/scrum-board.component';
 
 import { CreateTaskComponent } from './create-task/create-task.component';
+export function getGoogleConfigs() {
+  let config = new AuthServiceConfig(
+    [
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider("941718367028-f0550rgrm90usorok0jd3vsd9vopjqi4.apps.googleusercontent.com")
+      },
+    ]
+  );
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -35,14 +48,19 @@ import { CreateTaskComponent } from './create-task/create-task.component';
   MatCardModule,
   MatButtonModule,
   MatToolbarModule,
+  SocialLoginModule,
   BrowserAnimationsModule,
   RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-
-  providers: [],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: getGoogleConfigs
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
