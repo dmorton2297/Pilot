@@ -39,6 +39,7 @@ class UserController extends Controller
         //
         $name = $request -> input('name');
         $email = $request -> input('email');
+        //if email already in database, don't add userProfile to db
         $createdAt = Carbon::now()->toDateTimeString();
         $updatedAt = Carbon::now()->toDateTimeString();
         $verifiedAt = Carbon::now()->toDateTimeString();
