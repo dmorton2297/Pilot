@@ -25,6 +25,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 import { BacklogComponent } from './backlog/backlog.component';
 
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular5-social-login";
+import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -34,6 +36,17 @@ const appRoutes: Routes = [
   { path: 'backlog', component: BacklogComponent}
 ];
 
+export function getGoogleConfigs() {
+  let config = new AuthServiceConfig(
+    [
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider("941718367028-f0550rgrm90usorok0jd3vsd9vopjqi4.apps.googleusercontent.com")
+      },
+    ]
+  );
+  return config;
+}
 
 
 
@@ -57,6 +70,7 @@ const appRoutes: Routes = [
   MatFormFieldModule,
   MatToolbarModule,
   MatTableModule,
+  SocialLoginModule,
   BrowserAnimationsModule,
   BrowserModule,
   MatCardModule,
@@ -74,8 +88,12 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-
-  providers: [],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: getGoogleConfigs
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
