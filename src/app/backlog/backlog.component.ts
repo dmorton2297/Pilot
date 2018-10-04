@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 
@@ -12,12 +12,18 @@ export class BacklogComponent {
   public tasks: Task[] = [];
   public displayedColumns: String[] = ['id', 'name', 'description', 'priority', 'status', 'created'];
 
+  @Output() signalEvent = new EventEmitter<string>();
+
   constructor(private http: Http, private router: Router) { 
     this.loadData();
   }
 
   onCreateTask() {
     this.router.navigateByUrl('/createtask');
+  }
+
+  updateSignal() {
+    this.signalEvent.emit("SIG_UPDATE_TASKS");
   }
 
   loadData() {
@@ -45,7 +51,7 @@ export class BacklogComponent {
     }
 
     this.http.post('http://localhost:8000/api/changestatus', request).subscribe((res) => {
-      this.loadData();
+      this.updateSignal();
     });
   }
 

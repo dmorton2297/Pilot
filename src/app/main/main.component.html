@@ -1,8 +1,8 @@
 <mat-tab-group>
     <mat-tab label="Backlog"> 
-        <app-backlog></app-backlog>
+        <app-backlog (signalEvent)="receiveSignal($event)"></app-backlog>
     </mat-tab>
     <mat-tab label="Scrum"> 
-      <app-scrum-board></app-scrum-board>  
+      <app-scrum-board (signalEvent)="receiveSignal($event)"></app-scrum-board>  
     </mat-tab>
   </mat-tab-group>
