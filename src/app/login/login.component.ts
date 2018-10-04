@@ -1,4 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
+import { Http } from '@angular/http'
 
 @Component({
   selector: 'google-signin',
@@ -18,15 +19,20 @@ export class LoginComponent implements OnInit {
 
   onSignIn(googleUser) {
     var id_token = googleUser.getAuthResponse().id_token;
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://yourbackend.example.com/tokensignin');
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-      console.log('Signed in as: ' + xhr.responseText);
-    };
-    xhr.send('idtoken=' + id_token);
+    var profile = googleUser.getBasicProfile();
+    let userRequest : UserRequest = {
+      name: profile.getName() as string,
+      email: profile.getEmail() as string
+    }
+    
     //send user info to backend https://developers.google.com/identity/sign-in/web/backend-auth 
 
   }
 
+}
+
+interface UserRequest {
+
+  name: string
+  email: string
 }
