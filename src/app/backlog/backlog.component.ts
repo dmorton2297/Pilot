@@ -49,6 +49,23 @@ export class BacklogComponent {
     });
   }
 
+  
+	sortTableName() {
+	  
+	 this.tasks.sort((a, b) => {
+	  if(a.name < b.name) {return -1;}
+	  if(a.name > b.name) {return 1;}
+	  return 0;
+	 });
+    }
+   
+    sortTablePriority() {
+  	 this.tasks.sort((a, b) => a.priority - b.priority);
+	}
+	 
+	sortTableStatus() {
+	  this.tasks.sort((a, b) => a.status - b.status);
+    }
 }
 
 
