@@ -33,8 +33,8 @@ export class ModifyTaskComponent {
 
   public priorities : string[] = ['1', '2', '3'];
   public task : Task;
-  public req : FunctionalRequirment[];
-  public selectedReqs: FunctionalRequirment[];
+  public req : FunctionalRequirement[];
+  public selectedReqs: FunctionalRequirement[];
   public taskId : string;
   public teamId = 0;
 
@@ -55,15 +55,15 @@ export class ModifyTaskComponent {
       this.taskForm.patchValue({assignedUser: this.users[this.task[0].assigneduserid]});
     });  
 
-    /* Getting criteria user selected on creation */
+    /* Getting criteria the user selected on creation */
     this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
-      this.selectedReqs = res.json() as FunctionalRequirment[];
+      this.selectedReqs = res.json() as FunctionalRequirement[];
       this.taskForm.patchValue({funcreq: this.selectedReqs});
     });
 
     /* Getting all criteria associated with team */
     this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
-      this.req = res.json() as FunctionalRequirment[];
+      this.req = res.json() as FunctionalRequirement[];
     });
   }
 
@@ -91,7 +91,7 @@ export class ModifyTaskComponent {
       description: this.taskForm.get('description').value as string,
       priority: this.taskForm.get('priority').value as number,
       status: 0,
-      funcreq: 0,
+      funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
       creatorid: 0,
@@ -117,7 +117,7 @@ export class ModifyTaskComponent {
   }
 }
 
-interface FunctionalRequirment {
+interface FunctionalRequirement {
   id: string,
   name: string,
   description: string

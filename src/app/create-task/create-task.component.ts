@@ -6,7 +6,6 @@ import { Http } from '@angular/http';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
