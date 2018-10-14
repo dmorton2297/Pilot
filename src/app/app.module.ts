@@ -20,40 +20,69 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import {MatTabsModule} from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { FuncReqFormComponent } from './func-req-form/func-req-form.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
+
+import { BacklogComponent } from './backlog/backlog.component';
+
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular5-social-login";
+import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
+import { MainComponent } from './main/main.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'backlog', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'createtask', component: CreateTaskComponent },
+  { path: 'backlog', component: MainComponent },
+
   { path: 'scrum', component: ScrumBoardComponent },
   { path: 'modifytask/:id', component: ModifyTaskComponent },
   { path: 'funcreq', component: FuncReqFormComponent }
 ];
 
+export function getGoogleConfigs() {
+  let config = new AuthServiceConfig(
+    [
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider("941718367028-f0550rgrm90usorok0jd3vsd9vopjqi4.apps.googleusercontent.com")
+      },
+    ]
+  );
+  return config;
+}
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    CreateTaskComponent,
     NavigationComponent,
     ScrumBoardComponent,
+    CreateTaskComponent,
+    ScrumBoardComponent,
     ModifyTaskComponent,
+    BacklogComponent,
+    MainComponent,
     FuncReqFormComponent
     ],
   imports: [
   BrowserModule,
   HttpModule,
   MatCardModule,
+  MatSnackBarModule,
+
+  MatTabsModule,
   MatButtonModule,
   MatSelectModule,
   MatFormFieldModule,
   MatToolbarModule,
+  
   MatTableModule,
+  SocialLoginModule,
   BrowserAnimationsModule,
   BrowserModule,
   MatCardModule,
@@ -71,8 +100,12 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-
-  providers: [],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: getGoogleConfigs
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

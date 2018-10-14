@@ -1,3 +1,7 @@
+table {
+    width: 33%;
+}
+
 .heading {
     margin-bottom: 20px;
 }
@@ -7,10 +11,28 @@
 }
 
 .scrum-card {
-    width: 400px;
-    height: 200px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 10px;
 }
 
-.card-container {
-    
+
+.table-container {
+    display: flex;
+}
+
+#fill-space {
+    width: 50%;
+}
+
+#not-started {
+    background-color: lightcoral;
+}
+
+#started {
+    background-color: lightgoldenrodyellow;
+}
+
+#completed {
+    background-color: lightgreen;
 }

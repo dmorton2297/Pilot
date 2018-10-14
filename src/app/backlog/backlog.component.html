@@ -1,0 +1,90 @@
+
+<mat-card>
+<mat-card class="heading-container">
+  <div class="row">
+    <div class="col-md-8">
+        <h1 class="heading">User Backlog</h1>
+    </div>
+    <div class="col-md-4">
+        <button mat-button id="create-task" (click)="onCreateTask()">Create Task</button>
+    </div>
+    <button mat-button (click)="onSortNamePressed()">Sort by name</button>
+    <button mat-button (click)="onSortPrioPressed()">Sort by priority</button>
+  </div>
+  
+</mat-card>
+
+
+<mat-card class="table-container" *ngIf="tasks">
+  <table mat-table [dataSource]="tasks" class="mat-elevation-z0">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> 
+        <span>{{element.id}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> 
+          <span>{{element.name}}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Descriptions </th>
+          <td mat-cell *matCellDef="let element"> 
+            <span>{{element.description}}</span>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef> Priority </th>
+          <td mat-cell *matCellDef="let element"> 
+            <span>{{element.priority}}</span>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="created">
+          <th mat-header-cell *matHeaderCellDef> Created </th>
+          <td mat-cell *matCellDef="let element"> 
+            <span>{{element.created_at}}</span>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let element"> 
+            <div *ngIf="element.status == 0">
+              <button mat-button style="background-color: lightcoral; width: 100px;" (click)="onStatusClicked(element.id)">Not started</button>
+            </div>
+            <div *ngIf="element.status == 1">
+              <button mat-button style="background-color: yellow; width: 100px;" (click)="onStatusClicked(element.id)">Started</button>
+            </div>
+            <div *ngIf="element.status == 2">
+              <button mat-button style="background-color: lightgreen; width: 100px;" (click)="onStatusClicked(element.id)">Complete</button>
+            </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element"> 
+          <button mat-button id="element.id" (click)="onDeletePressed(element.id)">Delete</button>
+          <button mat-button id="element.id" (click)="onModifyPressed(element.id)">Modify</button>
+        </td>
+    </ng-container>
+      
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-card>
+</mat-card>
+
+
+
+

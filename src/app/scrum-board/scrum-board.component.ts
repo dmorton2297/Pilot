@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 
 @Component({
@@ -6,7 +6,9 @@ import { Http } from '@angular/http';
   templateUrl: './scrum-board.component.html',
   styleUrls: ['./scrum-board.component.css']
 })
-export class ScrumBoardComponent implements OnInit {
+export class ScrumBoardComponent {
+
+  @Output() signalEvent = new EventEmitter<string>();
 
   public tasks : Task[] = [];
   public notStartedTasks : Task[];
@@ -14,16 +16,22 @@ export class ScrumBoardComponent implements OnInit {
   public completedTasks : Task[];
   public displayedColumns : String[] = ['card'];
   constructor(private http: Http) {
+    this.loadData();
+   }
+
+   updateSignal() {
+    this.signalEvent.emit("SIG_UPDATE_TASKS");
+  }
+
+   loadData() {
     this.http.get('http://localhost:8000/api/getusertasks/0').subscribe((res) => {
       this.tasks = res.json() as Task[];
-      this.loadTableData();
+      this.processTableData();
     });
    }
 
-  ngOnInit() {
-  }
 
-  loadTableData() {
+  processTableData() {
     this.notStartedTasks = [];
     this.startedTasks = [];
     this.completedTasks = [];
@@ -37,7 +45,49 @@ export class ScrumBoardComponent implements OnInit {
       }
     }
   }
+  
 
+  sortTableName() {
+	  
+	   this.tasks.sort((a, b) => {
+		if(a.name < b.name) {return -1;}
+		if(a.name > b.name) {return 1;}
+		return 0;
+	  });
+	  
+	  this.notStartedTasks.sort((a, b) => {
+		if(a.name < b.name) {return -1;}
+		if(a.name > b.name) {return 1;}
+		return 0;
+	  });
+	  
+	  this.startedTasks.sort((a, b) => {
+		if(a.name < b.name) {return -1;}
+		if(a.name > b.name) {return 1;}
+		return 0;
+	  });
+	  
+	  this.completedTasks.sort((a, b) => {
+		if(a.name < b.name) {return -1;}
+		if(a.name > b.name) {return 1;}
+		return 0;
+	  });
+  }
+  
+  sortTablePriority() {
+  	  this.tasks.sort((a, b) => a.priority - b.priority);
+
+	  this.notStartedTasks.sort((a, b) => a.priority - b.priority);
+	  
+	  this.startedTasks.sort((a, b) => a.priority - b.priority);
+	  
+	  this.completedTasks.sort((a, b) => a.priority - b.priority);
+  
+  }
+  
+   sortTableStatus() {
+	   this.tasks.sort((a, b) => a.status - b.status);
+   }
 }
 
 interface Task {
