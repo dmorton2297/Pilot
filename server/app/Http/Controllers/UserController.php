@@ -35,15 +35,18 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-
+    {   
         //
         $name = $request -> input('name');
         $email = $request -> input('email');
-        $test = DB::table('users')->where('email', $email)->get();
-        if ($test) {
-            return;
-        }
+       // $test = DB::table('users')->where('email', $email)->get();
+        //if ($test) {
+         //   return;
+       // }
+       $test = $this -> getUserId($email);
+       if ($test != -1) {
+           return;
+       }
 
         $createdAt = Carbon::now()->toDateTimeString();
         $updatedAt = Carbon::now()->toDateTimeString();
@@ -75,6 +78,15 @@ class UserController extends Controller
     public function show($id)
     {
         //
+
+    }
+
+    public function getUserId($email) {
+        $results = DB::select('select id from users where email = :email', ['email' => $email]);
+        if (!$results) {
+            return -1;
+        }
+        return $results;
     }
 
     /**
