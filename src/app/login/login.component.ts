@@ -2,10 +2,6 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Http } from '@angular/http'
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { Router } from '@angular/router';
-import { Router } from '@angular/router';
-import { Router } from '@angular/router';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'google-signin',

@@ -40,10 +40,10 @@ class UserController extends Controller
         //
         $name = $request -> input('name');
         $email = $request -> input('email');
-        $test = DB::table('users')->where('email', $email)->get();
-        if ($test) {
-            return;
-        }
+       // $test = DB::table('users')->where('email', $email)->get();
+        //if ($test) {
+         //   return;
+       // }
 
         $createdAt = Carbon::now()->toDateTimeString();
         $updatedAt = Carbon::now()->toDateTimeString();
