@@ -7,7 +7,6 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatSnackBar} from '@angular/material';
 
-
 @Component({
   selector: 'app-modify-task',
   templateUrl: './modify-task.component.html',
@@ -27,7 +26,6 @@ export class ModifyTaskComponent {
         assignedUser: ['', Validators.required],
         assignedUserID: [''],
         criterian: this.fb.array([
-         this.fb.control('')
       ])
 });
 
@@ -46,6 +44,7 @@ export class ModifyTaskComponent {
     /* Getting task form values */
     this.http.get('http://localhost:8000/api/gettask/' + this.taskId).subscribe((res) => {
       this.task = res.json() as Task;
+      console.log(this.task[0].criterian);
       this.taskForm.patchValue({name: this.task[0].name});
       this.taskForm.patchValue({description: this.task[0].description});
       this.taskForm.patchValue({priority: this.priorities[this.task[0].priority - 1]});
@@ -57,7 +56,7 @@ export class ModifyTaskComponent {
       this.taskForm.patchValue({assignedUser: this.users[this.task[0].assigneduserid]});
     });  
 
-    /* Getting criteria the user selected on creation */
+    /* Getting selected functional requirements the user selected on creation */
     this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
       this.selectedReqs = res.json() as FunctionalRequirement[];
       this.taskForm.patchValue({funcreq: this.selectedReqs});
@@ -67,16 +66,59 @@ export class ModifyTaskComponent {
     this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
       this.req = res.json() as FunctionalRequirement[];
     });
+  
+    /* Getting all acceptance criteria associated with team */
+    var criteria: string[];
+    this.http.get('http://localhost:8000/api/getcriterian/' + this.taskId).subscribe((res) => {
+      criteria = res.json() as string[];
+      for (var i = 0; i < criteria.length; i++) {
+        this.pushCriteria(criteria[i]);
+      } 
+      this.cleanCriteria();
+    });
   }
 
+  /**
+   * Gets criterian for the view.
+   */
   get criterian() {
     return this.taskForm.get('criterian') as FormArray;
   }
 
+  /**
+   *  Adds criteria from view to criterian array.
+   */
   addCriteria() {
     this.criterian.push(this.fb.control(''));
   }
+  
+  /**
+   * Adds criteria from database to criterian array.
+   * 
+   * @param criterian 
+   */
+  pushCriteria(criterian: string) {
+    if (criterian != null) {
+       this.criterian.push(this.fb.control(criterian));
+    }
+  }
 
+  /**
+   *  Removes empty criterian.
+   */
+  cleanCriteria() {
+    for (var i = 0; i < this.criterian.length; i++) {
+      if (this.criterian[i] == "") {
+        this.criterian.removeAt(i);
+      }
+    }
+  }
+
+  /**
+   * Removes criterian from index i.
+   * 
+   * @param i 
+   */
   removeCriteria(i: number) {
     if (this.criterian.length == 1) {
       this.criterian.removeAt(i);
@@ -87,6 +129,8 @@ export class ModifyTaskComponent {
   }
 
   onSubmit() {
+    this.cleanCriteria();
+
     let request : Task = {
       id: this.taskId,
       name: this.taskForm.get('name').value as string,
@@ -98,7 +142,8 @@ export class ModifyTaskComponent {
       timespent: 0,
       creatorid: 0,
       teamid: 0,
-      assigneduserid: 0
+      assigneduserid: 0,
+      criterian: this.taskForm.get('criterian').value
     }
     this.http.post('http://localhost:8000/api/modifytask/' + this.taskId, request, this.taskId).subscribe();
     this.snackBar.open('Task modified', 'Ok', {
@@ -136,5 +181,6 @@ interface Task {
   timespent: number,
   teamid: number,
   creatorid: number,
-  assigneduserid: number
+  assigneduserid: number,
+  criterian: any
 }

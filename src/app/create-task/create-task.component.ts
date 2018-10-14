@@ -64,12 +64,16 @@ export class CreateTaskComponent {
     this.criterian.removeAt(i);
   }
 
-  onSubmit() {
+  cleanCriteria() {
     for (var i = 0; i < this.criterian.length; i++) {
-      if (this.criterian[i] == '') {
+      if (this.criterian[i] == "") {
         this.criterian.removeAt(i);
       }
     }
+  }
+
+  onSubmit() {
+    this.cleanCriteria();
 
     let request : TaskRequest = {
       name: this.taskForm.get('name').value as string,
@@ -79,9 +83,10 @@ export class CreateTaskComponent {
       funcreq: 0,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
-      creatorid: this.auth.id,
+      creatorid: 0, //this.auth.id,
       teamid: 0,
-      assigneduserid: 0
+      assigneduserid: 0,
+      criterian: this.taskForm.get('criterian').value,
     }
 
     this.http.post('http://localhost:8000/api/savetask', request).subscribe((res) => {
@@ -105,11 +110,6 @@ export class CreateTaskComponent {
   }
 }
 
-interface Criteria {
-  description: string,
-  body: string,
-  taskid: number
-}
 
 interface FunctionalRequirement {
   name: string,
@@ -127,5 +127,6 @@ interface TaskRequest {
   timespent: number,
   teamid: number,
   creatorid: number,
-  assigneduserid: number
+  assigneduserid: number,
+  criterian: any
 }

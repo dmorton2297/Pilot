@@ -30,7 +30,7 @@ Route::get('getSelectedReqs/{id}', 'TaskController@showReqs');
 Route::post('savereq', 'FunctionalRequirementController@store');
 Route::get('getfuncreqs/{id}', 'FunctionalRequirementController@teamIndex');
 Route::get('getuserid/{username}', 'UserController@getUserId');
-Route::post('savecriteria', 'CriteriaController@store');
+Route::get('getcriterian/{id}', 'TaskController@showCriterian');
 
 
 

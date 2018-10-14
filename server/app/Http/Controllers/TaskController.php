@@ -64,6 +64,7 @@ class TaskController extends Controller
         $timespent = $request -> input('timespent');
         $teamid = $request -> input('teamid');
         $creatorid = $request -> input('creatorid');
+        $criterian = json_encode($request -> input('criterian'));
 
         DB::table('task')->insert(
             ['name' => $name,
@@ -75,6 +76,7 @@ class TaskController extends Controller
              'timespent' => $timespent,
              'teamid' => $teamid,
              'creatorid' => $creatorid,
+             'criterian' => $criterian,
              'created_at' => Carbon::now()->toDateTimeString(),
              'updated_at' => Carbon::now()->toDateTimeString()
             ]
@@ -107,6 +109,17 @@ class TaskController extends Controller
     }
 
     /**
+     * Display acceptance criteria
+     * 
+     * @param int $id
+     */
+    public function showCriterian($id)
+    {
+        $criterian = json_decode(DB::table('task')->where('id', $id)->value('criterian'));
+        return $criterian;
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -122,6 +135,7 @@ class TaskController extends Controller
         $funcreq = json_encode($request->input('funcreq'));
         $estimate = $request -> input('estimate');
         $timespent = $request -> input('timespent');
+        $criterian = json_encode($request -> input('criterian'));
 
         DB::table('task')
 			->where('id', $id)
@@ -133,6 +147,7 @@ class TaskController extends Controller
              'funcreq' => $funcreq,
              'estimate' => $estimate,
              'timespent' => $timespent,
+             'criterian' => $criterian,
              'updated_at' => Carbon::now()->toDateTimeString()
 			]);
 			
