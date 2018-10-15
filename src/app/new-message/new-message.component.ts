@@ -21,19 +21,25 @@ export class NewMessageComponent {
     message: ['', Validators.required]
   });
 
+  public uID : number;
+  //public msg : string;
+  
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
-    
+    this.uID = 0;
   }
 
   onSubmit() {
+    //how to get current user's ID and name(email?)
+    //receiver and sender given by name or email or uID?
+    //this.msg = this.newMessage.get('message').value as string;
     let request : NewMessage = {
       receiver: this.newMessage.get('receiver').value as string,
       message: this.newMessage.get('message').value as string,
       sender: "Blake Thomas",
-      id: 0
+      id: this.uID
     }
 
-    this.http.post('http://localhost:8000/api/newMessage', request).subscribe((res) => {
+    this.http.post('http://localhost:8000/api/newMessage' + this.uID, request).subscribe((res) => {
       console.log(res);
     });
   }

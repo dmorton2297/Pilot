@@ -1,3 +1,26 @@
-<p>
-  new-message works!
-</p>
+<mat-card>
+  <mat-card-header>
+      <mat-card-title>
+        <h1>Send New Message</h1>
+      </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="newMessage" (ngSubmit)="onSubmit()">
+      <!-- Field for Recipient of Message -->
+      <mat-form-field> 
+          <input matInput type="text" formControlName="receiver" placeholder="Recipient Name" required> 
+      </mat-form-field>
+
+      <!-- Field for Message Content -->
+      <mat-form-field> 
+        <input matInput type="text" formControlName="message" placeholder="Message Body" required> 
+      </mat-form-field>
+      <!-- Submit and cancel buttons -->
+      <div class="button-row">
+        <button  mat-raised-button color="primary" [disabled]="!newMessage.valid" (click)="onSubmit">Send Message</button>
+        <button  mat-raised-button color="primary" (click)="onCancel()" type="button">Cancel</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
