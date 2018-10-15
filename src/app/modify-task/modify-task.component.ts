@@ -30,7 +30,6 @@ export class ModifyTaskComponent {
 });
 
   public users : string[] = ['John', 'Sarah', 'Matt']; 
-
   public priorities : string[] = ['1', '2', '3'];
   public task : Task;
   public req : FunctionalRequirement[];
@@ -44,7 +43,6 @@ export class ModifyTaskComponent {
     /* Getting task form values */
     this.http.get('http://localhost:8000/api/gettask/' + this.taskId).subscribe((res) => {
       this.task = res.json() as Task;
-      console.log(this.task[0].criterian);
       this.taskForm.patchValue({name: this.task[0].name});
       this.taskForm.patchValue({description: this.task[0].description});
       this.taskForm.patchValue({priority: this.priorities[this.task[0].priority - 1]});
@@ -56,7 +54,7 @@ export class ModifyTaskComponent {
       this.taskForm.patchValue({assignedUser: this.users[this.task[0].assigneduserid]});
     });  
 
-    /* Getting selected functional requirements the user selected on creation */
+    /* Getting functional requirements the user selected on creation */
     this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
       this.selectedReqs = res.json() as FunctionalRequirement[];
       this.taskForm.patchValue({funcreq: this.selectedReqs});
@@ -74,8 +72,24 @@ export class ModifyTaskComponent {
       for (var i = 0; i < criteria.length; i++) {
         this.pushCriteria(criteria[i]);
       } 
+
+      this.removeDuplicate();
       this.cleanCriteria();
     });
+  }
+
+  /**
+   *  This resolves the problem of selected functional requirements being
+   *  displayed twice.
+   */
+  removeDuplicate() {
+    for (var i = 0; i < this.req.length; i++) {
+      for (var j = 0; j < this.selectedReqs.length; j++) {
+        if (this.req[i].id == this.selectedReqs[j].id) {
+          this.req.splice(i, 1);
+        }
+      }
+    }
   }
 
   /**
@@ -104,17 +118,6 @@ export class ModifyTaskComponent {
   }
 
   /**
-   *  Removes empty criterian.
-   */
-  cleanCriteria() {
-    for (var i = 0; i < this.criterian.length; i++) {
-      if (this.criterian[i] == "") {
-        this.criterian.removeAt(i);
-      }
-    }
-  }
-
-  /**
    * Removes criterian from index i.
    * 
    * @param i 
@@ -128,9 +131,19 @@ export class ModifyTaskComponent {
     this.criterian.removeAt(i);
   }
 
+  /**
+   *  Removes empty criteria.
+   */
+  cleanCriteria() {
+    for (var i = 0; i < this.criterian.length; i++) {
+      if (this.criterian[i] == "") {
+        this.criterian.removeAt(i);
+      }
+    } 
+  }
+
   onSubmit() {
     this.cleanCriteria();
-
     let request : Task = {
       id: this.taskId,
       name: this.taskForm.get('name').value as string,

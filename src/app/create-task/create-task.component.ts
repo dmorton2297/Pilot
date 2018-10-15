@@ -80,7 +80,7 @@ export class CreateTaskComponent {
       description: this.taskForm.get('description').value as string,
       priority: this.taskForm.get('priority').value as number,
       status: 0,
-      funcreq: 0,
+      funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
       creatorid: 0, //this.auth.id,
