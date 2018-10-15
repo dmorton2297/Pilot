@@ -12,7 +12,6 @@ use Carbon\Carbon;
 
 class TaskController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +19,8 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-		$tasks = DB::table('task')->get();
-		
+
+        $tasks = DB::table('task')->get();
         return $tasks;
     }
 
@@ -60,7 +59,7 @@ class TaskController extends Controller
         $description = $request -> input('description');
         $priority = $request -> input('priority');
         $status = $request -> input('status');
-        $funcreq = $request -> input('funcreq');
+        $funcreq = json_encode($request -> input('funcreq'));
         $estimate = $request -> input('estimate');
         $timespent = $request -> input('timespent');
         $teamid = $request -> input('teamid');
@@ -93,10 +92,19 @@ class TaskController extends Controller
     public function show($id)
     {
         $task = DB::table('task')->where('id', $id)->get();
-		
 		return $task;
     }
 
+    /**
+     * Display functional requirements of specified task.
+     * 
+     * @param int $id
+     */
+    public function showReqs($id) 
+    {
+        $funcreqs = json_decode(DB::table('task')->where('id', $id)->value('funcreq'), true);
+        return $funcreqs;
+    }
 
     /**
      * Update the specified resource in storage.
@@ -111,9 +119,10 @@ class TaskController extends Controller
         $description = $request -> input('description');
         $priority = $request -> input('priority');
         $status = $request -> input('status');
-        $funcreq = $request -> input('funcreq');
+        $funcreq = json_encode($request->input('funcreq'));
         $estimate = $request -> input('estimate');
         $timespent = $request -> input('timespent');
+
         DB::table('task')
 			->where('id', $id)
 			->update(
@@ -139,7 +148,6 @@ class TaskController extends Controller
     public function destroy($id)
     {
         DB::table('task')->where('id','=',$id)->delete();
-		
     }
 	
 }

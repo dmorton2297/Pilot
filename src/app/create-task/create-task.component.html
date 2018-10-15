@@ -7,19 +7,19 @@
 
         <mat-card-content>
           <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-            <!-- Task name, description, and esimate-->
+            <!-- Task name, description, and esimate -->
             <mat-form-field> <input matInput type="text" formControlName="name" placeholder="Task Name" required> </mat-form-field>
             <mat-form-field> <input matInput type="text" formControlName="description" placeholder="Task Description" required> </mat-form-field>
             <mat-form-field> <input matInput type="number" formControlName="estimate" placeholder="Time estimate (hours)"> </mat-form-field>
-            <mat-form-field>
 
-            <!-- Priority level drop down box-->
-            <mat-select formControlName="priority" placeholder="Priority Level" required>
+            <!-- Priority level drop down box -->
+            <mat-form-field>
+            <mat-select formControlName="priority"  placeholder="Priority Level" required>
                     <mat-option *ngFor="let p of priorities" [value]="p">{{p}}</mat-option>
                 </mat-select>
             </mat-form-field> 
 
-            <!-- Assigned user drop down box-->
+            <!-- Assigned user drop down box -->
             <mat-form-field>
                    <mat-select formControlName="assignedUser" placeholder="Assignment" required> 
                         <mat-option *ngFor="let u of users" [value]="u">{{u}}</mat-option>
@@ -28,12 +28,12 @@
 
             <!-- Function requirement drop down box -->
             <mat-form-field>
-              <mat-select formControlName="funcreq" placeholder="Function Requirement" multiple> 
-                   <mat-option *ngFor="let f of req" [value]="f">{{f}}</mat-option>
+              <mat-select formControlName="funcreq" placeholder="Functional Requirements" multiple> 
+                   <mat-option *ngFor="let f of req" [value]="f">{{f.name}}</mat-option>
                </mat-select>  
             </mat-form-field> 
 
-          <!-- Acceptance Critera Section-->
+          <!-- Acceptance Critera Section -->
           <mat-card-header>
               <mat-card-title>
                   <h1>Acceptance Criteria</h1>
@@ -42,7 +42,7 @@
               <button mat-button (click)="addCriteria()" type="button">Add Criteria</button>
           </mat-card-header>
 
-            <!-- Displaying input boxes for critera-->
+            <!-- Displaying input boxes for critera -->
             <div formArrayName="criterian">
                 <div *ngFor="let address of criterian.controls; let i=index">
                     <!-- The repeated template -->
@@ -58,10 +58,4 @@
           </div>
         </form>
       </mat-card-content>
-      
-<!-- Debugging
-      <p>
-        Form Value: {{ taskForm.value | json }}
-      </p> -->
-
   </mat-card>

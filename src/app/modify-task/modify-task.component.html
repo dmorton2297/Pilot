@@ -1,55 +1,67 @@
-  <mat-card>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Modify Task</h1>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <!-- Task name, description, and esimate-->
+      <mat-form-field> <input matInput type="text" [(ngModel)]="name" formControlName="name" placeholder="Task Name" required> </mat-form-field>
+      <mat-form-field> <input matInput type="text" [(ngModel)]="description" formControlName="description" placeholder="Task Description" required> </mat-form-field>
+      <mat-form-field> <input matInput type="number" [(ngModel)]="estimate" formControlName="estimate" placeholder="Time estimate (hours)"> </mat-form-field>
+
+      <!-- Priority level drop down box-->
+      <mat-form-field>
+          <mat-select formControlName="priority" placeholder="Priority Level" required>
+              <mat-option *ngFor="let p of priorities" [value]="p">{{p}}</mat-option>
+          </mat-select>
+      </mat-form-field> 
+
+      <!-- Assigned user drop down box-->
+      <mat-form-field>
+             <mat-select formControlName="assignedUser" placeholder="Assignment" required> 
+                  <mat-option *ngFor="let u of users" [value]="u">{{u}}</mat-option>
+              </mat-select>  
+      </mat-form-field> 
+
+      <!-- Function requirement drop down box -->
+      <mat-form-field>
+        <mat-select formControlName="funcreq" [(ngModel)]="funcreq" type="text" placeholder="Function Requirement" multiple> 
+             <mat-option *ngFor="let f of selectedReqs" [value]="f">{{f.name}}</mat-option>
+             <mat-option *ngFor="let f of req" [value]="f">{{f.name}}</mat-option>
+         </mat-select>  
+      </mat-form-field> 
+
+    <!-- Acceptance Critera Section-->
     <mat-card-header>
-      <mat-card-title>
-        <h1>Modify a Task</h1>
-      </mat-card-title>
+        <mat-card-title>
+            <h1>Acceptance Criteria</h1>
+        </mat-card-title>
+        <div fxFlex></div>
+        <button mat-button (click)="addCriteria()" type="button">Add Criteria</button>
     </mat-card-header>
 
-    <mat-card-content>
-      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-        <!-- General Information -->
-        <mat-form-field> <input matInput type="text" formControlName="name" placeholder="Task Name" required> </mat-form-field>
-        <mat-form-field> <input matInput type="text" formControlName="desc" placeholder="Task Description" required> </mat-form-field>
-        <mat-form-field> <input matInput type="number" formControlName="estimation" placeholder="Time Estimation (hours)"> </mat-form-field>
-        <mat-form-field>
-          <mat-select formControlName="priority" placeholder="Priority Level" required>
-                <mat-option *ngFor="let p of priorities" [value]="p">{{p}}</mat-option>
-            </mat-select>
-        </mat-form-field> 
-
-        <mat-form-field>
-               <mat-select formControlName="assignedUser" placeholder="Assignment" required> 
-                    <mat-option *ngFor="let u of users" [value]="u">{{u}}</mat-option>
-                </mat-select>  
-        </mat-form-field> 
-
-      <!-- Acceptance Critera Section-->
-      <mat-card-header>
-          <mat-card-title>
-              <h1>Acceptance Criteria</h1>
-          </mat-card-title>
-          <div fxFlex></div>
-          <button mat-button (click)="addCriteria()" type="button">Add Criteria</button>
-      </mat-card-header>
-        <!-- Displaying input boxes for critera-->
-        <div formArrayName="criterian">
-            <div *ngFor="let address of criterian.controls; let i=index">
-                <!-- The repeated template -->
-                <mat-form-field> <input matInput type="text" [formControlName]="i"> </mat-form-field>
-            </div>
+      <!-- Displaying input boxes for critera-->
+      <div formArrayName="criterian">
+          <div *ngFor="let address of criterian.controls; let i=index">
+              <!-- The repeated template -->
+              <mat-form-field> <input matInput type="text" [formControlName]="i"> </mat-form-field>
+              <button mat-mini-fab color="primary" (click)="removeCriteria(i)" type="button">X</button>
           </div>
+        </div>
 
-      <!-- Submit and cancel buttons -->
-      <div class="button-row">
-            <button  mat-raised-button color="primary" [disabled]="!taskForm.valid" (clock)="onSubmit">Create Task</button>
-            <button  mat-raised-button color="primary" (click)="onCancel" type="button">Cancel</button>
-      </div>
-    </form>
-  </mat-card-content>
+    <!-- Submit and cancel buttons -->
+    <div class="button-row">
+          <button  mat-raised-button color="primary" [disabled]="!taskForm.valid" (click)="onSubmit">Modify</button>
+          <button  mat-raised-button color="primary" (click)="onDelete()" type="button">Delete</button>
+          <button  mat-raised-button color="primary" (click)="onCancel()" type="button">Cancel</button>
 
-  <!-- Debugging 
-  <p>
-    Form Value: {{ taskForm.value | json }}
-  </p> -->
+    </div>
+  </form>
+</mat-card-content>
+
+
 
 </mat-card>

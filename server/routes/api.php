@@ -18,10 +18,19 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::post('savetask', 'TaskController@store');
 Route::get('getusertasks/{userId}', 'TaskController@userIndex');
 Route::get('gettask/{id}', 'TaskController@show');
-Route::post('modifytask', 'TaskController@update');
 Route::post('changestatus', 'TaskController@changeStatus');
 Route::post('saveuser', 'UserController@store');
+Route::post('modifytask/{id}', 'TaskController@update');
+Route::get('deletetask/{id}', 'TaskController@destroy');
+Route::get('getSelectedReqs/{id}', 'TaskController@showReqs');
+Route::post('savereq', 'FunctionalRequirementController@store');
+Route::get('getfuncreqs/{id}', 'FunctionalRequirementController@teamIndex');
+Route::get('getuserid/{username}', 'UserController@getUserId');
+Route::post('savecriteria', 'CriteriaController@store');
+Route::post('newMessage/{id}', 'MessageController@store');
+
 

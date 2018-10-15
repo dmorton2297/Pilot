@@ -35,11 +35,20 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         //
         $name = $request -> input('name');
         $email = $request -> input('email');
         //if email already in database, don't add userProfile to db
+       // $test = DB::table('users')->where('email', $email)->get();
+        //if ($test) {
+         //   return;
+       // }
+       $test = $this -> getUserId($email);
+       if ($test != -1) {
+           return;
+       }
+
         $createdAt = Carbon::now()->toDateTimeString();
         $updatedAt = Carbon::now()->toDateTimeString();
         $verifiedAt = Carbon::now()->toDateTimeString();
@@ -55,6 +64,10 @@ class UserController extends Controller
                 'updated_at' => $updatedAt
             ]
             );
+
+
+
+        
     }
 
     /**
@@ -66,6 +79,15 @@ class UserController extends Controller
     public function show($id)
     {
         //
+
+    }
+
+    public function getUserId($email) {
+        $results = DB::select('select id from users where email = :email', ['email' => $email]);
+        if (!$results) {
+            return -1;
+        }
+        return $results;
     }
 
     /**

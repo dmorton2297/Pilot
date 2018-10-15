@@ -11,4 +11,5 @@ class Task extends Model
 	
     protected $table = 'Task';
 
+
 }
