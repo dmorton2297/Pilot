@@ -31,6 +31,7 @@ import { BacklogComponent } from './backlog/backlog.component';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular5-social-login";
 import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import { MainComponent } from './main/main.component';
+import { TeaminvitationsComponent } from './teaminvitations/teaminvitations.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -67,7 +68,8 @@ export function getGoogleConfigs() {
     ModifyTaskComponent,
     BacklogComponent,
     MainComponent,
-    FuncReqFormComponent
+    FuncReqFormComponent,
+    TeaminvitationsComponent
     ],
   imports: [
   BrowserModule,
