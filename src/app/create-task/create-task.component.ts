@@ -9,7 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {MatSnackBar} from '@angular/material';
 import { AuthService } from '../auth.service';
 
-
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
@@ -46,15 +45,25 @@ export class CreateTaskComponent {
     });
   }
 
-
+  /**
+   * Gets criterian for the view.
+   */
   get criterian() {
     return this.taskForm.get('criterian') as FormArray;
   }
 
+  /**
+   * Adds criteria from view to criterian rray.
+   */
   addCriteria() {
     this.criterian.push(this.fb.control(''));
   }
 
+  /**
+   * Removes criterian from index i.
+   * Ensures at least one line entry in view.
+   * @param i 
+   */
   removeCriteria(i: number) {
     if (this.criterian.length == 1) {
       this.criterian.removeAt(i);
@@ -64,12 +73,19 @@ export class CreateTaskComponent {
     this.criterian.removeAt(i);
   }
 
+  /**
+   * Removes empty criterian.
+   */
   cleanCriteria() {
     for (var i = 0; i < this.criterian.length; i++) {
       if (this.criterian[i] == "") {
         this.criterian.removeAt(i);
       }
     }
+  }
+
+  getMembers() {
+
   }
 
   onSubmit() {

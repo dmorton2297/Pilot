@@ -5,7 +5,7 @@ import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-modify-task',
@@ -99,6 +99,7 @@ export class ModifyTaskComponent {
     return this.taskForm.get('criterian') as FormArray;
   }
 
+  // TODO: Do I need this function.
   /**
    *  Adds criteria from view to criterian array.
    */
@@ -142,6 +143,10 @@ export class ModifyTaskComponent {
     } 
   }
 
+  getMembers() {
+
+  }
+
   onSubmit() {
     this.cleanCriteria();
     let request : Task = {
@@ -161,8 +166,8 @@ export class ModifyTaskComponent {
     this.http.post('http://localhost:8000/api/modifytask/' + this.taskId, request, this.taskId).subscribe();
     this.snackBar.open('Task modified', 'Ok', {
       duration: 3000
-      });
-    }
+    });
+  }
 
   onDelete() {
     if(!window.confirm('Are you sure you want to delete this task?')){
