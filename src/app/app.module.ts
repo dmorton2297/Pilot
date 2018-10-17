@@ -36,6 +36,7 @@ import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angul
 import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import { MainComponent } from './main/main.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
+import { ModifyTeamComponent } from './modify-team/modify-team.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -46,7 +47,8 @@ const appRoutes: Routes = [
   { path: 'scrum', component: ScrumBoardComponent },
   { path: 'modifytask/:id', component: ModifyTaskComponent },
   { path: 'funcreq', component: FuncReqFormComponent },
-  { path: 'createteam', component: CreateTeamComponent }
+  { path: 'createteam', component: CreateTeamComponent },
+  { path: 'modifyteam/:id', component: ModifyTeamComponent }
 ];
 
 export function getGoogleConfigs() {
@@ -74,7 +76,8 @@ export function getGoogleConfigs() {
     BacklogComponent,
     MainComponent,
     FuncReqFormComponent,
-    CreateTeamComponent
+    CreateTeamComponent,
+    ModifyTeamComponent
     ],
   imports: [
   BrowserModule,

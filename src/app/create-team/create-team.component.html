@@ -4,13 +4,11 @@
         <h1>Create New Team</h1>
       </mat-card-title>
     </mat-card-header>
-
     <mat-card-content>
       <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
-        <!-- Team name & team description -->
         <mat-form-field> <input matInput type="text" formControlName="name" [(ngModel)]="name" placeholder="Team Name" required> </mat-form-field>
         <mat-form-field> <input matInput type="text" formControlName="description" [(ngModel)]="description" placeholder="Team Description" required> </mat-form-field>
-        <mat-form-field> <input matInput type="text" formControlName="mess"  placeholder="Default Invitation Message"> </mat-form-field>
+        <mat-form-field> <input matInput type="text" formControlName="invitemsg" placeholder="Invitation Message"> </mat-form-field>
         <mat-form-field>
             <mat-select placeholder="Invite Users: " multiple> 
                  <mat-option *ngFor="let u of fillerusers" [value]="u">{{u}}</mat-option>
@@ -25,15 +23,13 @@
             <mat-button-toggle style="background-color: #00d2d3;" (click)="setColor('turquoise')" >Torquise</mat-button-toggle>
             <mat-button-toggle style="background-color: #54a0ff;" (click)="setColor('lblue')" >Light Blue</mat-button-toggle>
             <mat-button-toggle style="background-color: #2e86de;" (click)="setColor('dblue')" >Dark Blue</mat-button-toggle>
-            <mat-button-toggle style="background-color: #5f27cd;" (click)="setColor('purdue')" >Purple</mat-button-toggle>
+            <mat-button-toggle style="background-color: #5f27cd;" (click)="setColor('purple')" >Purple</mat-button-toggle>
             <mat-button-toggle style="background-color: #222f3e;" (click)="setColor('gray')" >Gray</mat-button-toggle>
         </mat-button-toggle-group>
-
-      <!-- Submit and cancel buttons -->
-      <div class="button-row" style="padding-top: 0.4cm">
+        <div class="button-row" style="padding-top: 0.4cm">
             <button  mat-raised-button color="primary" [disabled]="!teamForm.valid" (click)="onSubmit">Create Team</button>
             <button  mat-raised-button color="primary" (click)="onCancel()" type="button">Cancel</button>
-      </div>
+        </div>
     </form>
   </mat-card-content>  
 
@@ -43,5 +39,4 @@
   </p>
   -->
 
- 
 </mat-card>

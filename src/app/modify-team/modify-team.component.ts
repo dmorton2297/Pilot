@@ -8,12 +8,12 @@ import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-create-team',
-  templateUrl: './create-team.component.html',
-  styleUrls: ['./create-team.component.css']
+  selector: 'app-modify-team',
+  templateUrl: './modify-team.component.html',
+  styleUrls: ['./modify-team.component.css']
 })
 
-export class CreateTeamComponent{
+export class ModifyTeamComponent{
   teamForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -22,9 +22,21 @@ export class CreateTeamComponent{
       color: ['', Validators.required]
 });
 
+  teamId : string;
+  team: Team;
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
-    this.teamForm.get('invitemsg').setValue('I want you to join my team!');
-    console.log(this.teamForm);
+    this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
+
+    /* Getting team form values */
+    this.http.get('http://localhost:8000/api/getteam/' + this.teamId).subscribe((res) => {
+      this.team = res.json() as Team;
+      this.teamForm.patchValue({name: this.team[0].name});
+      this.teamForm.patchValue({description: this.team[0].description});
+      this.teamForm.patchValue({invitemsg: this.team[0].invitemsg});
+      this.teamForm.patchValue({color: this.team[0].color});
+    });  
+
+
   }
 
   setColor(c: string) {
@@ -44,12 +56,9 @@ export class CreateTeamComponent{
       invitemsg: this.teamForm.get('invitemsg').value as string,
       color: this.teamForm.get('color').value as string
     }
-    this.http.post('http://localhost:8000/api/createteam', request).subscribe((res) => {
-      console.log(res);
-    });
 
     // Send Invites
-    this.snackBar.open('Team Created', 'Ok', {
+    this.snackBar.open('Team Updated', 'Ok', {
       duration: 3000
     });
   }

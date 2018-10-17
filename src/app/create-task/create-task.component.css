@@ -6,3 +6,8 @@ mat-form-field {
 .button-row a {
   margin-right: 8px;
 }
+
+.myImg {
+    max-width: 20px;
+    max-height: 20px;
+}
