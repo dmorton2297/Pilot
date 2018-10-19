@@ -31,6 +31,10 @@ Route::post('savereq', 'FunctionalRequirementController@store');
 Route::get('getfuncreqs/{id}', 'FunctionalRequirementController@teamIndex');
 Route::get('getuserid/{username}', 'UserController@getUserId');
 Route::post('savecriteria', 'CriteriaController@store');
+Route::post('teamadd/{userid}/{teamid}', 'TeamController@add');
+Route::get('team/{teamid}', 'TeamController@index');
+Route::delete('teamremove/{userid}/{teamid}', 'TeamController@kick');
+
 
 
 
