@@ -21,6 +21,11 @@ class TeamController extends Controller
         return $tasks;
     }
 
+    public function userIndex($userId) {
+        $tasks = DB::table('team')->where('creatorId', $userId)->get();
+        return $tasks;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -33,12 +38,14 @@ class TeamController extends Controller
         $description = $request -> input('description');
         $invitemsg = $request -> input('invitemsg');
         $color = $request -> input('color');
+        $creatorId = $request -> input('creatorId');
 
         DB::table('team')->insert(
             ['name' => $name,
              'description' => $description,
              'color' => $color,
              'invitemsg' => $invitemsg,
+             'creatorId' => $creatorId,
              'created_at' => Carbon::now()->toDateTimeString(),
              'updated_at' => Carbon::now()->toDateTimeString()
             ]

@@ -42,7 +42,8 @@ export class CreateTeamComponent{
       name: this.teamForm.get('name').value as string,
       description: this.teamForm.get('description').value as string,
       invitemsg: this.teamForm.get('invitemsg').value as string,
-      color: this.teamForm.get('color').value as string
+      color: this.teamForm.get('color').value as string, 
+      creatorId: this.auth.getUserId()
     }
     this.http.post('http://localhost:8000/api/createteam', request).subscribe((res) => {
       console.log(res);
@@ -68,4 +69,5 @@ interface Team {
   description: string,
   invitemsg: string,
   color: any
+  creatorId: number
 }

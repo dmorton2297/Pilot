@@ -18,6 +18,7 @@ class CreateTeamTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('invitemsg');
+            $table->integer('creatorId');
             $table->string('color');
             $table->timestamps();
         });

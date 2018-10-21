@@ -34,10 +34,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { BacklogComponent } from './backlog/backlog.component';
 
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular5-social-login";
-import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import { MainComponent } from './main/main.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
 import { ModifyTeamComponent } from './modify-team/modify-team.component';
+import { TeamsComponent } from './teams/teams.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -49,7 +49,8 @@ const appRoutes: Routes = [
   { path: 'modifytask/:id', component: ModifyTaskComponent, canActivate: [AuthService] },
   { path: 'funcreq', component: FuncReqFormComponent, canActivate: [AuthService] },
   { path: 'createteam', component: CreateTeamComponent, canActivate: [AuthService] },
-  { path: 'modifyteam/:id', component: ModifyTeamComponent, canActivate: [AuthService] }
+  { path: 'modifyteam/:id', component: ModifyTeamComponent, canActivate: [AuthService] },
+  { path: 'teams', component: TeamsComponent, canActivate: [AuthService]}   
 ];
 
 export function getGoogleConfigs() {
@@ -78,7 +79,8 @@ export function getGoogleConfigs() {
     MainComponent,
     FuncReqFormComponent,
     CreateTeamComponent,
-    ModifyTeamComponent
+    ModifyTeamComponent,
+    TeamsComponent
     ],
   imports: [
   BrowserModule,
