@@ -45,11 +45,11 @@ const appRoutes: Routes = [
   { path: 'createtask', component: CreateTaskComponent, canActivate: [AuthService]  },
   { path: 'backlog', component: MainComponent, canActivate: [AuthService]  },
 
-  { path: 'scrum', component: ScrumBoardComponent },
-  { path: 'modifytask/:id', component: ModifyTaskComponent },
-  { path: 'funcreq', component: FuncReqFormComponent },
-  { path: 'createteam', component: CreateTeamComponent },
-  { path: 'modifyteam/:id', component: ModifyTeamComponent }
+  { path: 'scrum', component: ScrumBoardComponent, canActivate: [AuthService] },
+  { path: 'modifytask/:id', component: ModifyTaskComponent, canActivate: [AuthService] },
+  { path: 'funcreq', component: FuncReqFormComponent, canActivate: [AuthService] },
+  { path: 'createteam', component: CreateTeamComponent, canActivate: [AuthService] },
+  { path: 'modifyteam/:id', component: ModifyTeamComponent, canActivate: [AuthService] }
 ];
 
 export function getGoogleConfigs() {
