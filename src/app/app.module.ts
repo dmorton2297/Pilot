@@ -24,7 +24,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { FuncReqFormComponent } from './func-req-form/func-req-form.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-
+import { AuthService } from './auth.service';
 
 import { BacklogComponent } from './backlog/backlog.component';
 
@@ -35,12 +35,12 @@ import { MainComponent } from './main/main.component';
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'createtask', component: CreateTaskComponent },
-  { path: 'backlog', component: MainComponent },
+  { path: 'createtask', component: CreateTaskComponent, canActivate: [AuthService]  },
+  { path: 'backlog', component: MainComponent, canActivate: [AuthService]  },
 
-  { path: 'scrum', component: ScrumBoardComponent },
-  { path: 'modifytask/:id', component: ModifyTaskComponent },
-  { path: 'funcreq', component: FuncReqFormComponent }
+  { path: 'scrum', component: ScrumBoardComponent, canActivate: [AuthService]  },
+  { path: 'modifytask/:id', component: ModifyTaskComponent, canActivate: [AuthService]  },
+  { path: 'funcreq', component: FuncReqFormComponent, canActivate: [AuthService]  }
 ];
 
 export function getGoogleConfigs() {
@@ -101,6 +101,7 @@ export function getGoogleConfigs() {
     )
   ],
   providers: [
+    AuthService,
     {
       provide: AuthServiceConfig,
       useFactory: getGoogleConfigs

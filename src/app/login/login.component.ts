@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
       this.auth.setName(profile.getName());
       this.auth.setEmail(profile.getEmail());
       this.auth.setUserId(id);
+      this.auth.setLoggedIn();
       this.router.navigateByUrl('/');
       });
     });
