@@ -20,17 +20,24 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { FuncReqFormComponent } from './func-req-form/func-req-form.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthService } from './auth.service';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatExpansionModule} from '@angular/material/expansion';
+
+
+
 
 import { BacklogComponent } from './backlog/backlog.component';
 
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular5-social-login";
 import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import { MainComponent } from './main/main.component';
+import { CreateTeamComponent } from './create-team/create-team.component';
+import { ModifyTeamComponent } from './modify-team/modify-team.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -38,9 +45,11 @@ const appRoutes: Routes = [
   { path: 'createtask', component: CreateTaskComponent, canActivate: [AuthService]  },
   { path: 'backlog', component: MainComponent, canActivate: [AuthService]  },
 
-  { path: 'scrum', component: ScrumBoardComponent, canActivate: [AuthService]  },
-  { path: 'modifytask/:id', component: ModifyTaskComponent, canActivate: [AuthService]  },
-  { path: 'funcreq', component: FuncReqFormComponent, canActivate: [AuthService]  }
+  { path: 'scrum', component: ScrumBoardComponent },
+  { path: 'modifytask/:id', component: ModifyTaskComponent },
+  { path: 'funcreq', component: FuncReqFormComponent },
+  { path: 'createteam', component: CreateTeamComponent },
+  { path: 'modifyteam/:id', component: ModifyTeamComponent }
 ];
 
 export function getGoogleConfigs() {
@@ -67,7 +76,9 @@ export function getGoogleConfigs() {
     ModifyTaskComponent,
     BacklogComponent,
     MainComponent,
-    FuncReqFormComponent
+    FuncReqFormComponent,
+    CreateTeamComponent,
+    ModifyTeamComponent
     ],
   imports: [
   BrowserModule,
@@ -80,6 +91,8 @@ export function getGoogleConfigs() {
   MatSelectModule,
   MatFormFieldModule,
   MatToolbarModule,
+  MatButtonToggleModule,
+  MatExpansionModule,
   
   MatTableModule,
   SocialLoginModule,

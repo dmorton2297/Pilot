@@ -7,21 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-/*
-$table->increments('id');
-            $table->string('description');
-            $table->string('body');
-            $table->unsignedInteger('taskid');
-            $table->foreign('taskid')->references('id')->on('task')
-            ->onDelete('cascade');
-            $table->timestamps();
 
-
-
-*/
-
-
-class TaskController extends Controller
+class TeamController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,18 +17,8 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $acriteria = DB::table('acriteria')->get();
-        return $acriteria;
-    }
-
-    /**
-     * Display all tasks under a specified user.
-     *
-     * @param  int  $userId
-     * @return \Illuminate\Http\Response
-     */
-    public function userIndex($userId) {
- 
+        $tasks = DB::table('team')->get();
+        return $tasks;
     }
 
     /**
@@ -52,20 +29,22 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $name = $request -> input('name');
         $description = $request -> input('description');
-        $body = $request -> input('body');
-        $taskid = $request -> input('taskid');
+        $invitemsg = $request -> input('invitemsg');
+        $color = $request -> input('color');
 
-        DB::table('acriteria')->insert(
-            ['description' => $description,
-             'body' => $body,
-             'taskid' => $taskid,
+        DB::table('team')->insert(
+            ['name' => $name,
+             'description' => $description,
+             'color' => $color,
+             'invitemsg' => $invitemsg,
              'created_at' => Carbon::now()->toDateTimeString(),
              'updated_at' => Carbon::now()->toDateTimeString()
             ]
         );
 
-        return $description;
+        return $name;
     }
 
     /**
@@ -76,12 +55,10 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $acriteria = DB::table('acriteria')->where('id', $id)->get();
-		
-		return $acriteria;
+        $team = DB::table('team')->where('id', $id)->get();
+		return $team;
     }
 
-  
     /**
      * Update the specified resource in storage.
      *
@@ -91,7 +68,22 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-		//
+		$name = $request -> input('name');
+        $description = $request -> input('description');
+        $invitemsg = $request -> input('invitemsg');
+        $color = $request -> input('color');
+
+        DB::table('team')
+			->where('id', $id)
+			->update(
+			['name' => $name,
+             'description' => $description,
+             'invitemsg' => $invitemsg,
+             'color' => $color,
+             'updated_at' => Carbon::now()->toDateTimeString()
+			]);
+			
+		return $name;
     }
 
     /**
@@ -102,7 +94,7 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('acriteria')->where('id','=',$id)->delete();
+        DB::table('team')->where('id','=',$id)->delete();
     }
 	
 }

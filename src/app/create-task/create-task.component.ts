@@ -5,10 +5,9 @@ import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import {MatSnackBar} from '@angular/material';
 import { AuthService } from '../auth.service';
-
-
 
 @Component({
   selector: 'app-create-task',
@@ -46,15 +45,25 @@ export class CreateTaskComponent {
     });
   }
 
-
+  /**
+   * Gets criterian for the view.
+   */
   get criterian() {
     return this.taskForm.get('criterian') as FormArray;
   }
 
+  /**
+   * Adds criteria from view to criterian rray.
+   */
   addCriteria() {
     this.criterian.push(this.fb.control(''));
   }
 
+  /**
+   * Removes criterian from index i.
+   * Ensures at least one line entry in view.
+   * @param i 
+   */
   removeCriteria(i: number) {
     if (this.criterian.length == 1) {
       this.criterian.removeAt(i);
@@ -64,32 +73,43 @@ export class CreateTaskComponent {
     this.criterian.removeAt(i);
   }
 
-  onSubmit() {
+  /**
+   * Removes empty criterian.
+   */
+  cleanCriteria() {
     for (var i = 0; i < this.criterian.length; i++) {
-      if (this.criterian[i] == '') {
+      if (this.criterian[i] == "") {
         this.criterian.removeAt(i);
       }
     }
+  }
+
+  getMembers() {
+
+  }
+
+  onSubmit() {
+    this.cleanCriteria();
 
     let request : TaskRequest = {
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
       priority: this.taskForm.get('priority').value as number,
       status: 0,
-      funcreq: 0,
+      funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
-      creatorid: this.auth.id,
+      creatorid: 0, //this.auth.id,
       teamid: 0,
-      assigneduserid: 0
+      assigneduserid: 0,
+      criterian: this.taskForm.get('criterian').value,
     }
 
     this.http.post('http://localhost:8000/api/savetask', request).subscribe((res) => {
       console.log(res);
     });
 
-    /** *************** */
-    this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
+    //this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
 
     this.snackBar.open('Task created', 'Ok', {
       duration: 3000
@@ -106,11 +126,6 @@ export class CreateTaskComponent {
   }
 }
 
-interface Criteria {
-  description: string,
-  body: string,
-  taskid: number
-}
 
 interface FunctionalRequirement {
   name: string,
@@ -128,5 +143,6 @@ interface TaskRequest {
   timespent: number,
   teamid: number,
   creatorid: number,
-  assigneduserid: number
+  assigneduserid: number,
+  criterian: any
 }

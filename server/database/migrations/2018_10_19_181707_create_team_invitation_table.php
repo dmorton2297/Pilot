@@ -19,9 +19,9 @@ class CreateTeamInvitationTable extends Migration
 			$table->unsignedInteger('recipientid');
             $table->unsignedInteger('teamid');
 			
-			table->foreign('senderid')->references('id')->on('users')
+			$table->foreign('senderid')->references('id')->on('users')
             ->onDelete('cascade');
-			table->foreign('recipientid')->references('id')->on('users')
+			$table->foreign('recipientid')->references('id')->on('users')
             ->onDelete('cascade');
             $table->foreign('teamid')->references('id')->on('team')
             ->onDelete('cascade');
