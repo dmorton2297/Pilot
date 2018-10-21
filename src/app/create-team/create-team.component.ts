@@ -60,7 +60,7 @@ export class CreateTeamComponent{
       duration: 3000
     });
     this.teamForm.reset();
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/teams');
   }     
 }
 

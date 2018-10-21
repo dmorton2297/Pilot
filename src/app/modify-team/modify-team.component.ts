@@ -64,11 +64,11 @@ export class ModifyTeamComponent{
   }
 
   onCancel() {
-    this.snackBar.open('Team Creation Canceled', 'Ok', {
+    this.snackBar.open('Team Modification Canceled', 'Ok', {
       duration: 3000
     });
     this.teamForm.reset();
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/teams');
   }     
 }
 
