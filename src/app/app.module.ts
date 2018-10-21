@@ -38,6 +38,7 @@ import { MainComponent } from './main/main.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
 import { ModifyTeamComponent } from './modify-team/modify-team.component';
 import { TeamsComponent } from './teams/teams.component';
+import { ViewTeamComponent } from './view-team/view-team.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -50,7 +51,8 @@ const appRoutes: Routes = [
   { path: 'funcreq', component: FuncReqFormComponent, canActivate: [AuthService] },
   { path: 'createteam', component: CreateTeamComponent, canActivate: [AuthService] },
   { path: 'modifyteam/:id', component: ModifyTeamComponent, canActivate: [AuthService] },
-  { path: 'teams', component: TeamsComponent, canActivate: [AuthService]}   
+  { path: 'teams', component: TeamsComponent, canActivate: [AuthService]},
+  { path: 'viewteam/:id', component: ViewTeamComponent, canActivate: [AuthService]}   
 ];
 
 export function getGoogleConfigs() {
@@ -80,7 +82,8 @@ export function getGoogleConfigs() {
     FuncReqFormComponent,
     CreateTeamComponent,
     ModifyTeamComponent,
-    TeamsComponent
+    TeamsComponent,
+    ViewTeamComponent
     ],
   imports: [
   BrowserModule,
