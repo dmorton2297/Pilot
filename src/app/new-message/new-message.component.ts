@@ -47,7 +47,7 @@ export class NewMessageComponent {
   
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
     this.sender = this.auth.getUserId();
-    this.http.get('http://localhost:8000/getallusers').subscribe((res) => {
+    this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
       this.users = res.json() as User[];
     });
     for (let i = 0; i < this.users.length; i++) {
