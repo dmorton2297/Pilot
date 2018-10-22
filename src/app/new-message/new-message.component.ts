@@ -87,9 +87,11 @@ export class NewMessageComponent {
     this.router.navigateByUrl('/');
   }
 
-  private filterUsers(value: string): User[] {
-    const name = value.toLowerCase();
-    return this.users.filter(user => user.name.toLowerCase().indexOf(name) === 0);
+  private filterUsers(value: String): User[] {
+    if (value != undefined) {
+      const name = value.toLowerCase();
+      return this.users.filter(user => user.name.toLowerCase().indexOf(name) === 0);
+    }
   }
 
 

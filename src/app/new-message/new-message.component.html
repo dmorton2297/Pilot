@@ -8,17 +8,15 @@
   <mat-card-content>
     <form [formGroup]="newMessage" (ngSubmit)="onSubmit()">
       <!-- Field for Recipient of Message -->
-      <ng-container>
         <mat-form-field>
           <input type="text" matInput placeholder="Username" aria-label="User" formControlName="receiver" [formControl]="messageForm" [matAutocomplete]="auto"
             placeholder="Recipient Name">
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let user of filteredUsers | async" [value]="filteredUsers.name">
-              {{user}}
+            <mat-option *ngFor="let user of filteredUsers | async" [value]="users.name">
+              {{user.name}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-      </ng-container>
 
       <!-- Field for Message Content -->
       <mat-form-field>
