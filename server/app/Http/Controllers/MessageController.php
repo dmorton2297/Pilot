@@ -18,10 +18,11 @@ class MessageController extends Controller
     {   
         $sender = $request -> input('sender');
         $receiver = $request -> input('receiver');
-        $id = $request -> input('id');
+        //$id = $request -> input('id');
         $message = $request -> input('message');
         //how to get the team user is on? 
-        $team = 0;
+        //pull team assignments, look up team id from user id
+        $team = 1;
 
         $createdAt = Carbon::now()->toDateTimeString();
         $updatedAt = Carbon::now()->toDateTimeString();
@@ -30,7 +31,6 @@ class MessageController extends Controller
 
         DB::table('message')->insert(
             [
-                'id'=> $id,
                 'message'=> $message,
                 'sender'=> $sender,
                 'receiver'=> $receiver,

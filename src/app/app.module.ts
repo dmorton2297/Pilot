@@ -17,6 +17,7 @@ import { ModifyTaskComponent } from './modify-task/modify-task.component';
 import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatAutocompleteModule} from '@angular/material/autocomplete'; 
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -74,9 +75,11 @@ export function getGoogleConfigs() {
   imports: [
   BrowserModule,
   HttpModule,
+  MatAutocompleteModule,
   MatCardModule,
   MatSnackBarModule,
-
+  ReactiveFormsModule,
+  FormsModule,
   MatTabsModule,
   MatButtonModule,
   MatSelectModule,
@@ -94,9 +97,7 @@ export function getGoogleConfigs() {
   MatSelectModule,
   MatButtonModule,
   MatListModule,
-  FormsModule,
   MatIconModule,
-  ReactiveFormsModule,
   RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
