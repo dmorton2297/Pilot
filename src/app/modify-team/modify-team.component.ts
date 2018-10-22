@@ -35,8 +35,6 @@ export class ModifyTeamComponent{
       this.teamForm.patchValue({invitemsg: this.team[0].invitemsg});
       this.teamForm.patchValue({color: this.team[0].color});
     });  
-
-
   }
 
   setColor(c: string) {

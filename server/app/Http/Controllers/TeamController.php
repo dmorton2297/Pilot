@@ -17,8 +17,14 @@ class TeamController extends Controller
      */
     public function index(Request $request)
     {
-        $tasks = DB::table('team')->get();
-        return $tasks;
+        $teams = DB::table('team')->get();
+        return $teams;
+    }
+
+    public function indexName($name)
+    {
+        $team = DB::table('team')->where('name', '=', $name)->get();
+        return $team;
     }
 
     /**

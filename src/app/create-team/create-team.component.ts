@@ -44,6 +44,15 @@ export class CreateTeamComponent{
       invitemsg: this.teamForm.get('invitemsg').value as string,
       color: this.teamForm.get('color').value as string
     }
+
+    // TODO: Check for unique team name
+    this.http.get('http://localhost:8000/api/findteam/' + this.teamForm.get('name').value as string).subscribe((res) => {
+      if (res != null) {
+        console.log("Team Found");
+        return;
+      }
+    });
+
     this.http.post('http://localhost:8000/api/createteam', request).subscribe((res) => {
       console.log(res);
     });

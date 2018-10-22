@@ -53,7 +53,7 @@ export class CreateTaskComponent {
   }
 
   /**
-   * Adds criteria from view to criterian rray.
+   * Adds criteria from view to criterian array.
    */
   addCriteria() {
     this.criterian.push(this.fb.control(''));
