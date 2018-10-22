@@ -57,8 +57,7 @@ export class NewMessageComponent {
     this.filteredUsers = this.messageForm.valueChanges
       .pipe(
         startWith(''),
-        map(user => user ? this.filterUsers(user.name) 
-        : this.users.slice())
+        map(user => user ? this.filterUsers(user) : this.users.slice())
       );
       
   }
@@ -87,7 +86,7 @@ export class NewMessageComponent {
     this.router.navigateByUrl('/');
   }
 
-  private filterUsers(value: String): User[] {
+  private filterUsers(value: string): User[] {
     if (value != undefined) {
       const name = value.toLowerCase();
       return this.users.filter(user => user.name.toLowerCase().indexOf(name) === 0);
