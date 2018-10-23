@@ -42,7 +42,8 @@ export class CreateTeamComponent{
       name: this.teamForm.get('name').value as string,
       description: this.teamForm.get('description').value as string,
       invitemsg: this.teamForm.get('invitemsg').value as string,
-      color: this.teamForm.get('color').value as string
+      color: this.teamForm.get('color').value as string, 
+      creatorId: this.auth.getUserId()
     }
 
     // TODO: Check for unique team name
@@ -68,7 +69,7 @@ export class CreateTeamComponent{
       duration: 3000
     });
     this.teamForm.reset();
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/teams');
   }     
 }
 
@@ -77,4 +78,5 @@ interface Team {
   description: string,
   invitemsg: string,
   color: any
+  creatorId: number
 }

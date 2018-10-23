@@ -99,7 +99,7 @@ export class CreateTaskComponent {
       funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
-      creatorid: 0, //this.auth.id,
+      creatorid: this.auth.id,
       teamid: 0,
       assigneduserid: 0,
       criterian: this.taskForm.get('criterian').value,
@@ -114,6 +114,8 @@ export class CreateTaskComponent {
     this.snackBar.open('Task created', 'Ok', {
       duration: 3000
     });
+    this.router.navigateByUrl('/');
+
   }
 
   onCancel() {

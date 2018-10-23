@@ -23,7 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { FuncReqFormComponent } from './func-req-form/func-req-form.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { AuthService } from './auth.service';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {MatExpansionModule} from '@angular/material/expansion';
 
@@ -33,22 +34,25 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { BacklogComponent } from './backlog/backlog.component';
 
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular5-social-login";
-import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import { MainComponent } from './main/main.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
 import { ModifyTeamComponent } from './modify-team/modify-team.component';
+import { TeamsComponent } from './teams/teams.component';
+import { ViewTeamComponent } from './view-team/view-team.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'createtask', component: CreateTaskComponent },
-  { path: 'backlog', component: MainComponent },
+  { path: 'createtask', component: CreateTaskComponent, canActivate: [AuthService]  },
+  { path: 'backlog', component: MainComponent, canActivate: [AuthService]  },
 
-  { path: 'scrum', component: ScrumBoardComponent },
-  { path: 'modifytask/:id', component: ModifyTaskComponent },
-  { path: 'funcreq', component: FuncReqFormComponent },
-  { path: 'createteam', component: CreateTeamComponent },
-  { path: 'modifyteam/:id', component: ModifyTeamComponent }
+  { path: 'scrum', component: ScrumBoardComponent, canActivate: [AuthService] },
+  { path: 'modifytask/:id', component: ModifyTaskComponent, canActivate: [AuthService] },
+  { path: 'funcreq', component: FuncReqFormComponent, canActivate: [AuthService] },
+  { path: 'createteam', component: CreateTeamComponent, canActivate: [AuthService] },
+  { path: 'modifyteam/:id', component: ModifyTeamComponent, canActivate: [AuthService] },
+  { path: 'teams', component: TeamsComponent, canActivate: [AuthService]},
+  { path: 'viewteam/:id', component: ViewTeamComponent, canActivate: [AuthService]}   
 ];
 
 export function getGoogleConfigs() {
@@ -77,7 +81,9 @@ export function getGoogleConfigs() {
     MainComponent,
     FuncReqFormComponent,
     CreateTeamComponent,
-    ModifyTeamComponent
+    ModifyTeamComponent,
+    TeamsComponent,
+    ViewTeamComponent
     ],
   imports: [
   BrowserModule,
@@ -113,6 +119,7 @@ export function getGoogleConfigs() {
     )
   ],
   providers: [
+    AuthService,
     {
       provide: AuthServiceConfig,
       useFactory: getGoogleConfigs

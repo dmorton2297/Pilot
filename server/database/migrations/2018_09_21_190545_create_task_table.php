@@ -24,6 +24,7 @@ class CreateTaskTable extends Migration
             $table->integer('timespent');
             $table->integer('teamid')->nullable();
             $table->integer('creatorid');
+            $table->text('criterian');
             $table->integer('assigneduserid')->nullable();
             $table->timestamps();
         });

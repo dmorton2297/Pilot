@@ -167,6 +167,7 @@ export class ModifyTaskComponent {
     this.snackBar.open('Task modified', 'Ok', {
       duration: 3000
     });
+    this.router.navigateByUrl('/');
   }
 
   onDelete() {
@@ -175,6 +176,10 @@ export class ModifyTaskComponent {
     } 
     this.http.post('http://localhost:8000/api/deletetask/' + this.taskId, this.taskId).subscribe();
     this.taskForm.reset();
+    this.snackBar.open('Task deleted', 'Ok', {
+      duration: 3000
+    });
+    this.router.navigateByUrl('/');
   }
 
   onCancel() {
