@@ -34,6 +34,7 @@ Route::get('getcriterian/{id}', 'TaskController@showCriterian');
 Route::post('createteam', 'TeamController@store');
 Route::get('getteam/{id}', 'TeamController@show');
 Route::get('getusersteams/{userId}', 'TeamController@userIndex');
+Route::post('modifyteam/{id}', 'TeamController@update');
 
 
 
