@@ -19,7 +19,6 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-
         $tasks = DB::table('task')->get();
         return $tasks;
     }
@@ -33,7 +32,6 @@ class TaskController extends Controller
     public function userIndex($userId) 
     {
         $tasks = DB::table('task')->where('creatorid', $userId)->get();
-
         return $tasks;
     }
 

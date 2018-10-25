@@ -21,10 +21,11 @@ class TeamController extends Controller
         return $teams;
     }
 
-    public function indexName($name)
+    public function nameIndex($name)
     {
-        $team = DB::table('team')->where('name', '=', $name)->get();
-        return $team;
+        $team = DB::table('team')->where('name', $name)->get();
+        if ($team->isEmpty()) return 1;
+        return 0;
     }
 
     public function userIndex($userId) {

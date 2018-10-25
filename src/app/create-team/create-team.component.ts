@@ -46,21 +46,20 @@ export class CreateTeamComponent{
       creatorId: this.auth.getUserId()
     }
 
-    // TODO: Check for unique team name
-    this.http.get('http://localhost:8000/api/findteam/' + this.teamForm.get('name').value as string).subscribe((res) => {
-      if (res != null) {
-        console.log("Team Found");
+    this.http.get('http://localhost:8000/api/findteam/' + this.teamForm.get('name').value).subscribe((res) => {
+      if (res.json() == "0") {
+        this.snackBar.open('Team name already in-use!', 'Ok', {
+          duration: 3000
+        });
         return;
+      } else {
+        this.http.post('http://localhost:8000/api/createteam', request).subscribe((res) => {
+          console.log(res);
+          this.snackBar.open('Team Created', 'Ok', {
+            duration: 3000
+          });
+        });
       }
-    });
-
-    this.http.post('http://localhost:8000/api/createteam', request).subscribe((res) => {
-      console.log(res);
-    });
-
-    // Send Invites
-    this.snackBar.open('Team Created', 'Ok', {
-      duration: 3000
     });
   }
 
