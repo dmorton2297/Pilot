@@ -39,6 +39,7 @@ import { CreateTeamComponent } from './create-team/create-team.component';
 import { ModifyTeamComponent } from './modify-team/modify-team.component';
 import { TeamsComponent } from './teams/teams.component';
 import { ViewTeamComponent } from './view-team/view-team.component';
+import { TeaminvitationsComponent } from './teaminvitations/teaminvitations.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -83,7 +84,8 @@ export function getGoogleConfigs() {
     CreateTeamComponent,
     ModifyTeamComponent,
     TeamsComponent,
-    ViewTeamComponent
+    ViewTeamComponent,
+    TeaminvitationsComponent,
     ],
   imports: [
   BrowserModule,
