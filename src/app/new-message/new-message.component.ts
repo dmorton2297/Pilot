@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
@@ -7,7 +7,6 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../auth.service';
-import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -50,10 +49,6 @@ export class NewMessageComponent {
     this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
       this.users = res.json() as User[];
     });
-    for (let i = 0; i < this.users.length; i++) {
-        this.usernames[i] = this.users[i].name;
-        this.userids[i] = this.users[i].id;
-    }
     this.filteredUsers = this.messageForm.valueChanges
       .pipe(
         startWith(''),
@@ -67,7 +62,7 @@ export class NewMessageComponent {
     //receiver and sender given by name or email or uID?
     //get receiving user's name and find his id
     //this.msg = this.newMessage.get('message').value as string;
-    
+    alert(this.newMessage.get('receiver'))
     let request : NewMessage = {
       receiver: this.newMessage.get('receiver').value as string,
       message: this.newMessage.get('message').value as string,

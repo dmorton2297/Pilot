@@ -33,6 +33,7 @@ import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angul
 import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import { MainComponent } from './main/main.component';
 import { NewMessageComponent } from './new-message/new-message.component';
+import { UserMessagesComponent } from './user-messages/user-messages.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -70,7 +71,8 @@ export function getGoogleConfigs() {
     BacklogComponent,
     MainComponent,
     FuncReqFormComponent,
-    NewMessageComponent
+    NewMessageComponent,
+    UserMessagesComponent
     ],
   imports: [
   BrowserModule,
