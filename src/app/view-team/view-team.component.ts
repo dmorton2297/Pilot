@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Http } from '@angular/http';
 
@@ -13,9 +13,8 @@ export class ViewTeamComponent implements OnInit {
   public team: Team;
   public teamName: String = "";
   public teamDescription: String = "";
-
   
-  public users: User[] = [];
+  public users: User;
   
   @Output() signalEvent = new EventEmitter<string>();
 
