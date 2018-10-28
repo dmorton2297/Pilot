@@ -41,6 +41,8 @@ Route::get('teammembers/{teamid}', 'TeamAssignmentController@index');
 Route::get('teamremove/{userid}/{teamid}', 'TeamAssignmentController@kick');
 Route::get('teaminvites/{userid}', 'TeamInvitationController@index');
 Route::get('deleteinvite/{id}', 'TeamInvitationController@remove');
+Route::post('inviteuser', 'TeamInvitationController@invite');
+Route::get('allsentinvites/{id}', 'TeamInvitationController@detailedUserIndex');
 
 
 

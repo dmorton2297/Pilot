@@ -84,7 +84,7 @@ export class CreateTaskComponent {
     }
   }
 
-  getMembers() {
+  getMembers() { 
 
   }
 

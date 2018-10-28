@@ -32,7 +32,7 @@ export class ViewTeamComponent implements OnInit {
   }
 
   onInviteUsers() {
-    this.router.navigateByUrl('/inviteToTeam/' + this.teamId + '/' + this.teamName);
+    this.router.navigateByUrl('/inviteToTeam/' + this.teamId);
   }
 
 }

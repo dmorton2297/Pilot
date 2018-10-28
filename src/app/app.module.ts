@@ -55,7 +55,7 @@ const appRoutes: Routes = [
   { path: 'modifyteam/:id', component: ModifyTeamComponent, canActivate: [AuthService] },
   { path: 'teams', component: TeamsComponent, canActivate: [AuthService]},
   { path: 'viewteam/:id', component: ViewTeamComponent, canActivate: [AuthService]},
-  { path: 'inviteToTeam/:id/:name', component: InviteToTeamComponent, canActivate: [AuthService]} 
+  { path: 'inviteToTeam/:teamid', component: InviteToTeamComponent, canActivate: [AuthService]} 
 ];
 
 export function getGoogleConfigs() {

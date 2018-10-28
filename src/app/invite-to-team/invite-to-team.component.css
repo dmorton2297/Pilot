@@ -6,3 +6,11 @@ mat-form-field {
   .button-row a {
     margin-right: 8px;
   }
+
+mat-card {
+  width: 100%;
+}
+
+table {
+  width: 80%;
+}
