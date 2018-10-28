@@ -13,6 +13,9 @@ export class ViewTeamComponent implements OnInit {
   public team: Team;
   public teamName: String = "";
   public teamDescription: String = "";
+  
+  public assignments: Assignment[] = [];
+  public users: Users[] = [];
 
 
   constructor(private router: Router, private http: Http, private activatedRoute: ActivatedRoute) {
@@ -20,10 +23,14 @@ export class ViewTeamComponent implements OnInit {
     this.http.get('http://localhost:8000/api/getteam/' + this.teamId).subscribe((res)=>{
       this.team = res.json() as Team;
       this.team = this.team[0];
-      this.teamName = this.team.name;
+	  this.teamName = this.team.name;
       this.teamDescription = this.team.description;
       console.log(this.team.name);
     });
+	this.http.get('http://localhost:8000/api/teammembers/' + this.teamId).subscribe((res) =>{
+		
+		
+	}
   }
 
   ngOnInit() {
@@ -31,8 +38,14 @@ export class ViewTeamComponent implements OnInit {
 
 }
 
-interface Team {
 
+  onInviteUsers() {
+    // navigate to invite users form
+  }
+
+interface Team {
+	
+  id: number,
   name: String,
   description: String,
   invitemsg: String,
@@ -40,3 +53,10 @@ interface Team {
   creatorId: number
 
 }
+
+interface User {
+	id: number,
+	name: String,
+	email: String,
+}
+	
