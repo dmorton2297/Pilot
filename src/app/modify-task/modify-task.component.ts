@@ -29,7 +29,7 @@ export class ModifyTaskComponent {
       ])
 });
 
-  public users : string[] = ['John', 'Sarah', 'Matt']; 
+  public users : User[];
   public priorities : string[] = ['1', '2', '3'];
   public task : Task;
   public req : FunctionalRequirement[];
@@ -75,6 +75,30 @@ export class ModifyTaskComponent {
 
       this.removeDuplicate();
       this.cleanCriteria();
+    });
+
+    this.getUsers();
+ }
+
+  getSelectedReq() {
+
+  } 
+
+  getAllReq() {
+
+  }
+
+  getCriterion() {
+
+  }
+
+  getSelectedRequirment() {
+
+  }
+
+  getUsers() {
+    this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
+      this.users = res.json() as User[];
     });
   }
 
@@ -185,6 +209,11 @@ export class ModifyTaskComponent {
   onCancel() {
     this.router.navigateByUrl('/backlog');
   }
+}
+
+interface User {
+  id: number,
+  name: string
 }
 
 interface FunctionalRequirement {

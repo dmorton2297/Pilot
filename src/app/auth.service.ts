@@ -13,8 +13,6 @@ export class AuthService implements CanActivate {
 
   loggedIn: boolean = false;
 
-  
-
   constructor(private router: Router) { }
 
   canActivate(

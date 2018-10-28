@@ -10,8 +10,8 @@
         <mat-form-field> <input matInput type="text" formControlName="description" [(ngModel)]="description" placeholder="Team Description" required> </mat-form-field>
         <mat-form-field> <input matInput type="text" formControlName="invitemsg" placeholder="Default Invitation Message"> </mat-form-field>
         <mat-form-field>
-            <mat-select placeholder="Invite Users: " multiple> 
-                 <mat-option *ngFor="let u of fillerusers" [value]="u">{{u}}</mat-option>
+            <mat-select formControlName="toInvite" placeholder="Invite Users: " multiple> 
+                 <mat-option *ngFor="let u of users" [value]="u">{{u.name}}</mat-option>
              </mat-select>  
           </mat-form-field> 
         <mat-card-subtitle style="padding-top: 0.3cm"> Team Color *</mat-card-subtitle>

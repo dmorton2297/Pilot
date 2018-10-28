@@ -40,8 +40,8 @@ Route::post('savecriteria', 'CriteriaController@store');
 Route::get('addteammember/{userid}/{teamid}', 'TeamAssignmentController@add');
 Route::get('teammembers/{teamid}', 'TeamAssignmentController@index');
 Route::get('teamremove/{userid}/{teamid}', 'TeamAssignmentController@kick');
-
-
-
-
+Route::post('savecriteria', 'CriteriaController@store');
+Route::post('newmessage', 'MessageController@store');
+Route::get('getallusers', 'UserController@index');
+Route::post('inviteuser', 'TeamInvitationController@invite');
 

@@ -22,7 +22,7 @@
             <!-- Assigned user drop down box -->
             <mat-form-field>
                    <mat-select formControlName="assignedUser" placeholder="Assignment" required> 
-                        <mat-option *ngFor="let u of users" [value]="u">{{u}}</mat-option>
+                        <mat-option *ngFor="let u of users" [value]="u">{{u.name}}</mat-option>
                     </mat-select>  
             </mat-form-field> 
 
@@ -48,7 +48,7 @@
                     <!-- The repeated template -->
                     <mat-form-field> <input matInput type="text" [formControlName]="i"> </mat-form-field>
                     <a (click)="removeCriteria(i)"> <img class="myImg" img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEaSURBVGhD7Zq9bQJBGESvDEIj0QWWA/fg3JGRKwBHOKQA4w4wNSASEmcUQwziZ75stFobTsytDjRPegHL7n37gJDKGFOcD7g+Y+xpNWN4vNDYW5T49JYX+AtzF/7POJN7VqrkG5zB3CVKGne4GocIlYQ8wze4gvzweB3rSv+aEXeQ8Q15SLxWU2KGQ+rQipAO5N/7K0yJNd4TZ5hWhDxCfn8DU2KN98QZxiF1cAjhECUOIRyixCGEQ5Q4hHCIEocQDlHiEMIhShxC3ETIA5yQnzAl1nhPnGFaEaLAIXW4m5Ap5CEL+CI2nskzvqCcEeQhJRxCOT24g7mBTbiFXdgI7/AAc4OV7uEANsoTnMPcHwEU/sA+NMbIqKoTPNbSVLFTyOsAAAAASUVORK5CYII="> </a>
-               <!-->     <button mat-mini-fab  (click)="removeCriteria(i)" type="button">X</button> -->
+               <!--     <button mat-mini-fab  (click)="removeCriteria(i)" type="button">X</button> -->
                 </div>
               </div>
 
@@ -64,5 +64,5 @@
         Form Value: {{ taskForm.value | json }}
       </p>
       -->
-      
+    
   </mat-card>

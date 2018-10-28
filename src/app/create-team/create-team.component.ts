@@ -19,22 +19,38 @@ export class CreateTeamComponent{
       description: ['', Validators.required],
       invitemsg: [''],
       members: [''],
-      color: ['', Validators.required]
+      color: ['', Validators.required],
+      toInvite: ['']
 });
+
+  users : User[];
+  teamId : number;
 
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
     this.teamForm.get('invitemsg').setValue('I want you to join my team!');
-    console.log(this.teamForm);
+    this.getUsers();
   }
 
   setColor(c: string) {
     this.teamForm.patchValue({color: c});
   }
 
-  fillerusers = ['Caden', 'Charlie', 'Dylan', 'John', 'Jackson'];
   getUsers() {
-
+    this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
+      this.users = res.json() as User[];
+    });
   }
+
+  inviteUsers() {
+    var to_invite : User[] = this.teamForm.get('toInvite').value as User[];
+    for (var i = 0; i < to_invite.length; i++) {
+      let request : Invite = {
+        userid: to_invite[i].id,
+        teamid: this.teamId
+      }
+      this.http.post('http://localhost:8000/api/inviteuser', request);
+    }
+  } 
 
   onSubmit() {
     console.log(this.teamForm);
@@ -54,10 +70,11 @@ export class CreateTeamComponent{
         return;
       } else {
         this.http.post('http://localhost:8000/api/createteam', request).subscribe((res) => {
-          console.log(res);
           this.snackBar.open('Team Created', 'Ok', {
             duration: 3000
           });
+          this.teamId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+          this.inviteUsers();
         });
       }
     });
@@ -70,6 +87,16 @@ export class CreateTeamComponent{
     this.teamForm.reset();
     this.router.navigateByUrl('/teams');
   }     
+}
+
+interface Invite {
+  userid : number,
+  teamid : number
+}
+
+interface User {
+  id: number,
+  name: string
 }
 
 interface Team {

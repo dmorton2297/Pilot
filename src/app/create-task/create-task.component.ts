@@ -5,8 +5,7 @@ import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -33,17 +32,24 @@ export class CreateTaskComponent {
 });
 
   public priorities = ['1', '2', '3'];
-  public users = ['John', 'Sarah', 'Matt']; 
+  public users: User[]; 
   public req : FunctionalRequirement[];
   public teamId = 0;
   public taskId : string;
 
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
     this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
-      console.log(res.json());
       this.req = res.json() as FunctionalRequirement[];
+      this.getUsers();
     });
   }
+
+  getUsers() {
+    this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
+      this.users = res.json() as User[];
+    });
+  } 
+  
 
   /**
    * Gets criterian for the view.
@@ -128,6 +134,11 @@ export class CreateTaskComponent {
   }
 }
 
+interface User {
+  id: number,
+  name: string,
+  email: string
+}
 
 interface FunctionalRequirement {
   name: string,

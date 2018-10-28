@@ -17,6 +17,7 @@ import { ModifyTaskComponent } from './modify-task/modify-task.component';
 import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatAutocompleteModule} from '@angular/material/autocomplete'; 
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -40,6 +41,7 @@ import { ModifyTeamComponent } from './modify-team/modify-team.component';
 import { TeamsComponent } from './teams/teams.component';
 import { ViewTeamComponent } from './view-team/view-team.component';
 import { TeaminvitationsComponent } from './teaminvitations/teaminvitations.component';
+import { NewMessageComponent } from './new-message/new-message.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -53,7 +55,7 @@ const appRoutes: Routes = [
   { path: 'createteam', component: CreateTeamComponent, canActivate: [AuthService] },
   { path: 'modifyteam/:id', component: ModifyTeamComponent, canActivate: [AuthService] },
   { path: 'teams', component: TeamsComponent, canActivate: [AuthService]},
-  { path: 'viewteam/:id', component: ViewTeamComponent, canActivate: [AuthService]}   
+  { path: 'viewteam/:id', component: ViewTeamComponent, canActivate: [AuthService]},
 ];
 
 export function getGoogleConfigs() {
@@ -90,9 +92,9 @@ export function getGoogleConfigs() {
   imports: [
   BrowserModule,
   HttpModule,
+  MatAutocompleteModule,
   MatCardModule,
   MatSnackBarModule,
-
   MatTabsModule,
   MatButtonModule,
   MatSelectModule,
@@ -102,6 +104,8 @@ export function getGoogleConfigs() {
   MatExpansionModule,
   
   MatTableModule,
+  FormsModule,
+  ReactiveFormsModule,
   SocialLoginModule,
   BrowserAnimationsModule,
   BrowserModule,
@@ -112,9 +116,7 @@ export function getGoogleConfigs() {
   MatSelectModule,
   MatButtonModule,
   MatListModule,
-  FormsModule,
   MatIconModule,
-  ReactiveFormsModule,
   RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

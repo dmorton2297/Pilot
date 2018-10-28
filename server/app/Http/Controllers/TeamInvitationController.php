@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 
 class TeamInvitationController extends Controller
 {
+	
 	//Displays all invites for a specified user
-	public function index($id) {
+	public function index($id) 
+	{
 		$invites = DB::table('teamassignment')->where('id',$id)->get();
 		
 		return $invites;

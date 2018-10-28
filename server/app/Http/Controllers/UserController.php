@@ -15,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+            //selectfrom db a list of users
+           $users = DB::table('users')->get();
+                return $users;
     }
 
     /**
@@ -65,7 +67,7 @@ class UserController extends Controller
             );
 
 
-
+ 
         
     }
 
