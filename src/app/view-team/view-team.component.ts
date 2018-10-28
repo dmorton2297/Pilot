@@ -9,17 +9,20 @@ import { Http } from '@angular/http';
 })
 export class ViewTeamComponent implements OnInit {
 
-  teamId: string;
-  team: Team;
-  public teamName: string = "";
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private http: Http) { 
+  public teamId: String;
+  public team: Team;
+  public teamName: String = "";
+  public teamDescription: String = "";
+
+
+  constructor(private router: Router, private http: Http, private activatedRoute: ActivatedRoute) {
     this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.http.get('http://localhost:8000/api/getteam/' + this.teamId).subscribe((res) => {
-      console.log(res.json);
-      var temp = res.json() as Team[];
-      this.team = temp[0];
+    this.http.get('http://localhost:8000/api/getteam/' + this.teamId).subscribe((res)=>{
+      this.team = res.json() as Team;
+      this.team = this.team[0];
       this.teamName = this.team.name;
-      console.log(this.teamName);
+      this.teamDescription = this.team.description;
+      console.log(this.team.name);
     });
   }
 
@@ -29,14 +32,11 @@ export class ViewTeamComponent implements OnInit {
 }
 
 interface Team {
-  id: number,
-  name: string,
-  description: string,
-  invitemsg: string,
+
+  name: String,
+  description: String,
+  invitemsg: String,
   color: any
-  creatorId: number,
-  created_at: number,
-  updated_at: number
+  creatorId: number
+
 }
-
-
