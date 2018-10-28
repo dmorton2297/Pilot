@@ -35,6 +35,12 @@ Route::post('createteam', 'TeamController@store');
 Route::get('getteam/{id}', 'TeamController@show');
 Route::get('findteam/{name}', 'TeamController@nameIndex');
 Route::get('getusersteams/{userId}', 'TeamController@userIndex');
+Route::post('modifyteam/{id}', 'TeamController@update');
+Route::post('savecriteria', 'CriteriaController@store');
+Route::get('addteammember/{userid}/{teamid}', 'TeamAssignmentController@add');
+Route::get('teammembers/{teamid}', 'TeamAssignmentController@index');
+Route::get('teamremove/{userid}/{teamid}', 'TeamAssignmentController@kick');
+
 
 
 

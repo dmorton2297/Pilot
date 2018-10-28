@@ -34,7 +34,7 @@ export class TeamsComponent implements OnInit {
   }
 
   onViewPressed(id: number) {
-    this.router.navigateByUrl('/viewteam/id');
+    this.router.navigateByUrl('/viewteam/' + id);
   }
 
 }
