@@ -1,6 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { Http } from '@angular/http';
-import { EventEmitter } from 'events';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-teaminvitations',

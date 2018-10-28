@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Invite Users to Team</h1>
+      <h3>{{teamName}}</h3>
+    </mat-card-title>
+  </mat-card-header>
+  <hr style="widows: 100%;"/>
+
+  <mat-card-content>
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <label>Recipient Email</label>
+      <mat-form-field> <input matInput type="text" formControlName="email" placeholder="recipient@email.com" required> </mat-form-field>
+      <label>Invitation message</label>
+      <mat-form-field> <input matInput type="text" formControlName="invmessage" placeholder="Invite Message" required> </mat-form-field>
+      <div class="button-row">
+          <button  mat-raised-button color="primary" [disabled]="!taskForm.valid" (click)="onSubmit">Invite User</button>
+          <button  mat-raised-button color="primary" (click)="onCancel()" type="button">Cancel</button>
+    </div>
+    </form>
+  </mat-card-content>
+</mat-card>
