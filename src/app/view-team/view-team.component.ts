@@ -26,6 +26,10 @@ export class ViewTeamComponent implements OnInit {
   ngOnInit() {
   }
 
+  onInviteUsers() {
+    // navigate to invite users form
+  }
+
 }
 
 interface Team {
