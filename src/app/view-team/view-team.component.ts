@@ -12,6 +12,7 @@ export class ViewTeamComponent implements OnInit {
   teamId: string;
   team: Team;
   public teamName: string = "";
+  public teamDescription: String = "";
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private http: Http) { 
     this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
     this.http.get('http://localhost:8000/api/getteam/' + this.teamId).subscribe((res) => {

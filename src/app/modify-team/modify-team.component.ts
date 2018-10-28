@@ -54,13 +54,18 @@ export class ModifyTeamComponent{
       name: this.teamForm.get('name').value as string,
       description: this.teamForm.get('description').value as string,
       invitemsg: this.teamForm.get('invitemsg').value as string,
-      color: this.teamForm.get('color').value as string
+      color: this.teamForm.get('color').value as string,
+      creatorId: this.auth.getUserId()
     }
 
-    // Send Invites
-    this.snackBar.open('Team Updated', 'Ok', {
-      duration: 3000
+    this.http.post('http://localhost:8000/api/modifyteam/' + this.teamId, request).subscribe((res) => {
+      this.snackBar.open('Team Updated', 'Ok', {
+        duration: 3000
+      });
     });
+
+    // Send Invites
+    
   }
 
   onCancel() {
@@ -76,5 +81,6 @@ interface Team {
   name: string,
   description: string,
   invitemsg: string,
-  color: any
+  color: any,
+  creatorId: number
 }
