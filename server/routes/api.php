@@ -39,6 +39,8 @@ Route::post('savecriteria', 'CriteriaController@store');
 Route::get('addteammember/{userid}/{teamid}', 'TeamAssignmentController@add');
 Route::get('teammembers/{teamid}', 'TeamAssignmentController@index');
 Route::get('teamremove/{userid}/{teamid}', 'TeamAssignmentController@kick');
+Route::get('teaminvites/{userid}', 'TeamInvitationController@index');
+Route::get('deleteinvite/{id}', 'TeamInvitationController@remove');
 
 
 

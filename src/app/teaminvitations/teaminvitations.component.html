@@ -3,12 +3,25 @@
 <head> </head>
 
 <body>
+<mat-card class="table-container" *ngIf="invites">
+ <table mat-table [dataSource]="invites" class="mat-elevation-z0">
+	
+	<ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> 
+        <span>{{element.id}}</span>
+      </td>
+    </ng-container>
 
-<div>
-User invited you to team
-<button> Accept </button>
-<button> Decline </button>
-</div>
+	<ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element"> 
+          <button mat-button id="element.id" (click)="onAcceptClicked(element.id)"> Accept </button>
+		  <button mat-button id="element.id" (click)="onDeclineClicked(element.id)"> Decline </button>
+        </td>
+    </ng-container>
+ </table>
+</mat-card>
 
 
 

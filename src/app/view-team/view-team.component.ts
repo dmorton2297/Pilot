@@ -22,6 +22,10 @@ export class ViewTeamComponent implements OnInit {
       this.teamName = this.team.name;
       console.log(this.teamName);
     });
+	this.http.get('http://localhost:8000/api/teammembers/' + this.teamId).subscribe((res) =>{
+		
+		
+	});
   }
 
   ngOnInit() {
@@ -32,6 +36,9 @@ export class ViewTeamComponent implements OnInit {
   }
 
 }
+
+
+  
 
 interface Team {
   id: number,
@@ -45,3 +52,11 @@ interface Team {
 }
 
 
+	
+
+interface User {
+	id: number,
+	name: String,
+	email: String,
+}
+	
