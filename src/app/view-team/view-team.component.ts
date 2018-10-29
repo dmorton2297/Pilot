@@ -15,7 +15,7 @@ export class ViewTeamComponent implements OnInit {
   public teamName: string = "";
   public teamDescription: String = "";
   
-  public users: User;
+  public users: User[];
 
   public dialog;
   
@@ -29,8 +29,9 @@ export class ViewTeamComponent implements OnInit {
       this.teamName = this.team.name;
       console.log(this.teamName);
     });
-    this.http.get('http://localhost:8000/api/teammembers/' + this.teamId).subscribe((res) => {
-      this.users = res.json() as User;
+    this.http.get('http://localhost:8000/api/getteammembers/' + this.teamId).subscribe((res) => {
+      this.users = res.json() as User[];
+      console.log(this.users);
     });
     this.dialog = MatDialog;
   }
@@ -77,9 +78,11 @@ interface Team {
 	
 
 interface User {
-	id: number,
-	name: String,
-	email: String,
+  id: number,
+	email: String,  
+  memberName: String,
+  teamId: number,
+  teamName: String
 }
 
 @Component ({
