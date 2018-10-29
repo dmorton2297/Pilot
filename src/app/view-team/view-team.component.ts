@@ -10,26 +10,28 @@ import { Http } from '@angular/http';
 })
 export class ViewTeamComponent implements OnInit {
 
-  public teamId: String;
-  public team: Team;
-  public teamName: String = "";
+  teamId: string;
+  team: Team;
+  public teamName: string = "";
   public teamDescription: String = "";
-  
   public users: User;
 
-  public dialog;
-  
+  public dialog;  
   @Output() signalEvent = new EventEmitter<string>();
 
   constructor(private router: Router, private http: Http, private activatedRoute: ActivatedRoute) {
     this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.http.get('http://localhost:8000/api/getteam/' + this.teamId).subscribe((res)=>{
-      this.team = res.json() as Team;
-      this.team = this.team[0];
+    this.http.get('http://localhost:8000/api/getteam/' + this.teamId).subscribe((res) => {
+      console.log(res.json);
+      var temp = res.json() as Team[];
+      this.team = temp[0];
       this.teamName = this.team.name;
-      this.teamDescription = this.team.description;
-      console.log(this.team.name);
+      console.log(this.teamName);
     });
+	this.http.get('http://localhost:8000/api/teammembers/' + this.teamId).subscribe((res) =>{
+		
+	});
+
     this.http.get('http://localhost:8000/api/teammembers/' + this.teamId).subscribe((res) => {
       this.users = res.json() as User;
     });
@@ -41,6 +43,9 @@ export class ViewTeamComponent implements OnInit {
   }
   
   onDeletePressed(id) {
+	  this.http.get('http://localhost:8000/api/teamremove/'+id+'/'+ this.teamId).subscribe();
+	  this.updateSignal();
+
     const dialogConfirm = this.dialog.open(ConfirmDeleteDialog);
     dialogConfirm.afterClosed().subscribe(result => {
       if (result == true) {
@@ -54,15 +59,35 @@ export class ViewTeamComponent implements OnInit {
   ngOnInit() {
   }
 
+  onInviteUsers() {
+    this.router.navigateByUrl('/inviteToTeam/' + this.teamId);
+  }
+
 }
 
-interface Team {
-  name: String,
-  description: String,
-  invitemsg: String,
-  color: any
-  creatorId: number
 
+interface Team {
+  id: number,
+  name: string,
+  description: string,
+  invitemsg: string,
+  color: any
+  creatorId: number,
+  created_at: number,
+  updated_at: number
+}
+
+
+interface User {
+	id: number,
+	name: String,
+	email: String,
+}
+
+interface User {
+	userid: number,
+	name: String,
+	email: String,
 }
 
 interface User {
