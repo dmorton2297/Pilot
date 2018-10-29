@@ -15,6 +15,8 @@ export class UserMessagesComponent {
 
   public uID : number;
   public messages : Message[] = [];
+  column_names: string[] = ['from', 'message']
+
 
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) { 
     //get uID, get from 'message' table where id = uID
@@ -30,7 +32,7 @@ export class UserMessagesComponent {
 
 interface Message {
   id: number,
-  name: string,
+  message: string,
   sender: number,
   receiver: number,
   team: number
