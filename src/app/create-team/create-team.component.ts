@@ -28,18 +28,18 @@ export class CreateTeamComponent{
 
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
     this.teamForm.get('invitemsg').setValue('I want you to join my team!');
-    this.getUsers();
   }
 
   setColor(c: string) {
     this.teamForm.patchValue({color: c});
   }
 
+  /*
   getUsers() {
     this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
       this.users = res.json() as User[];
     });
-  }
+  } */
 
   inviteUsers() {
     var to_invite : User[] = this.teamForm.get('toInvite').value as User[];
@@ -73,8 +73,6 @@ export class CreateTeamComponent{
           this.snackBar.open('Team Created', 'Ok', {
             duration: 3000
           });
-          this.teamId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-          this.inviteUsers();
         });
       }
     });
