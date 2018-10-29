@@ -14,7 +14,7 @@ export class ViewTeamComponent implements OnInit {
   team: Team;
   public teamName: string = "";
   public teamDescription: String = "";
-  
+  public displayedColumns: String[] = ['id', 'name', 'email', 'actions'];
   public users: User[];
 
   public dialog;
@@ -27,6 +27,7 @@ export class ViewTeamComponent implements OnInit {
       var temp = res.json() as Team[];
       this.team = temp[0];
       this.teamName = this.team.name;
+      this.teamDescription = this.team.description;
       console.log(this.teamName);
     });
     this.http.get('http://localhost:8000/api/getteammembers/' + this.teamId).subscribe((res) => {
