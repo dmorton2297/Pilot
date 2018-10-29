@@ -13,7 +13,7 @@ export class TeaminvitationsComponent {
   @Output() signalEvent = new EventEmitter<string>();
   
 	public invites : Invites[] = [];
-	public displayedColumns: String[] = ['id', 'senderName', 'senderEmail', 'teamName', 'teamId'];
+	public displayedColumns: String[] = ['id', 'senderName', 'senderEmail', 'teamName', 'teamId', 'actions'];
   
   constructor(private http: Http, private auth: AuthService) {
 	this.loadData();
@@ -30,21 +30,24 @@ export class TeaminvitationsComponent {
 	  });  
   }
   
-  onAcceptClicked(inviteId: number) {
+  onAcceptPressed(inviteId: number) {
 	  var user = 0;
 	  var team = 0;
 		for (var i = 0; i < this.invites.length; i++) {
 			if (this.invites[i].id == inviteId) {
 				user = this.auth.getUserId();
 				team = this.invites[i].teamId;
-				this.http.get('http://localhost:8000/api/addteammember/'+user+'/'+team);
-				this.http.get('http://localhost:8000/api/deleteinvite/'+inviteId).subscribe();
-				this.updateSignal();
+				this.http.get('http://localhost:8000/api/addteammember/'+user+'/'+team).subscribe(res => {
+					this.http.get('http://localhost:8000/api/deleteinvite/'+inviteId).subscribe(r => {
+						this.loadData();
+					});
+
+				});
 			}
 		}
   }
   
-  onDeclineClicked(inviteId: number) {
+  onDeclinePressed(inviteId: number) {
 	  for (var i = 0; i < this.invites.length; i++) {
 			if (this.invites[i].id == inviteId) {
 				this.http.get('http://localhost:8000/api/deleteinvite/'+inviteId).subscribe();
