@@ -48,7 +48,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'createtask', component: CreateTaskComponent, canActivate: [AuthService]  },
   { path: 'backlog', component: MainComponent, canActivate: [AuthService]  },
-
+  { path: 'invites', component: TeaminvitationsComponent, canActivate: [AuthService] },
   { path: 'scrum', component: ScrumBoardComponent, canActivate: [AuthService] },
   { path: 'modifytask/:id', component: ModifyTaskComponent, canActivate: [AuthService] },
   { path: 'funcreq', component: FuncReqFormComponent, canActivate: [AuthService] },

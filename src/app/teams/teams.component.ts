@@ -25,6 +25,10 @@ export class TeamsComponent implements OnInit {
     this.router.navigateByUrl('/createteam');
   }
 
+  onInvitesClicked() {
+    this.router.navigateByUrl('/invites');
+  }
+
   onDeletePressed(id: number) {
 
   }
