@@ -15,6 +15,11 @@ class TeamInvitationController extends Controller
 		
 		return $invites;
 	}
+
+	public function getUserInvitations($id) {
+		$invites = DB::table('team_invitation')->where('recipientid', $id)->get();
+		return $invites;
+	}
 	
 	//Creates user invitation
     public function invite(Request $request){
