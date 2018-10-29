@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-scrum-board',
@@ -15,7 +16,7 @@ export class ScrumBoardComponent {
   public startedTasks : Task[];
   public completedTasks : Task[];
   public displayedColumns : String[] = ['card'];
-  constructor(private http: Http) {
+  constructor(private http: Http, private auth: AuthService) {
     this.loadData();
    }
 
@@ -24,7 +25,7 @@ export class ScrumBoardComponent {
   }
 
    loadData() {
-    this.http.get('http://localhost:8000/api/getusertasks/0').subscribe((res) => {
+    this.http.get('http://localhost:8000/api/getusertasks/' + this.auth.getUserId()).subscribe((res) => {
       this.tasks = res.json() as Task[];
       this.processTableData();
     });
