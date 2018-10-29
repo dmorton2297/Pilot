@@ -27,9 +27,10 @@ export class ViewTeamComponent implements OnInit {
       this.teamDescription = this.team.description;
       console.log(this.team.name);
     });
-	this.http.get('http://localhost:8000/api/teammembers/' + this.teamId).subscribe((res)=>{
-		this.users = res.json() as User;
-	}
+    this.http.get('http://localhost:8000/api/teammembers/' + this.teamId).subscribe((res) => {
+      this.users = res.json() as User;
+    });
+ 
   }
   
    updateSignal() {
