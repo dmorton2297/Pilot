@@ -33,7 +33,7 @@ export class CreateTaskComponent {
 });
 
   public priorities = ['1', '2', '3'];
-  public users = ['John', 'Sarah', 'Matt']; 
+  public users = ['Myself']; 
   public req : FunctionalRequirement[];
   public teamId = 0;
   public taskId : string;
@@ -99,7 +99,7 @@ export class CreateTaskComponent {
       funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
-      creatorid: 0, //this.auth.id,
+      creatorid: this.auth.getUserId(),
       teamid: 0,
       assigneduserid: 0,
       criterian: this.taskForm.get('criterian').value,
