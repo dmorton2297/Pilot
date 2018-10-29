@@ -47,7 +47,7 @@ class TeamController extends Controller
         $color = $request -> input('color');
         $creatorId = $request -> input('creatorId');
 
-        DB::table('team')->insert(
+        $teamId = DB::table('team')->insertGetId(
             ['name' => $name,
              'description' => $description,
              'color' => $color,
@@ -57,6 +57,14 @@ class TeamController extends Controller
              'updated_at' => Carbon::now()->toDateTimeString()
             ]
         );
+
+        DB::table('teamassignment')->insert(
+            ['userid' => $creatorId,
+             'teamid' => $teamId,
+            'created_at' => Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon::now()->toDateTimeString()
+            ]
+            );
 
         return $name;
     }
