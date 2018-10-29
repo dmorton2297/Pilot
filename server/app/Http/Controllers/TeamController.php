@@ -33,6 +33,17 @@ class TeamController extends Controller
         return $tasks;
     }
 
+    public function joinedTeams($userId) {
+        $result = DB::table('teamassignment') 
+		-> join('users', 'teamassignment.userid', '=', 'users.id')
+		-> join('team', 'teamassignment.teamid', '=', 'team.id')
+		-> select('team.id', 'team.name', 'team.description', 'team.color', 'team.creatorid', 'team.created_at')
+		-> where('users.id', $userId)
+        -> get();
+        
+        return $result;
+    }
+
     /**
      * Store a newly created resource in storage.
      *

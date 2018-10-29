@@ -13,7 +13,7 @@ export class TeamsComponent implements OnInit {
   public displayedColumns: String[] = ['id', 'name', 'description', 'created', 'actions'];
 
   constructor(private router: Router, private http: Http, private auth: AuthService) { 
-    this.http.get('http://localhost:8000/api/getusersteams/' + this.auth.getUserId()).subscribe((res) => {
+    this.http.get('http://localhost:8000/api/getjoinedteams/' + this.auth.getUserId()).subscribe((res) => {
       this.teams = res.json() as Team[];
     });
   }
@@ -44,9 +44,9 @@ export class TeamsComponent implements OnInit {
 }
 
 interface Team {
+  id: number
   name: string,
   description: string,
-  invitemsg: string,
   color: any
   creatorId: number
 }

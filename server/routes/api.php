@@ -48,7 +48,6 @@ Route::post('inviteuser', 'TeamInvitationController@invite');
 Route::get('allsentinvites/{id}', 'TeamInvitationController@detailedUserIndex');
 Route::get('allrecievedinvites/{id}', 'TeamInvitationController@getUserInvitations');
 Route::get('getteammembers/{teamId}', 'TeamAssignmentController@getTeamMembers');
-
-
+Route::get('getjoinedteams/{userId}', 'TeamController@joinedTeams');
 
 
