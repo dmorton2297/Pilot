@@ -1,6 +1,15 @@
-<mat-card *ngIf="teamName">
-  <h1>{{teamName}}</h1>
-  <h3>{{teamDescription}}</h3> 
+<mat-card>
+  <mat-card class="heading-container">
+    <div class="row">
+      <div class="col-md-8">
+          <h1 class="heading">{{teamName}}</h1>
+      </div>
+      <div class="col-md-4">
+          <button mat-button id="invite" (click)="onInviteUsers()">Invite Users</button>
+      </div>
+    </div>
+    
+  </mat-card>
 </mat-card>
 
 

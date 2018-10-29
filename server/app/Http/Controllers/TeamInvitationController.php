@@ -3,33 +3,53 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class TeamInvitationController extends Controller
 {
 	
 	//Displays all invites for a specified user
-	public function index($id) 
-	{
-		$invites = DB::table('teamassignment')->where('id',$id)->get();
+	public function index($id) {
+		$invites = DB::table('team_invitation')->where('id',$id)->get();
 		
 		return $invites;
 	}
 	
 	//Creates user invitation
     public function invite(Request $request){
-		$userid = $request->input('userid');
+
+		$recipientid = $request->input('recipientid');
+		$senderid = $request->input('senderid');
 		$teamid = $request->input('teamid');
-		DB::table('teamassignment')->insert([
-			'userid' => $userid,
+
+		$invites = DB::table('team_invitation')->where('senderid',$senderid)->where('recipientid', $recipientid)->get();
+		if ($invites->count() > 0) {
+			return;
+		}
+
+
+		DB::table('team_invitation')->insert([
+			'senderid' => $senderid,
+			'recipientid' => $recipientid,
 			'teamid' => $teamid
 		]
-	);
+		);
 		
+	}
+
+	public function detailedUserIndex($userId) {
+		$result = DB::table('team_invitation') 
+		-> join('users', 'team_invitation.recipientid', '=', 'users.id')
+		-> select('users.email', 'users.name', 'team_invitation.teamid')
+		-> get();
+
+		return $result;
 	}
 	
 	//Removes invite from table
 	public function remove($id){
-		DB::table('teamassignment')->where('id', $id)->delete();
+		DB::table('team_invitation')->where('id', $id)->delete();
 		
 	}
 	

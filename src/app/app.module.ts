@@ -42,6 +42,7 @@ import { TeamsComponent } from './teams/teams.component';
 import { ViewTeamComponent } from './view-team/view-team.component';
 import { TeaminvitationsComponent } from './teaminvitations/teaminvitations.component';
 import { NewMessageComponent } from './new-message/new-message.component';
+import { InviteToTeamComponent } from './invite-to-team/invite-to-team.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -56,6 +57,7 @@ const appRoutes: Routes = [
   { path: 'modifyteam/:id', component: ModifyTeamComponent, canActivate: [AuthService] },
   { path: 'teams', component: TeamsComponent, canActivate: [AuthService]},
   { path: 'viewteam/:id', component: ViewTeamComponent, canActivate: [AuthService]},
+  { path: 'inviteToTeam/:teamid', component: InviteToTeamComponent, canActivate: [AuthService]} 
 ];
 
 export function getGoogleConfigs() {
@@ -88,6 +90,7 @@ export function getGoogleConfigs() {
     TeamsComponent,
     ViewTeamComponent,
     TeaminvitationsComponent,
+    InviteToTeamComponent,
     ],
   imports: [
   BrowserModule,

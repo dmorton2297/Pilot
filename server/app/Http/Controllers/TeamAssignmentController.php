@@ -11,8 +11,8 @@ class TeamAssignmentController extends Controller
 {
     //Displays all members of a team
     public function index($teamid) {
-		$tasks = DB::table('teamassignment')->where('teamid', $teamid)->get();
-        return $tasks;
+		$users = DB::table('teamassignment')->where('teamid', $teamid)->get();
+        return $users;
     }
     
     public function add($userid,$teamid) {

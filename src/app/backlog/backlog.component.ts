@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -8,7 +8,7 @@ import { AuthService } from '../auth.service';
   templateUrl: './backlog.component.html',
   styleUrls: ['./backlog.component.css']
 })
-export class BacklogComponent {
+export class BacklogComponent implements OnInit{
 
   public tasks: Task[] = [];
   public displayedColumns: String[] = ['id', 'name', 'description', 'priority', 'status', 'created', 'actions'];
@@ -22,8 +22,16 @@ export class BacklogComponent {
     this.loadData();
   }
 
+  ngOnInit() {
+    this.loadData();
+  }
+
   onCreateTask() {
     this.router.navigateByUrl('/createtask');
+  }
+
+  onCreateFuncReq() {
+    this.router.navigateByUrl('/funcreq');
   }
 
   updateSignal() {
