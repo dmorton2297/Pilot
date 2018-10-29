@@ -39,9 +39,8 @@ class MessageController extends Controller
             );
     }
 
-    public function getMessages(Request $request) {
-        $userID = $request -> input('id');
-
-        DB::table('message')->get
+    public function getMessages($id) {
+        $messages = DB::table('message')->where('receiver', $id)->get();
+        return $messages;
     }
 }

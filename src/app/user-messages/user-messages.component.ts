@@ -11,11 +11,27 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './user-messages.component.html',
   styleUrls: ['./user-messages.component.css']
 })
-export class UserMessagesComponent implements OnInit {
+export class UserMessagesComponent {
 
-  constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) { }
+  public uID : number;
+  public messages : Message[] = [];
 
-  ngOnInit() {
+  constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) { 
+    //get uID, get from 'message' table where id = uID
+    this.uID = this.auth.getUserId();
+    this.http.get('http://localhost:8000/api/getmessages' + this.uID).subscribe((res) => {
+      this.messages = res.json() as Message[];
+    });
   }
 
+
+
+}
+
+interface Message {
+  id: number,
+  name: string,
+  sender: number,
+  receiver: number,
+  team: number
 }

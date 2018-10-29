@@ -62,7 +62,7 @@ export class NewMessageComponent {
     //receiver and sender given by name or email or uID?
     //get receiving user's name and find his id
     //this.msg = this.newMessage.get('message').value as string;
-    alert(this.newMessage.get('receiver'))
+    //alert(this.newMessage.get('receiver'))
     let request : NewMessage = {
       receiver: this.newMessage.get('receiver').value as string,
       message: this.newMessage.get('message').value as string,
