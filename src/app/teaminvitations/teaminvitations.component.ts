@@ -1,6 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { Http } from '@angular/http';
 import { EventEmitter } from '@angular/core';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-teaminvitations',
@@ -11,9 +12,10 @@ export class TeaminvitationsComponent {
 
   @Output() signalEvent = new EventEmitter<string>();
   
-  public invites : Invites[] = [];
+	public invites : Invites[] = [];
+	public displayedColumns: String[] = ['id', 'senderName', 'senderEmail', 'teamName', 'teamId'];
   
-  constructor(private http: Http) {
+  constructor(private http: Http, private auth: AuthService) {
 	this.loadData();
   }
   
@@ -22,8 +24,9 @@ export class TeaminvitationsComponent {
   }
   
   loadData() {
-	  this.http.get('http://localhost:8000/api/teaminvites/0').subscribe((res) =>  {
-		  this.invites = res.json() as Invites[];
+	  this.http.get('http://localhost:8000/api/allrecievedinvites/' + this.auth.getUserId()).subscribe((res) =>  {
+			this.invites = res.json() as Invites[];
+			console.log(this.invites);
 	  });  
   }
   
@@ -32,8 +35,8 @@ export class TeaminvitationsComponent {
 	  var team = 0;
 		for (var i = 0; i < this.invites.length; i++) {
 			if (this.invites[i].id == inviteId) {
-				user = this.invites[i].receiverid;
-				team = this.invites[i].teamid;
+				user = this.auth.getUserId();
+				team = this.invites[i].teamId;
 				this.http.get('http://localhost:8000/api/addteammember/'+user+'/'+team);
 				this.http.get('http://localhost:8000/api/deleteinvite/'+inviteId).subscribe();
 				this.updateSignal();
@@ -55,7 +58,8 @@ export class TeaminvitationsComponent {
 
 interface Invites {
 	id: number,
-	receiverid: number,
-	teamid: number,
-	teamname: string,
+	email: string,
+	senderName: string,
+	teamId: number,
+	teamName: string
 }

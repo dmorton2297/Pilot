@@ -17,8 +17,14 @@ class TeamInvitationController extends Controller
 	}
 
 	public function getUserInvitations($id) {
-		$invites = DB::table('team_invitation')->where('recipientid', $id)->get();
-		return $invites;
+		$result = DB::table('team_invitation') 
+		-> join('users', 'team_invitation.senderid', '=', 'users.id')
+		-> join('team', 'team_invitation.teamid', '=', 'team.id')
+		-> select('team_invitation.id', 'users.email', 'users.name as senderName', 'team_invitation.teamid as teamId', 'team.name as teamName')
+		-> where('team_invitation.recipientid', $id)
+		-> get();
+
+		return $result;
 	}
 	
 	//Creates user invitation
