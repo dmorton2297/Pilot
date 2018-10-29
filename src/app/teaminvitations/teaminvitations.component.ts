@@ -50,8 +50,9 @@ export class TeaminvitationsComponent {
   onDeclinePressed(inviteId: number) {
 	  for (var i = 0; i < this.invites.length; i++) {
 			if (this.invites[i].id == inviteId) {
-				this.http.get('http://localhost:8000/api/deleteinvite/'+inviteId).subscribe();
-				this.updateSignal();
+				this.http.get('http://localhost:8000/api/deleteinvite/'+inviteId).subscribe((res) => {
+					this.loadData();					
+				});
 			}
 		}
   }
