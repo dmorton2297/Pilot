@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Http } from '@angular/http';
 
@@ -15,6 +16,8 @@ export class ViewTeamComponent implements OnInit {
   public teamDescription: String = "";
   
   public users: User;
+
+  public dialog;
   
   @Output() signalEvent = new EventEmitter<string>();
 
@@ -30,7 +33,7 @@ export class ViewTeamComponent implements OnInit {
     this.http.get('http://localhost:8000/api/teammembers/' + this.teamId).subscribe((res) => {
       this.users = res.json() as User;
     });
- 
+    this.dialog = MatDialog;
   }
   
    updateSignal() {
@@ -38,8 +41,14 @@ export class ViewTeamComponent implements OnInit {
   }
   
   onDeletePressed(id) {
-	  this.http.get('http://localhost:8000/api/teamremove/'+id+'/'+ this.teamId).subscribe();
-	  this.updateSignal();
+    const dialogConfirm = this.dialog.open(ConfirmDeleteDialog);
+    dialogConfirm.afterClosed().subscribe(result => {
+      if (result == true) {
+        this.http.get('http://localhost:8000/api/teamremove/' + id + '/' + this.teamId).subscribe();
+        this.updateSignal();
+
+      }
+      });
   }
 
   ngOnInit() {
@@ -61,3 +70,9 @@ interface User {
 	name: String,
 	email: String,
 }
+
+@Component ({
+  selector: 'confirm-delete-dialog',
+  templateUrl: 'confirm-delete-dialog.html',
+})
+export class ConfirmDeleteDialog {}
