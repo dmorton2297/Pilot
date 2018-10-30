@@ -21,29 +21,44 @@ import { MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { FuncReqFormComponent } from './func-req-form/func-req-form.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { AuthService } from './auth.service';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatExpansionModule} from '@angular/material/expansion';
+
+
 
 
 import { BacklogComponent } from './backlog/backlog.component';
 
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular5-social-login";
-import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import { MainComponent } from './main/main.component';
+import { CreateTeamComponent } from './create-team/create-team.component';
+import { ModifyTeamComponent } from './modify-team/modify-team.component';
+import { TeamsComponent } from './teams/teams.component';
+import { ViewTeamComponent } from './view-team/view-team.component';
+import { TeaminvitationsComponent } from './teaminvitations/teaminvitations.component';
 import { NewMessageComponent } from './new-message/new-message.component';
 import { UserMessagesComponent } from './user-messages/user-messages.component';
+import { InviteToTeamComponent } from './invite-to-team/invite-to-team.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'createtask', component: CreateTaskComponent },
-  { path: 'backlog', component: MainComponent },
-  { path: 'newmessage', component: NewMessageComponent },
-  { path: 'scrum', component: ScrumBoardComponent },
-  { path: 'modifytask/:id', component: ModifyTaskComponent },
-  { path: 'funcreq', component: FuncReqFormComponent }
+  { path: 'createtask', component: CreateTaskComponent, canActivate: [AuthService]  },
+  { path: 'backlog', component: MainComponent, canActivate: [AuthService]  },
+  { path: 'invites', component: TeaminvitationsComponent, canActivate: [AuthService] },
+  { path: 'scrum', component: ScrumBoardComponent, canActivate: [AuthService] },
+  { path: 'modifytask/:id', component: ModifyTaskComponent, canActivate: [AuthService] },
+  { path: 'funcreq', component: FuncReqFormComponent, canActivate: [AuthService] },
+  { path: 'createteam', component: CreateTeamComponent, canActivate: [AuthService] },
+  { path: 'modifyteam/:id', component: ModifyTeamComponent, canActivate: [AuthService] },
+  { path: 'teams', component: TeamsComponent, canActivate: [AuthService]},
+  { path: 'viewteam/:id', component: ViewTeamComponent, canActivate: [AuthService]},
+  { path: 'inviteToTeam/:teamid', component: InviteToTeamComponent, canActivate: [AuthService]} 
 ];
 
 export function getGoogleConfigs() {
@@ -72,7 +87,13 @@ export function getGoogleConfigs() {
     MainComponent,
     FuncReqFormComponent,
     NewMessageComponent,
-    UserMessagesComponent
+    UserMessagesComponent,
+    CreateTeamComponent,
+    ModifyTeamComponent,
+    TeamsComponent,
+    ViewTeamComponent,
+    TeaminvitationsComponent,
+    InviteToTeamComponent,
     ],
   imports: [
   BrowserModule,
@@ -80,15 +101,17 @@ export function getGoogleConfigs() {
   MatAutocompleteModule,
   MatCardModule,
   MatSnackBarModule,
-  ReactiveFormsModule,
-  FormsModule,
   MatTabsModule,
   MatButtonModule,
   MatSelectModule,
   MatFormFieldModule,
   MatToolbarModule,
+  MatButtonToggleModule,
+  MatExpansionModule,
   
   MatTableModule,
+  FormsModule,
+  ReactiveFormsModule,
   SocialLoginModule,
   BrowserAnimationsModule,
   BrowserModule,
@@ -106,6 +129,7 @@ export function getGoogleConfigs() {
     )
   ],
   providers: [
+    AuthService,
     {
       provide: AuthServiceConfig,
       useFactory: getGoogleConfigs

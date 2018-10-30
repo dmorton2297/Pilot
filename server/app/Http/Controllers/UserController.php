@@ -15,9 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //selectfrom db a list of users
-        $users = DB::table('users')->get();
-        return $users;
+            //selectfrom db a list of users
+           $users = DB::table('users')->get();
+                return $users;
     }
 
     /**
@@ -41,7 +41,6 @@ class UserController extends Controller
         //
         $name = $request -> input('name');
         $email = $request -> input('email');
-        //if email already in database, don't add userProfile to db
        // $test = DB::table('users')->where('email', $email)->get();
         //if ($test) {
          //   return;
@@ -68,7 +67,7 @@ class UserController extends Controller
             );
 
 
-
+ 
         
     }
 

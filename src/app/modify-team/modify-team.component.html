@@ -1,0 +1,30 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Modify Team</h1>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+      <mat-form-field> <input matInput type="text" formControlName="name" [(ngModel)]="name" placeholder="Team Name" required> </mat-form-field>
+      <mat-form-field> <input matInput type="text" formControlName="description" [(ngModel)]="description" placeholder="Team Description" required> </mat-form-field>
+      <mat-form-field> <input matInput type="text" formControlName="invitemsg" placeholder="Invitation Message"> </mat-form-field>
+      <mat-card-subtitle style="padding-top: 0.3cm"> Team Color *</mat-card-subtitle>
+      <mat-button-toggle-group>
+          <mat-button-toggle style="background-color: #ee5253;" (click)="setColor('red')" >Red</mat-button-toggle>
+          <mat-button-toggle style="background-color: #ff9f43;" (click)="setColor('orange')" >Orange</mat-button-toggle>
+          <mat-button-toggle style="background-color: #feca57;" (click)="setColor('yellow')" >Yellow</mat-button-toggle>
+          <mat-button-toggle style="background-color: #1dd1a1;" (click)="setColor('green')" >Green</mat-button-toggle>
+          <mat-button-toggle style="background-color: #00d2d3;" (click)="setColor('turquoise')" >Torquise</mat-button-toggle>
+          <mat-button-toggle style="background-color: #54a0ff;" (click)="setColor('lblue')" >Light Blue</mat-button-toggle>
+          <mat-button-toggle style="background-color: #2e86de;" (click)="setColor('dblue')" >Dark Blue</mat-button-toggle>
+          <mat-button-toggle style="background-color: #5f27cd;" (click)="setColor('purple')" >Purple</mat-button-toggle>
+          <mat-button-toggle style="background-color: #222f3e;" (click)="setColor('gray')" >Gray</mat-button-toggle>
+      </mat-button-toggle-group>
+      <div class="button-row" style="padding-top: 0.4cm">
+          <button  mat-raised-button color="primary" [disabled]="!teamForm.valid" (click)="onSubmit">Modify</button>
+          <button  mat-raised-button color="primary" (click)="onCancel()" type="button">Cancel</button>
+      </div>
+  </form>
+</mat-card-content>  
+</mat-card>

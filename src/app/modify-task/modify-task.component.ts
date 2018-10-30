@@ -5,8 +5,7 @@ import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import {MatSnackBar} from '@angular/material';
-
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-modify-task',
@@ -27,16 +26,14 @@ export class ModifyTaskComponent {
         assignedUser: ['', Validators.required],
         assignedUserID: [''],
         criterian: this.fb.array([
-         this.fb.control('')
       ])
 });
 
-  public users : string[] = ['John', 'Sarah', 'Matt']; 
-
+  public users : User[];
   public priorities : string[] = ['1', '2', '3'];
   public task : Task;
-  public req : FunctionalRequirment[];
-  public selectedReqs: FunctionalRequirment[];
+  public req : FunctionalRequirement[];
+  public selectedReqs: FunctionalRequirement[];
   public taskId : string;
   public teamId = 0;
 
@@ -57,26 +54,99 @@ export class ModifyTaskComponent {
       this.taskForm.patchValue({assignedUser: this.users[this.task[0].assigneduserid]});
     });  
 
-    /* Getting criteria user selected on creation */
+    /* Getting functional requirements the user selected on creation */
     this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
-      this.selectedReqs = res.json() as FunctionalRequirment[];
+      this.selectedReqs = res.json() as FunctionalRequirement[];
       this.taskForm.patchValue({funcreq: this.selectedReqs});
     });
 
     /* Getting all criteria associated with team */
     this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
-      this.req = res.json() as FunctionalRequirment[];
+      this.req = res.json() as FunctionalRequirement[];
+    });
+  
+    /* Getting all acceptance criteria associated with team */
+    var criteria: string[];
+    this.http.get('http://localhost:8000/api/getcriterian/' + this.taskId).subscribe((res) => {
+      criteria = res.json() as string[];
+      for (var i = 0; i < criteria.length; i++) {
+        this.pushCriteria(criteria[i]);
+      } 
+
+      this.removeDuplicate();
+      this.cleanCriteria();
+    });
+
+    this.getUsers();
+ }
+
+  getSelectedReq() {
+
+  } 
+
+  getAllReq() {
+
+  }
+
+  getCriterion() {
+
+  }
+
+  getSelectedRequirment() {
+
+  }
+
+  getUsers() {
+    this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
+      this.users = res.json() as User[];
     });
   }
 
+  /**
+   *  This resolves the problem of selected functional requirements being
+   *  displayed twice.
+   */
+  removeDuplicate() {
+    for (var i = 0; i < this.req.length; i++) {
+      for (var j = 0; j < this.selectedReqs.length; j++) {
+        if (this.req[i].id == this.selectedReqs[j].id) {
+          this.req.splice(i, 1);
+        }
+      }
+    }
+  }
+
+  /**
+   * Gets criterian for the view.
+   */
   get criterian() {
     return this.taskForm.get('criterian') as FormArray;
   }
 
+  // TODO: Do I need this function.
+  /**
+   *  Adds criteria from view to criterian array.
+   */
   addCriteria() {
     this.criterian.push(this.fb.control(''));
   }
+  
+  /**
+   * Adds criteria from database to criterian array.
+   * 
+   * @param criterian 
+   */
+  pushCriteria(criterian: string) {
+    if (criterian != null) {
+       this.criterian.push(this.fb.control(criterian));
+    }
+  }
 
+  /**
+   * Removes criterian from index i.
+   * 
+   * @param i 
+   */
   removeCriteria(i: number) {
     if (this.criterian.length == 1) {
       this.criterian.removeAt(i);
@@ -86,25 +156,43 @@ export class ModifyTaskComponent {
     this.criterian.removeAt(i);
   }
 
+  /**
+   *  Removes empty criteria.
+   */
+  cleanCriteria() {
+    for (var i = 0; i < this.criterian.length; i++) {
+      if (this.criterian[i] == "") {
+        this.criterian.removeAt(i);
+      }
+    } 
+  }
+
+  getMembers() {
+
+  }
+
   onSubmit() {
+    this.cleanCriteria();
     let request : Task = {
       id: this.taskId,
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
       priority: this.taskForm.get('priority').value as number,
       status: 0,
-      funcreq: 0,
+      funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
       creatorid: 0,
       teamid: 0,
-      assigneduserid: 0
+      assigneduserid: 0,
+      criterian: this.taskForm.get('criterian').value
     }
     this.http.post('http://localhost:8000/api/modifytask/' + this.taskId, request, this.taskId).subscribe();
     this.snackBar.open('Task modified', 'Ok', {
       duration: 3000
-      });
-    }
+    });
+    this.router.navigateByUrl('/');
+  }
 
   onDelete() {
     if(!window.confirm('Are you sure you want to delete this task?')){
@@ -112,6 +200,10 @@ export class ModifyTaskComponent {
     } 
     this.http.post('http://localhost:8000/api/deletetask/' + this.taskId, this.taskId).subscribe();
     this.taskForm.reset();
+    this.snackBar.open('Task deleted', 'Ok', {
+      duration: 3000
+    });
+    this.router.navigateByUrl('/');
   }
 
   onCancel() {
@@ -119,7 +211,12 @@ export class ModifyTaskComponent {
   }
 }
 
-interface FunctionalRequirment {
+interface User {
+  id: number,
+  name: string
+}
+
+interface FunctionalRequirement {
   id: string,
   name: string,
   description: string
@@ -136,5 +233,6 @@ interface Task {
   timespent: number,
   teamid: number,
   creatorid: number,
-  assigneduserid: number
+  assigneduserid: number,
+  criterian: any
 }

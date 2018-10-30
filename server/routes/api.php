@@ -30,9 +30,25 @@ Route::get('getSelectedReqs/{id}', 'TaskController@showReqs');
 Route::post('savereq', 'FunctionalRequirementController@store');
 Route::get('getfuncreqs/{id}', 'FunctionalRequirementController@teamIndex');
 Route::get('getuserid/{username}', 'UserController@getUserId');
+Route::get('getcriterian/{id}', 'TaskController@showCriterian');
+Route::post('createteam', 'TeamController@store');
+Route::get('getteam/{id}', 'TeamController@show');
+Route::get('findteam/{name}', 'TeamController@nameIndex');
+Route::get('getusersteams/{userId}', 'TeamController@userIndex');
+Route::post('modifyteam/{id}', 'TeamController@update');
 Route::post('savecriteria', 'CriteriaController@store');
+Route::get('addteammember/{userid}/{teamid}', 'TeamAssignmentController@add');
+Route::get('teammembers/{teamid}', 'TeamAssignmentController@index');
+Route::get('teamremove/{userid}/{teamid}', 'TeamAssignmentController@kick');
 Route::post('newmessage', 'MessageController@store');
 Route::get('getmessages/{id}', 'MessageController@getMessages');
 Route::get('getallusers', 'UserController@index');
+Route::get('teaminvites/{userid}', 'TeamInvitationController@index');
+Route::get('deleteinvite/{id}', 'TeamInvitationController@remove');
+Route::post('inviteuser', 'TeamInvitationController@invite');
+Route::get('allsentinvites/{id}', 'TeamInvitationController@detailedUserIndex');
+Route::Get('allrecievedinvites/{id}', 'TeamInvitationController@getUserInvitations');
+
+
 
 

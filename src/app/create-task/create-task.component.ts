@@ -5,10 +5,8 @@ import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../auth.service';
-
-
 
 @Component({
   selector: 'app-create-task',
@@ -34,27 +32,44 @@ export class CreateTaskComponent {
 });
 
   public priorities = ['1', '2', '3'];
-  public users = ['John', 'Sarah', 'Matt']; 
+  public users = []; 
   public req : FunctionalRequirement[];
   public teamId = 0;
   public taskId : string;
 
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
     this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
-      console.log(res.json());
       this.req = res.json() as FunctionalRequirement[];
+      this.getUsers();
     });
   }
 
+  getUsers() {
+    this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
+      this.users = res.json() as User[];
+    });
+  } 
+  
 
+  /**
+   * Gets criterian for the view.
+   */
   get criterian() {
     return this.taskForm.get('criterian') as FormArray;
   }
 
+  /**
+   * Adds criteria from view to criterian array.
+   */
   addCriteria() {
     this.criterian.push(this.fb.control(''));
   }
 
+  /**
+   * Removes criterian from index i.
+   * Ensures at least one line entry in view.
+   * @param i 
+   */
   removeCriteria(i: number) {
     if (this.criterian.length == 1) {
       this.criterian.removeAt(i);
@@ -64,36 +79,49 @@ export class CreateTaskComponent {
     this.criterian.removeAt(i);
   }
 
-  onSubmit() {
+  /**
+   * Removes empty criterian.
+   */
+  cleanCriteria() {
     for (var i = 0; i < this.criterian.length; i++) {
-      if (this.criterian[i] == '') {
+      if (this.criterian[i] == "") {
         this.criterian.removeAt(i);
       }
     }
+  }
+
+  getMembers() { 
+
+  }
+
+  onSubmit() {
+    this.cleanCriteria();
 
     let request : TaskRequest = {
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
       priority: this.taskForm.get('priority').value as number,
       status: 0,
-      funcreq: 0,
+      funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
-      creatorid: this.auth.id,
+      creatorid: this.auth.getUserId(),
       teamid: 0,
-      assigneduserid: 0
+      assigneduserid: 0,
+      criterian: this.taskForm.get('criterian').value,
     }
 
     this.http.post('http://localhost:8000/api/savetask', request).subscribe((res) => {
       console.log(res);
     });
 
-    /** *************** */
-    this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
+    //this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
 
     this.snackBar.open('Task created', 'Ok', {
       duration: 3000
     });
+    this.router.navigateByUrl('/');
+
   }
 
   onCancel() {
@@ -106,10 +134,10 @@ export class CreateTaskComponent {
   }
 }
 
-interface Criteria {
-  description: string,
-  body: string,
-  taskid: number
+interface User {
+  id: number,
+  name: string,
+  email: string
 }
 
 interface FunctionalRequirement {
@@ -128,5 +156,6 @@ interface TaskRequest {
   timespent: number,
   teamid: number,
   creatorid: number,
-  assigneduserid: number
+  assigneduserid: number,
+  criterian: any
 }
