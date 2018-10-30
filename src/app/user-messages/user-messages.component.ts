@@ -21,8 +21,12 @@ export class UserMessagesComponent {
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) { 
     //get uID, get from 'message' table where id = uID
     this.uID = this.auth.getUserId();
-    this.http.get('http://localhost:8000/api/getmessages' + this.uID).subscribe((res) => {
-      this.messages = res.json() as Message[];
+    //this.uID = 1;
+    //alert(this.uID);
+    this.http.get('http://localhost:8000/api/getmessages/' + this.uID).subscribe((res) => {
+    //this.http.get('http://localhost:8000/api/getmessages').subscribe((res) => {
+      //this.messages = res.json() as Message[];
+      console.log(res);
     });
   }
 
