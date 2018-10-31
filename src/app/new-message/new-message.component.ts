@@ -78,7 +78,7 @@ export class NewMessageComponent {
 
   onCancel() {
     this.newMessage.reset();
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/usermessages');
   }
 
   private filterUsers(value: string): User[] {

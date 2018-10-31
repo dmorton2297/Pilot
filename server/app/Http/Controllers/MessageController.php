@@ -43,8 +43,19 @@ class MessageController extends Controller
         $messages = DB::table('message')->where('receiver', $id)->get();
         return $messages;
     }
+
     public function delete($id) 
     {
         DB::table('message')->where('id','=',$id)->delete();
     }
+
+    public function getUserInvitations($id) {
+		$result = DB::table('message') 
+		-> join('users', 'message.senderid', '=', 'users.id')
+		-> select('message.id', 'users.email', 'users.name as From')
+		-> where('message.receiver', $id)
+		-> get();
+
+		return $result;
+	}
 }

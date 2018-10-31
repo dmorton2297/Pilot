@@ -21,4 +21,8 @@ export class NavigationComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
+  onMessagingPressed() {
+    this.router.navigateByUrl('/usermessages');
+  }
+
 }

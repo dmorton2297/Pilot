@@ -1,18 +1,22 @@
 <mat-card>
-  <mat-card-header>
-    <mat-card-title>
-      <h1>Send New Message</h1>
-    </mat-card-title>
-  </mat-card-header>
+  <mat-card class="heading-container">
+    <div class="row">
+      <div class="col-md-8">
+        <h1 class="heading">Send New Message</h1>
+      </div>
+      <div class="col-md-4">
+          <button mat-button id="cancel" (click)="onCancel()">Cancel</button>
+        </div>
+    </div>
+  </mat-card>
 
   <mat-card-content>
     <form [formGroup]="newMessage" (ngSubmit)="onSubmit()">
       <!-- Field for Recipient of Message -->
         <mat-form-field>
-          <input type="text" matInput placeholder="Username" aria-label="User" formControlName="receiver" [formControl]="messageForm" [matAutocomplete]="auto"
-            placeholder="Recipient Name" required>
+          <input type="text" matInput placeholder="Username" aria-label="User" [formControl]="messageForm" [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let user of filteredUsers | async" [value]="users.name">
+            <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name">
               {{user.name}}
             </mat-option>
           </mat-autocomplete>
