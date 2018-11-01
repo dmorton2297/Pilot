@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-backlog',
@@ -18,7 +19,7 @@ export class BacklogComponent implements OnInit{
 
   @Output() signalEvent = new EventEmitter<string>();
 
-  constructor(private http: Http, private router: Router, private auth: AuthService) { 
+  constructor(private http: Http, private router: Router, private auth: AuthService, private state: StateService) { 
     this.loadData();
   }
 
@@ -40,14 +41,27 @@ export class BacklogComponent implements OnInit{
   }
 
   loadData() {
-    this.http.get('http://localhost:8000/api/getusertasks/'+this.auth.id).subscribe((res) => {
-      this.tasks = res.json() as Task[];
-      if (this.sortByName) {
-        this.sortTableName();
-      } else if (this.sortByPriority) {
-        this.sortTablePriority();
-      }
-    });
+    if (this.state.getCurrentStateId() == 0) {
+      console.log('here');
+      this.http.get('http://localhost:8000/api/getusertasks/'+this.auth.id).subscribe((res) => {
+        this.tasks = res.json() as Task[];
+        if (this.sortByName) {
+          this.sortTableName();
+        } else if (this.sortByPriority) {
+          this.sortTablePriority();
+        }
+      });
+    } else {
+      this.http.get('http://localhost:8000/api/getteamtasks/'+this.state.getCurrentStateId()).subscribe((res) => {
+        this.tasks = res.json() as Task[];
+        if (this.sortByName) {
+          this.sortTableName();
+        } else if (this.sortByPriority) {
+          this.sortTablePriority();
+        }
+      });
+    }
+    
   }
 
   onStatusClicked(taskId: number) {

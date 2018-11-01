@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../auth.service';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-create-task',
@@ -37,7 +38,7 @@ export class CreateTaskComponent {
   public teamId = 0;
   public taskId : string;
 
-  constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private fb: FormBuilder, private http: Http, private state: StateService, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
     this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
       this.req = res.json() as FunctionalRequirement[];
       this.getUsers();
@@ -106,7 +107,7 @@ export class CreateTaskComponent {
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
       creatorid: this.auth.getUserId(),
-      teamid: 0,
+      teamid: this.state.getCurrentStateId(),
       assigneduserid: 0,
       criterian: this.taskForm.get('criterian').value,
     }

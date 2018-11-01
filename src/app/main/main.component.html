@@ -1,11 +1,11 @@
   <div style="margin-bottom: -40px; margin-top: 8px;" class="row">
-    <div class="col-md-11">
+    <div class="col-md-8">
       <span flex></span>
     </div>
-    <div class="col-md-1">
-        <button style="z-index: 100;" mat-button [matMenuTriggerFor]="menu" *ngIf="teamsLoaded">Menu</button>
+    <div class="col-md-4">
+        <button style="z-index: 100; float: right;" mat-button [matMenuTriggerFor]="menu" *ngIf="teamsLoaded">{{selectedViewOption}}</button>
         <mat-menu  id="menu" #menu="matMenu">
-            <button *ngFor="let a of viewOptions" style="z-index: 10001; font-size: 10pt;" mat-menu-item>{{a}}</button>
+            <button *ngFor="let a of viewOptions" style="z-index: 10001; font-size: 10pt;" mat-menu-item (click)="onMenuItemPressed(a)">{{a}}</button>
           </mat-menu>
     </div>
   </div>
