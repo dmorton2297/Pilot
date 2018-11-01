@@ -51,6 +51,8 @@ Route::get('allrecievedinvites/{id}', 'TeamInvitationController@getUserInvitatio
 Route::get('getteammembers/{teamId}', 'TeamAssignmentController@getTeamMembers');
 Route::get('getjoinedteams/{userId}', 'TeamController@joinedTeams');
 Route::post('addFavorite', 'FavoriteController@store');
-Route::post('removeFavorite/{userid}/{favoriteid}', 'FavoriteController@destory');
+Route::get('removeFavorite/{userid}/{favoriteid}', 'FavoriteController@destroy');
+Route::get('getallfav', 'FavoriteController@index');
+Route::get('checkfavorite/{userid}/{favoriteid}', 'FavoriteController@indexUser');
 
 

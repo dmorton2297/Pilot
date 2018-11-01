@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-
-
-
 class FavoriteController extends Controller
 {
     /**
@@ -20,6 +17,12 @@ class FavoriteController extends Controller
     public function index(Request $request)
     {
         $fav = DB::table('favorite')->get();
+        return $fav;
+    }
+
+    public function indexUser($userid, $favoriteid) 
+    {
+        $fav = DB::table('favorite')->where('userid', '=', $userid)->get();
         return $fav;
     }
 
@@ -88,10 +91,8 @@ class FavoriteController extends Controller
     public function destroy($userid, $favoriteid)
     {
         DB::table('favorite')
-            ->where('userid','=',$id)
-            ->where(function ($query) {
-                $query->where('favoriteid', '=', $favoriteid);
-            })
-            ->destory();
+            ->where('userid','=',$userid)
+            ->where('favoriteid', '=', $favoriteid)
+            ->delete();
     }
 }

@@ -36,11 +36,11 @@
             </td>
           </ng-container>
 
-        <!-- TODO: Add favorite button.-->
+        <!-- -->
         <ng-container matColumnDef="favorite">
           <th mat-header-cell *matHeaderCellDef> Favorite </th>
           <td mat-cell *matCellDef="let element"> 
-            <button mat-button (click)="toggled = !toggled; updateFavorite(toggled, element.id);" >{{toggled ? 'Remove favorite' : 'Add favorite'}}</button>
+            <mat-button-toggle (click)="updateFavorite(element.id);" >{{toggle[element.id] ? 'Remove favorite' : 'Add favorite'}}</mat-button-toggle>
           </td>
         </ng-container>
         

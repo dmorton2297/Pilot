@@ -80,22 +80,6 @@ export class ModifyTaskComponent {
     this.getUsers();
  }
 
-  getSelectedReq() {
-
-  } 
-
-  getAllReq() {
-
-  }
-
-  getCriterion() {
-
-  }
-
-  getSelectedRequirment() {
-
-  }
-
   getUsers() {
     this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
       this.users = res.json() as User[];
@@ -165,10 +149,6 @@ export class ModifyTaskComponent {
         this.criterian.removeAt(i);
       }
     } 
-  }
-
-  getMembers() {
-
   }
 
   onSubmit() {
