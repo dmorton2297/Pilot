@@ -11,7 +11,7 @@ import { AuthService } from '../auth.service';
 export class BacklogComponent implements OnInit{
 
   public tasks: Task[] = [];
-  public displayedColumns: String[] = ['id', 'name', 'description', 'priority', 'status', 'created', 'actions'];
+  public displayedColumns: String[] = ['name', 'description', 'priority', 'status', 'actions'];
 
   public sortByName = true;
   public sortByPriority = false;
@@ -23,6 +23,7 @@ export class BacklogComponent implements OnInit{
   }
 
   ngOnInit() {
+    console.log('ngoninit called here');
     this.loadData();
   }
 

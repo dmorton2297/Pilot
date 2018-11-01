@@ -112,15 +112,14 @@ export class CreateTaskComponent {
     }
 
     this.http.post('http://localhost:8000/api/savetask', request).subscribe((res) => {
-      console.log(res);
-    });
+      this.snackBar.open('Task created', 'Ok', {
+        duration: 3000
+      });
+      this.router.navigateByUrl('/backlog');    });
 
     //this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
 
-    this.snackBar.open('Task created', 'Ok', {
-      duration: 3000
-    });
-    this.router.navigateByUrl('/');
+    
 
   }
 
