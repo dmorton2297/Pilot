@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Http } from '@angular/http';
 
@@ -20,7 +20,7 @@ export class ViewTeamComponent implements OnInit {
   public dialog;
   
   @Output() signalEvent = new EventEmitter<string>();
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private http: Http) { 
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private http: Http, public snackBar: MatSnackBar) { 
     this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
     this.http.get('http://localhost:8000/api/getteam/' + this.teamId).subscribe((res) => {
       console.log(res.json);
@@ -42,14 +42,15 @@ export class ViewTeamComponent implements OnInit {
   }
   
   onDeletePressed(id) {
-    const dialogConfirm = this.dialog.open(ConfirmDeleteDialog);
-    dialogConfirm.afterClosed().subscribe(result => {
-      if (result == true) {
-        this.http.get('http://localhost:8000/api/teamremove/' + id + '/' + this.teamId).subscribe();
-        this.updateSignal();
-
-      }
+    this.http.get('http://localhost:8000/api/teamremove/' + id + '/' + this.teamId).subscribe((res) => {
+      this.snackBar.open('Member removed', 'Ok', {
+        duration: 3000
       });
+    });
+  }
+
+  onMessagePressed(id) {
+    console.log(id);
   }
 
   ngOnInit() {
