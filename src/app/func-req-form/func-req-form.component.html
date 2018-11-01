@@ -8,11 +8,11 @@
     <form [formGroup]="reqForm" (ngSubmit)="onSubmit()">
       <mat-form-field> <input matInput type="text" formControlName="name" placeholder="Name" required> </mat-form-field>
       <mat-form-field> <input matInput type="text" formControlName="description" placeholder="Description" required> </mat-form-field>
-      <mat-form-field>
+      <!--<mat-form-field>
         <mat-select placeholder="Tasks" multiple required> 
            <mat-option *ngFor="let f of tasks" [value]="f">{{f.name}}</mat-option>
         </mat-select>  
-      </mat-form-field>
+      </mat-form-field> -->
       <div class="button-row">
             <button  mat-raised-button color="primary"  (click)="onSubmit">Create</button>
             <button  mat-raised-button color="primary" (click)="onBack()" type="button">Back</button>

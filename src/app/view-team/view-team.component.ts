@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Http } from '@angular/http';
+import { AuthService } from '../auth.service';
+
 
 @Component({
   selector: 'app-view-team',
@@ -14,13 +16,14 @@ export class ViewTeamComponent implements OnInit {
   team: Team;
   public teamName: string = "";
   public teamDescription: String = "";
-  public displayedColumns: String[] = ['id', 'name', 'email', 'actions'];
+  public displayedColumns: String[] = ['id', 'name', 'email', 'actions', 'favorite'];
   public users: User[];
+  toggled: boolean = false;
 
   public dialog;
   
   @Output() signalEvent = new EventEmitter<string>();
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private http: Http) { 
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private http: Http, private auth: AuthService) { 
     this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
     this.http.get('http://localhost:8000/api/getteam/' + this.teamId).subscribe((res) => {
       console.log(res.json);
@@ -52,6 +55,21 @@ export class ViewTeamComponent implements OnInit {
       });
   }
 
+  updateFavorite(favorite: boolean, id: number) {
+    console.log(favorite);
+    if (favorite) {
+      let request : Favorite = {
+        userid: this.auth.getUserId(),
+        favoriteid : id
+      }
+      this.http.post('http://localhost:8000/api/addFavorite/', request).subscribe((res) => {
+        console.log(res);
+      });
+    } else {
+      // Remove favorite
+    }
+  }
+
   ngOnInit() {
   }
 
@@ -63,6 +81,10 @@ export class ViewTeamComponent implements OnInit {
 
 
   
+interface Favorite {
+  userid : number,
+  favoriteid : number
+}
 
 interface Team {
   id: number,
