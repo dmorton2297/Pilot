@@ -33,6 +33,29 @@ class TeamController extends Controller
         return $tasks;
     }
 
+    public function setRole(Request $request) {
+        $role = $request -> input('role');
+        $userId = $request -> input('userid');
+        $teamId = $request -> input('teamid');
+
+        DB::table('teamrole')
+        ->where('userid', $userId)
+        ->where('teamid', $teamId)
+        ->update(['role' => $role]);
+    }
+
+    public function getRole(Request $request) {
+        $userId = $request -> input('userid');
+        $teamId = $request -> input('teamid');
+
+        $results = DB::table('teamrole')
+        ->where('userid', $userId)
+        ->where('teamid', $teamId)
+        ->get();
+
+        return $results;
+    }
+
     public function joinedTeams($userId) {
         $result = DB::table('teamassignment') 
 		-> join('users', 'teamassignment.userid', '=', 'users.id')
@@ -76,6 +99,16 @@ class TeamController extends Controller
             'updated_at' => Carbon::now()->toDateTimeString()
             ]
             );
+
+        DB::table('teamrole') -> insert(
+            [
+                'role' => 'Owner',
+                'teamid' => $teamId,
+                'userid' => $creatorId,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]
+        );
 
         return $name;
     }

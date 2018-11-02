@@ -45,6 +45,7 @@ import { NewMessageComponent } from './new-message/new-message.component';
 import { UserMessagesComponent } from './user-messages/user-messages.component';
 import { InviteToTeamComponent } from './invite-to-team/invite-to-team.component';
 import { MessageToUserComponent } from './message-to-user/message-to-user.component';
+import { ManageTeamRoleComponent } from './manage-team-role/manage-team-role.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -62,7 +63,8 @@ const appRoutes: Routes = [
   { path: 'inviteToTeam/:teamid', component: InviteToTeamComponent, canActivate: [AuthService]}, 
   { path: 'messages', component: UserMessagesComponent, canActivate: [AuthService]},
   { path: 'newmessage', component: NewMessageComponent, canActivate: [AuthService] },
-  { path: 'sendmessagetouser/:id', component: MessageToUserComponent, canActivate: [AuthService] }
+  { path: 'sendmessagetouser/:id', component: MessageToUserComponent, canActivate: [AuthService] },
+  { path: 'managerole/:userid/:teamid', component: ManageTeamRoleComponent, canActivate: [AuthService] }
 ];
 
 export function getGoogleConfigs() {
@@ -99,6 +101,7 @@ export function getGoogleConfigs() {
     TeaminvitationsComponent,
     InviteToTeamComponent,
     MessageToUserComponent,
+    ManageTeamRoleComponent,
     ],
   imports: [
   BrowserModule,
