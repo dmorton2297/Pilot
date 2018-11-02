@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('savetask', 'TaskController@store');
 Route::get('getusertasks/{userId}', 'TaskController@userIndex');
+Route::get('getteamtasks/{teamId}', 'TaskController@teamIndex');
 Route::get('gettask/{id}', 'TaskController@show');
 Route::post('changestatus', 'TaskController@changeStatus');
 Route::post('saveuser', 'UserController@store');
@@ -46,8 +47,8 @@ Route::get('teaminvites/{userid}', 'TeamInvitationController@index');
 Route::get('deleteinvite/{id}', 'TeamInvitationController@remove');
 Route::post('inviteuser', 'TeamInvitationController@invite');
 Route::get('allsentinvites/{id}', 'TeamInvitationController@detailedUserIndex');
-Route::Get('allrecievedinvites/{id}', 'TeamInvitationController@getUserInvitations');
-
-
+Route::get('allrecievedinvites/{id}', 'TeamInvitationController@getUserInvitations');
+Route::get('getteammembers/{teamId}', 'TeamAssignmentController@getTeamMembers');
+Route::get('getjoinedteams/{userId}', 'TeamController@joinedTeams');
 
 

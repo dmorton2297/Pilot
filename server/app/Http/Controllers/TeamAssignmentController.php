@@ -29,7 +29,18 @@ class TeamAssignmentController extends Controller
     //Removes user from team
 	public function kick($userid,$teamid) {
 		DB::table('teamassignment')->where('userid', $userid)->where('teamid',$teamid)->delete();
-	}
+    }
+    
+    public function getTeamMembers($teamId) {
+        $result = DB::table('teamassignment') 
+		-> join('users', 'teamassignment.userid', '=', 'users.id')
+		-> join('team', 'teamassignment.teamid', '=', 'team.id')
+		-> select('teamassignment.id', 'users.email', 'users.name as memberName', 'teamassignment.teamid as teamId', 'team.name as teamName')
+		-> where('teamassignment.teamid', $teamId)
+		-> get();
+
+		return $result;
+    }
 
     /**
      * Show the form for creating a new resource.
