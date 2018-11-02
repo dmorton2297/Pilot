@@ -35,7 +35,7 @@ class TeamAssignmentController extends Controller
         $result = DB::table('teamassignment') 
 		-> join('users', 'teamassignment.userid', '=', 'users.id')
 		-> join('team', 'teamassignment.teamid', '=', 'team.id')
-		-> select('teamassignment.id', 'users.email', 'users.name as memberName', 'teamassignment.teamid as teamId', 'team.name as teamName')
+		-> select('users.id', 'users.email', 'users.name as memberName', 'teamassignment.teamid as teamId', 'team.name as teamName')
 		-> where('teamassignment.teamid', $teamId)
 		-> get();
 

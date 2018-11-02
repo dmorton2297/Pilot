@@ -104,7 +104,7 @@ export class NewMessageComponent implements OnInit {
 
   onCancel() {
     this.newMessage.reset();
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/messages');
   }
 
   private filterUsers(exp: string) {

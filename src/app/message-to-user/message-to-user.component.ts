@@ -65,11 +65,13 @@ export class MessageToUserComponent implements OnInit {
     this.http.post('http://localhost:8000/api/newmessage', request).subscribe((res) => {
       console.log(res);
     });
+
+    
   }
 
   onCancel() {
     this.message.reset();
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/messages');
   }
 
 
