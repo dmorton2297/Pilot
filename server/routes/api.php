@@ -52,5 +52,6 @@ Route::get('allrecievedinvites/{id}', 'TeamInvitationController@getUserInvitatio
 Route::get('getteammembers/{teamId}', 'TeamAssignmentController@getTeamMembers');
 Route::get('getjoinedteams/{userId}', 'TeamController@joinedTeams');
 Route::get('getuser/{id}', 'UserController@userWithId');
+Route::get('deletemessage/{id}', 'MessageController@delete');
 
 

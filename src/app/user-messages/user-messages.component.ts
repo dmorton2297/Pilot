@@ -23,12 +23,16 @@ export class UserMessagesComponent {
     this.uID = this.auth.getUserId();
     //this.uID = 1;
     //alert(this.uID);
-    this.http.get('http://localhost:8000/api/getmessages/' + this.uID).subscribe((res) => {
-    //this.http.get('http://localhost:8000/api/getmessages').subscribe((res) => {
-      console.log(res);
-      this.messages = res.json() as Message[];
+    this.loadMessages();
+  }
 
-    });
+  loadMessages() {
+    this.http.get('http://localhost:8000/api/getmessages/' + this.uID).subscribe((res) => {
+      //this.http.get('http://localhost:8000/api/getmessages').subscribe((res) => {
+        console.log(res);
+        this.messages = res.json() as Message[];
+  
+      });
   }
 
   onNewMessagePressed() {
@@ -37,6 +41,12 @@ export class UserMessagesComponent {
 
   onReplyPressed($id) {
     this.router.navigateByUrl('/sendmessagetouser/' + $id);
+  }
+
+  onDeletePressed(id) {
+    this.http.get('http://localhost:8000/api/deletemessage/' + id).subscribe((res) => {
+      this.loadMessages();
+    });
   }
 
 
