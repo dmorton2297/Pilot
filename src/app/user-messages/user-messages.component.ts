@@ -15,10 +15,10 @@ export class UserMessagesComponent {
 
   public uID : number;
   public messages : Message[] = [];
-  column_names: string[] = ['from', 'message']
+  displayedColumns: string[] = ['sender', 'message', 'actions'];
 
 
-  constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) { 
+  constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private activatedRoute: ActivatedRoute, private router: Router) { 
     //get uID, get from 'message' table where id = uID
     this.uID = this.auth.getUserId();
     //this.uID = 1;
@@ -28,6 +28,10 @@ export class UserMessagesComponent {
       //this.messages = res.json() as Message[];
       console.log(res);
     });
+  }
+
+  onNewMessagePressed() {
+    this.router.navigateByUrl('/newmessage');
   }
 
 

@@ -1,3 +1,5 @@
+
+
 <mat-card>
   <mat-card-header>
     <mat-card-title>
@@ -9,13 +11,13 @@
     <form [formGroup]="newMessage" (ngSubmit)="onSubmit()">
       <!-- Field for Recipient of Message -->
         <mat-form-field>
-          <input type="text" matInput placeholder="Username" aria-label="User" formControlName="receiver" [formControl]="messageForm" [matAutocomplete]="auto"
+          <input type="text" id="to" matInput placeholder="Username" aria-label="User" formControlName="receiver" [matAutocomplete]="auto"
             placeholder="Recipient Name" required>
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let user of filteredUsers | async" [value]="users.name">
-              {{user.name}}
-            </mat-option>
-          </mat-autocomplete>
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{option}}
+                </mat-option>
+            </mat-autocomplete>
         </mat-form-field>
 
       <!-- Field for Message Content -->

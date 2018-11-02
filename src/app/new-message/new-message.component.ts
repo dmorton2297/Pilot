@@ -18,19 +18,17 @@ import { startWith, map } from 'rxjs/operators';
   styleUrls: ['./new-message.component.css']
 })
 
-export class NewMessageComponent {
+export class NewMessageComponent implements OnInit {
   newMessage = this.fb.group({
-    receiver: ['', Validators.required],
-    message: ['', Validators.required]
+    receiver: [''],
+    message: ['']
   });
 
-  public uID : number;
+  public options = [];
   public sender : number;
   public receiver : string;
   public users : User[] = [];
-  public usernames : string[] = [];
-  public userids : number[] = [];
-  public searchResult = [];
+  public displayedUsers: User[] = [];
   public messageForm : FormControl = new FormControl();
   filteredUsers: Observable<User[]>;
   public userForm = this.fb.group({
@@ -48,13 +46,28 @@ export class NewMessageComponent {
     this.sender = this.auth.getUserId();
     this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
       this.users = res.json() as User[];
+      this.displayedUsers = this.users;
+      this.loadOptions();
     });
-    this.filteredUsers = this.messageForm.valueChanges
-      .pipe(
-        startWith(''),
-        map(user => user ? this.filterUsers(user) : this.users.slice())
-      );
       
+  }
+
+  loadOptions() {
+    this.options = [];
+    for (var i = 0; i < this.displayedUsers.length; i++) {
+      this.options.push(this.displayedUsers[i].name + '  |  ' + this.displayedUsers[i].email);
+    }
+  }
+
+  ngOnInit() {
+    var input = document.getElementById('to');
+
+    // add event listener to the too field to capture every time the user updates the input
+    let that = this;
+    input.addEventListener('input', function(){   
+      console.log(that.newMessage.get('receiver').value as string);
+      that.filterUsers(that.newMessage.get('receiver').value as string);
+    });
   }
 
   onSubmit() {
@@ -81,11 +94,24 @@ export class NewMessageComponent {
     this.router.navigateByUrl('/');
   }
 
-  private filterUsers(value: string): User[] {
-    if (value != undefined) {
-      const name = value.toLowerCase();
-      return this.users.filter(user => user.name.toLowerCase().indexOf(name) === 0);
+  private filterUsers(exp: string) {
+    this.displayedUsers = [];
+    for (var i = 0; i < this.users.length; i++) {
+      let n = this.users[i].name;
+      let e = this.users[i].email;
+
+
+      if (n.includes(exp) || e.includes(exp)) {
+        this.displayedUsers.push(this.users[i]);
+      }
     }
+
+    console.log(this.displayedUsers);
+    this.loadOptions();
+  }
+
+  displayFn(user?: string): string | undefined {
+    return user ? user : undefined;
   }
 
 
