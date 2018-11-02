@@ -23,7 +23,8 @@ export class ViewTeamComponent implements OnInit {
   public canChangeRole = false;
   public canMessage = false;
 
-  public dialog;  
+  public dialog;
+  
   @Output() signalEvent = new EventEmitter<string>();
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private http: Http, public snackBar: MatSnackBar, private auth: AuthService) { 
     this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -32,11 +33,6 @@ export class ViewTeamComponent implements OnInit {
       var temp = res.json() as Team[];
       this.team = temp[0];
       this.teamName = this.team.name;
-      console.log(this.teamName);
-    });
-
-    this.http.get('http://localhost:8000/api/teammembers/' + this.teamId).subscribe((res) => {
-     // this.users = res.json() as User[];
       this.teamDescription = this.team.description;
       console.log(this.teamName);
       this.getTeamMembers();
@@ -123,6 +119,8 @@ interface Team {
   updated_at: number
 }
 
+
+	
 
 interface User {
   id: number,
