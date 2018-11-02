@@ -116,7 +116,8 @@ export class CreateTaskComponent {
       this.snackBar.open('Task created', 'Ok', {
         duration: 3000
       });
-      this.router.navigateByUrl('/backlog');    });
+      this.location.back();
+        });
 
     //this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
 

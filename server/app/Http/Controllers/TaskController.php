@@ -31,7 +31,7 @@ class TaskController extends Controller
      */
     public function userIndex($userId) 
     {
-        $tasks = DB::table('task')->where('creatorid', $userId)->get();
+        $tasks = DB::table('task')->where('creatorid', $userId) -> where('teamid', 0)->get();
         return $tasks;
     }
 
