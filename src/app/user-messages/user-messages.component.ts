@@ -31,8 +31,23 @@ export class UserMessagesComponent {
       //this.http.get('http://localhost:8000/api/getmessages').subscribe((res) => {
         console.log(res);
         this.messages = res.json() as Message[];
+        this.checkExpiredMessages();
   
       });
+  }
+
+  checkExpiredMessages() {
+    for (var i = 0; i < this.messages.length; i++) {
+      console.log(this.messages[i].created_at);
+      let date = new Date(this.messages[i].created_at);
+      let todayDate = new Date(Date.parse(Date()));
+      var seconds = (todayDate.getTime() - date.getTime()) / 1000;
+
+      // on week delete condition
+      if (seconds > 604800) {
+        this.onDeletePressed(this.messages[i].id);
+      }
+    }
   }
 
   onNewMessagePressed() {
@@ -59,5 +74,7 @@ interface Message {
   senderId: number,
   senderEmail: string,
   receiver: number,
-  team: number
+  team: number,
+  created_at: number,
+  updated_at: number
 }

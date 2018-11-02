@@ -21,7 +21,7 @@ export class CreateTeamComponent{
       members: [''],
       color: ['', Validators.required],
       toInvite: ['']
-});
+    });
 
   users : User[];
   teamId : number;
@@ -95,6 +95,6 @@ interface Team {
   name: string,
   description: string,
   invitemsg: string,
-  color: any
-  creatorId: number
+  color: any,
+  creatorId: number,
 }

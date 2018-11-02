@@ -6,9 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import {MatSnackBar} from '@angular/material';
 
-
-
-
 @Component({
   selector: 'app-invite-to-team',
   templateUrl: './invite-to-team.component.html',
@@ -37,7 +34,6 @@ export class InviteToTeamComponent implements OnInit {
       this.team = res.json() as Team[];
       this.teamName = this.team[0].name;
       this.taskForm.patchValue({invmessage: this.team[0].invitemsg});
-      console.log
     });
   }
   loadCurrentInvites() {
