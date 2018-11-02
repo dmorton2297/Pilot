@@ -34,13 +34,6 @@ export class CreateTeamComponent{
     this.teamForm.patchValue({color: c});
   }
 
-  /*
-  getUsers() {
-    this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
-      this.users = res.json() as User[];
-    });
-  } */
-
   inviteUsers() {
     var to_invite : User[] = this.teamForm.get('toInvite').value as User[];
     for (var i = 0; i < to_invite.length; i++) {
@@ -76,6 +69,7 @@ export class CreateTeamComponent{
         });
       }
     });
+    this.router.navigateByUrl('/teams');
   }
 
   onCancel() {

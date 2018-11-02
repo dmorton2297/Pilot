@@ -29,19 +29,17 @@ export class InviteToTeamComponent implements OnInit {
     this.teamId = this.activatedRoute.snapshot.paramMap.get('teamid'); 
     this.loadTeamName();
     this.loadCurrentInvites();
-
-    
-
-
   }
 
+  public team : Team[];
   loadTeamName() {
     this.http.get('http://localhost:8000/api/getteam/'+this.teamId).subscribe((res) => {
-      let r = res.json() as Team[];
-      this.teamName = r[0].name;
+      this.team = res.json() as Team[];
+      this.teamName = this.team[0].name;
+      this.taskForm.patchValue({invmessage: this.team[0].invitemsg});
+      console.log
     });
   }
-
   loadCurrentInvites() {
     this.http.get('http://localhost:8000/api/allsentinvites/' + this.auth.getUserId()).subscribe(res => {
       let r = res.json() as Invite[];

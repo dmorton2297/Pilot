@@ -34,12 +34,9 @@ export class ViewTeamComponent implements OnInit {
       this.teamName = this.team.name;
       console.log(this.teamName);
     });
-	this.http.get('http://localhost:8000/api/teammembers/' + this.teamId).subscribe((res) =>{
-		
-	});
 
     this.http.get('http://localhost:8000/api/teammembers/' + this.teamId).subscribe((res) => {
-      this.users = res.json() as User[];
+     // this.users = res.json() as User[];
       this.teamDescription = this.team.description;
       console.log(this.teamName);
       this.getTeamMembers();
