@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('savetask', 'TaskController@store');
 Route::get('getusertasks/{userId}', 'TaskController@userIndex');
+Route::get('getteamtasks/{teamId}', 'TaskController@teamIndex');
 Route::get('gettask/{id}', 'TaskController@show');
 Route::post('changestatus', 'TaskController@changeStatus');
 Route::post('saveuser', 'UserController@store');
@@ -40,8 +41,19 @@ Route::post('savecriteria', 'CriteriaController@store');
 Route::get('addteammember/{userid}/{teamid}', 'TeamAssignmentController@add');
 Route::get('teammembers/{teamid}', 'TeamAssignmentController@index');
 Route::get('teamremove/{userid}/{teamid}', 'TeamAssignmentController@kick');
-Route::post('savecriteria', 'CriteriaController@store');
 Route::post('newmessage', 'MessageController@store');
+Route::get('getmessages/{id}', 'MessageController@getMessages');
 Route::get('getallusers', 'UserController@index');
+Route::get('teaminvites/{userid}', 'TeamInvitationController@index');
+Route::get('deleteinvite/{id}', 'TeamInvitationController@remove');
 Route::post('inviteuser', 'TeamInvitationController@invite');
+Route::get('allsentinvites/{id}', 'TeamInvitationController@detailedUserIndex');
+Route::get('allrecievedinvites/{id}', 'TeamInvitationController@getUserInvitations');
+Route::get('getteammembers/{teamId}', 'TeamAssignmentController@getTeamMembers');
+Route::get('getjoinedteams/{userId}', 'TeamController@joinedTeams');
+Route::get('getuser/{id}', 'UserController@userWithId');
+Route::get('deletemessage/{id}', 'MessageController@delete');
+Route::post('setrole', 'TeamController@setRole');
+Route::post('getrole', 'TeamController@getRole');
+
 

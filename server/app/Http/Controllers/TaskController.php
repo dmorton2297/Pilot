@@ -35,6 +35,11 @@ class TaskController extends Controller
         return $tasks;
     }
 
+    public function teamIndex($teamId) {
+        $tasks = DB::table('task')->where('teamid', $teamId)->get();
+        return $tasks;
+    }
+
     public function changeStatus(Request $request)
     {
         $taskId = $request -> input('taskId');

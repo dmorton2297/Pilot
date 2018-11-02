@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
+import { AuthService } from '../auth.service';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-scrum-board',
@@ -15,7 +17,7 @@ export class ScrumBoardComponent {
   public startedTasks : Task[];
   public completedTasks : Task[];
   public displayedColumns : String[] = ['card'];
-  constructor(private http: Http) {
+  constructor(private http: Http, private auth: AuthService, private state: StateService) {
     this.loadData();
    }
 
@@ -23,12 +25,23 @@ export class ScrumBoardComponent {
     this.signalEvent.emit("SIG_UPDATE_TASKS");
   }
 
-   loadData() {
-    this.http.get('http://localhost:8000/api/getusertasks/0').subscribe((res) => {
-      this.tasks = res.json() as Task[];
-      this.processTableData();
-    });
-   }
+  loadData() {
+    if (this.state.getCurrentStateId() == 0) {
+      this.http.get('http://localhost:8000/api/getusertasks/'+this.auth.id).subscribe((res) => {
+        this.tasks = res.json() as Task[];
+        this.processTableData();
+        
+      });
+    } else {
+      console.log('scrum board is here')
+      this.http.get('http://localhost:8000/api/getteamtasks/'+this.state.getCurrentStateId()).subscribe((res) => {
+        this.tasks = res.json() as Task[];
+        this.processTableData();
+       
+      });
+    }
+    
+  }
 
 
   processTableData() {

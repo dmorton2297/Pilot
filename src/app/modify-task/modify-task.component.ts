@@ -187,23 +187,27 @@ export class ModifyTaskComponent {
       assigneduserid: 0,
       criterian: this.taskForm.get('criterian').value
     }
-    this.http.post('http://localhost:8000/api/modifytask/' + this.taskId, request, this.taskId).subscribe();
+    this.http.post('http://localhost:8000/api/modifytask/' + this.taskId, request, this.taskId).subscribe((res) => {
+      this.router.navigateByUrl('/backlog');
+    });
     this.snackBar.open('Task modified', 'Ok', {
       duration: 3000
     });
-    this.router.navigateByUrl('/');
   }
 
   onDelete() {
     if(!window.confirm('Are you sure you want to delete this task?')){
       return;
     } 
-    this.http.post('http://localhost:8000/api/deletetask/' + this.taskId, this.taskId).subscribe();
-    this.taskForm.reset();
-    this.snackBar.open('Task deleted', 'Ok', {
-      duration: 3000
+    this.http.post('http://localhost:8000/api/deletetask/' + this.taskId, this.taskId).subscribe((res) => {
+      this.taskForm.reset();
+      this.snackBar.open('Task deleted', 'Ok', {
+        duration: 3000
+      });
+      this.router.navigateByUrl('/');
+
     });
-    this.router.navigateByUrl('/');
+    
   }
 
   onCancel() {

@@ -1,24 +1,30 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.component.html',
   styleUrls: ['./backlog.component.css']
 })
-export class BacklogComponent {
+export class BacklogComponent implements OnInit{
 
   public tasks: Task[] = [];
-  public displayedColumns: String[] = ['id', 'name', 'description', 'priority', 'status', 'created', 'actions'];
+  public displayedColumns: String[] = ['name', 'description', 'priority', 'status', 'actions'];
 
   public sortByName = true;
   public sortByPriority = false;
 
   @Output() signalEvent = new EventEmitter<string>();
 
-  constructor(private http: Http, private router: Router, private auth: AuthService) { 
+  constructor(private http: Http, private router: Router, private auth: AuthService, private state: StateService) { 
+    this.loadData();
+  }
+
+  ngOnInit() {
+    console.log('ngoninit called here');
     this.loadData();
   }
 
@@ -26,19 +32,36 @@ export class BacklogComponent {
     this.router.navigateByUrl('/createtask');
   }
 
+  onCreateFuncReq() {
+    this.router.navigateByUrl('/funcreq');
+  }
+
   updateSignal() {
     this.signalEvent.emit("SIG_UPDATE_TASKS");
   }
 
   loadData() {
-    this.http.get('http://localhost:8000/api/getusertasks/'+this.auth.id).subscribe((res) => {
-      this.tasks = res.json() as Task[];
-      if (this.sortByName) {
-        this.sortTableName();
-      } else if (this.sortByPriority) {
-        this.sortTablePriority();
-      }
-    });
+    if (this.state.getCurrentStateId() == 0) {
+      console.log('here');
+      this.http.get('http://localhost:8000/api/getusertasks/'+this.auth.id).subscribe((res) => {
+        this.tasks = res.json() as Task[];
+        if (this.sortByName) {
+          this.sortTableName();
+        } else if (this.sortByPriority) {
+          this.sortTablePriority();
+        }
+      });
+    } else {
+      this.http.get('http://localhost:8000/api/getteamtasks/'+this.state.getCurrentStateId()).subscribe((res) => {
+        this.tasks = res.json() as Task[];
+        if (this.sortByName) {
+          this.sortTableName();
+        } else if (this.sortByPriority) {
+          this.sortTablePriority();
+        }
+      });
+    }
+    
   }
 
   onStatusClicked(taskId: number) {

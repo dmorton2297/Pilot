@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../auth.service';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-create-task',
@@ -32,12 +33,12 @@ export class CreateTaskComponent {
 });
 
   public priorities = ['1', '2', '3'];
-  public users: User[]; 
+  public users = []; 
   public req : FunctionalRequirement[];
   public teamId = 0;
   public taskId : string;
 
-  constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private fb: FormBuilder, private http: Http, private state: StateService, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
     this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
       this.req = res.json() as FunctionalRequirement[];
       this.getUsers();
@@ -90,7 +91,7 @@ export class CreateTaskComponent {
     }
   }
 
-  getMembers() {
+  getMembers() { 
 
   }
 
@@ -105,22 +106,21 @@ export class CreateTaskComponent {
       funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
-      creatorid: this.auth.id,
-      teamid: 0,
+      creatorid: this.auth.getUserId(),
+      teamid: this.state.getCurrentStateId(),
       assigneduserid: 0,
       criterian: this.taskForm.get('criterian').value,
     }
 
     this.http.post('http://localhost:8000/api/savetask', request).subscribe((res) => {
-      console.log(res);
-    });
+      this.snackBar.open('Task created', 'Ok', {
+        duration: 3000
+      });
+      this.router.navigateByUrl('/backlog');    });
 
     //this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
 
-    this.snackBar.open('Task created', 'Ok', {
-      duration: 3000
-    });
-    this.router.navigateByUrl('/');
+    
 
   }
 
