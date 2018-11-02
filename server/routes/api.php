@@ -53,5 +53,7 @@ Route::get('getteammembers/{teamId}', 'TeamAssignmentController@getTeamMembers')
 Route::get('getjoinedteams/{userId}', 'TeamController@joinedTeams');
 Route::get('getuser/{id}', 'UserController@userWithId');
 Route::get('deletemessage/{id}', 'MessageController@delete');
+Route::post('setrole', 'TeamController@setRole');
+Route::post('getrole', 'TeamController@getRole');
 
 

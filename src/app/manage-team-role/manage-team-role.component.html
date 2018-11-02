@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-card-header>
+      <h1>Manage {{username}}'s role.</h1>
+  </mat-card-header>
+  <hr style="widht: 100%"/>
+  <h4>{{teamName}}</h4>
+
+
+  <mat-card-content>
+    <form [formGroup]="role" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <input type="text" matInput placeholder="Role" aria-label="Role" formControlName="role" [matAutocomplete]="auto" [value]="displayedRole" required>
+        <mat-autocomplete #auto="matAutocomplete" >
+            <mat-option *ngFor="let option of options" [value]="option">
+              {{option}}
+            </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      
+
+      <div class="button-row">
+          <button mat-raised-button color="primary" (click)="onSubmit">Update Role</button>
+          <button mat-raised-button color="primary" (click)="onCancel()" type="button">Cancel</button>
+        </div>
+    </form>
+  </mat-card-content>
+</mat-card>
