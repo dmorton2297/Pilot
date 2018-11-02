@@ -24,6 +24,16 @@ class TeamAssignmentController extends Controller
         'updated_at' => Carbon::now()->toDateTimeString()
 		]
         );
+
+        DB::table('teamrole')->insert(
+        [
+            'role' => 'Member',
+            'teamid' => $teamid,
+            'userid' => $userid,
+            'created_at' => Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon::now()->toDateTimeString()
+        ]
+        );
     }
     
     //Removes user from team
@@ -34,8 +44,9 @@ class TeamAssignmentController extends Controller
     public function getTeamMembers($teamId) {
         $result = DB::table('teamassignment') 
 		-> join('users', 'teamassignment.userid', '=', 'users.id')
-		-> join('team', 'teamassignment.teamid', '=', 'team.id')
-		-> select('users.id', 'users.email', 'users.name as memberName', 'teamassignment.teamid as teamId', 'team.name as teamName')
+        -> join('team', 'teamassignment.teamid', '=', 'team.id')
+        -> join('teamrole', 'teamassignment.userid', '=', 'teamrole.userid')
+		-> select('users.id', 'users.email', 'users.name as memberName', 'teamassignment.teamid as teamId', 'team.name as teamName', 'teamrole.role')
 		-> where('teamassignment.teamid', $teamId)
 		-> get();
 

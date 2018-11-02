@@ -77,6 +77,16 @@ class TeamController extends Controller
             ]
             );
 
+        DB::table('teamrole') -> insert(
+            [
+                'role' => 'Owner',
+                'teamid' => $teamId,
+                'userid' => $creatorId,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]
+        );
+
         return $name;
     }
 
