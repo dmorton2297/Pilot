@@ -50,7 +50,7 @@ export class ViewTeamComponent implements OnInit {
   }
 
   onMessagePressed(id) {
-    console.log(id);
+    this.router.navigateByUrl('/sendmessagetouser/' + id);
   }
 
   ngOnInit() {

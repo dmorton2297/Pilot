@@ -20,6 +20,11 @@ class UserController extends Controller
                 return $users;
     }
 
+    public function userWithId($id) {
+        $results = DB::table('users')->where('id', $id)->get();
+        return $results;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
