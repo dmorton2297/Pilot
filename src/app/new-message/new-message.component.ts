@@ -76,8 +76,21 @@ export class NewMessageComponent implements OnInit {
     //get receiving user's name and find his id
     //this.msg = this.newMessage.get('message').value as string;
     //alert(this.newMessage.get('receiver'))
+    let recipient = this.newMessage.get('receiver').value;
+    let recipientId = -1;
+    for (var i = 0; i < this.users.length; i++) {
+      if (recipient.includes(this.users[i].name) && recipient.includes(this.users[i].email)) {
+        recipientId = this.users[i].id;
+      }
+    }
+
+    if (recipientId == -1) {
+      window.alert('The user could not be found')
+      return;
+    }
+
     let request : NewMessage = {
-      receiver: this.newMessage.get('receiver').value as string,
+      recipient: recipientId,
       message: this.newMessage.get('message').value as string,
       sender: this.sender
     }
@@ -118,7 +131,7 @@ export class NewMessageComponent implements OnInit {
 }
 
 interface NewMessage {
-  receiver: string,
+  recipient: number,
   message: string,
   sender: number
 }

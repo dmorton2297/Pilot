@@ -1,0 +1,34 @@
+
+
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h1>Respond to {{displayName}}</h1>
+      </mat-card-title>
+    </mat-card-header>
+  
+    <mat-card-content>
+      <form [formGroup]="message" (ngSubmit)="onSubmit()">
+        <!-- Field for Recipient of Message -->
+          <mat-form-field>
+            <input type="text" id="to" matInput placeholder="Username" aria-label="User" formControlName="receiver" [matAutocomplete]="auto"
+              placeholder="Recipient Name" [value]="name" disabled required>
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of options" [value]="option">
+                    {{option}}
+                  </mat-option>
+              </mat-autocomplete>
+          </mat-form-field>
+  
+        <!-- Field for Message Content -->
+        <mat-form-field>
+          <input matInput type="text" formControlName="message" placeholder="Message Body" required>
+        </mat-form-field>
+        <!-- Submit and cancel buttons -->
+        <div class="button-row">
+          <button mat-raised-button color="primary" [disabled]="!message.valid" (click)="onSubmit">Send Message</button>
+          <button mat-raised-button color="primary" (click)="onCancel()" type="button">Cancel</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>

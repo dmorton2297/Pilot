@@ -25,8 +25,9 @@ export class UserMessagesComponent {
     //alert(this.uID);
     this.http.get('http://localhost:8000/api/getmessages/' + this.uID).subscribe((res) => {
     //this.http.get('http://localhost:8000/api/getmessages').subscribe((res) => {
-      //this.messages = res.json() as Message[];
       console.log(res);
+      this.messages = res.json() as Message[];
+
     });
   }
 
@@ -34,6 +35,9 @@ export class UserMessagesComponent {
     this.router.navigateByUrl('/newmessage');
   }
 
+  onReplyPressed($id) {
+    this.router.navigateByUrl('/sendmessagetouser/' + $id);
+  }
 
 
 }
@@ -41,7 +45,9 @@ export class UserMessagesComponent {
 interface Message {
   id: number,
   message: string,
-  sender: number,
+  sender: string,
+  senderId: number,
+  senderEmail: string,
   receiver: number,
   team: number
 }
