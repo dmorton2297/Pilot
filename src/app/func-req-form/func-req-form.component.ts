@@ -21,9 +21,7 @@ export class FuncReqFormComponent {
   public tasks : Task[] = [];
   
   constructor(private fb: FormBuilder, private http: Http, private router: Router) { 
-    this.http.get('http://localhost:8000/api/getusertasks/0').subscribe((res) => {
-        this.tasks = res.json() as Task[];
-      });
+
   }
 
   onSubmit() {
