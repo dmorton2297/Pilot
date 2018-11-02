@@ -46,6 +46,7 @@ import { UserMessagesComponent } from './user-messages/user-messages.component';
 import { InviteToTeamComponent } from './invite-to-team/invite-to-team.component';
 import { MessageToUserComponent } from './message-to-user/message-to-user.component';
 import { ManageTeamRoleComponent } from './manage-team-role/manage-team-role.component';
+import { SendMessageToTeamComponent } from './send-message-to-team/send-message-to-team.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -102,6 +103,7 @@ export function getGoogleConfigs() {
     InviteToTeamComponent,
     MessageToUserComponent,
     ManageTeamRoleComponent,
+    SendMessageToTeamComponent,
     ],
   imports: [
   BrowserModule,
