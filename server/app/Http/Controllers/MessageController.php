@@ -38,7 +38,11 @@ class MessageController extends Controller
             ]
             );
     }
-    
+
+    public function getMessages($id) {
+        $messages = DB::table('message')->where('receiver', $id)->get();
+        return $messages;
+    }
     public function delete($id) 
     {
         DB::table('message')->where('id','=',$id)->delete();

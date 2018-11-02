@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
@@ -7,7 +7,6 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../auth.service';
-import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -47,18 +46,13 @@ export class NewMessageComponent {
   
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
     this.sender = this.auth.getUserId();
-    this.http.get('http://localhost:8000/getallusers').subscribe((res) => {
+    this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
       this.users = res.json() as User[];
     });
-    for (let i = 0; i < this.users.length; i++) {
-        this.usernames[i] = this.users[i].name;
-        this.userids[i] = this.users[i].id;
-    }
     this.filteredUsers = this.messageForm.valueChanges
       .pipe(
         startWith(''),
-        map(user => user ? this.filterUsers(user.name) 
-        : this.users.slice())
+        map(user => user ? this.filterUsers(user) : this.users.slice())
       );
       
   }
@@ -68,7 +62,7 @@ export class NewMessageComponent {
     //receiver and sender given by name or email or uID?
     //get receiving user's name and find his id
     //this.msg = this.newMessage.get('message').value as string;
-    
+    //alert(this.newMessage.get('receiver'))
     let request : NewMessage = {
       receiver: this.newMessage.get('receiver').value as string,
       message: this.newMessage.get('message').value as string,
@@ -88,8 +82,10 @@ export class NewMessageComponent {
   }
 
   private filterUsers(value: string): User[] {
-    const name = value.toLowerCase();
-    return this.users.filter(user => user.name.toLowerCase().indexOf(name) === 0);
+    if (value != undefined) {
+      const name = value.toLowerCase();
+      return this.users.filter(user => user.name.toLowerCase().indexOf(name) === 0);
+    }
   }
 
 

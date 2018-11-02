@@ -42,6 +42,7 @@ import { TeamsComponent } from './teams/teams.component';
 import { ViewTeamComponent } from './view-team/view-team.component';
 import { TeaminvitationsComponent } from './teaminvitations/teaminvitations.component';
 import { NewMessageComponent } from './new-message/new-message.component';
+import { UserMessagesComponent } from './user-messages/user-messages.component';
 import { InviteToTeamComponent } from './invite-to-team/invite-to-team.component';
 
 const appRoutes: Routes = [
@@ -85,6 +86,8 @@ export function getGoogleConfigs() {
     BacklogComponent,
     MainComponent,
     FuncReqFormComponent,
+    NewMessageComponent,
+    UserMessagesComponent,
     CreateTeamComponent,
     ModifyTeamComponent,
     TeamsComponent,

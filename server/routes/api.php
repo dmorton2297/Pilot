@@ -42,6 +42,7 @@ Route::get('addteammember/{userid}/{teamid}', 'TeamAssignmentController@add');
 Route::get('teammembers/{teamid}', 'TeamAssignmentController@index');
 Route::get('teamremove/{userid}/{teamid}', 'TeamAssignmentController@kick');
 Route::post('newmessage', 'MessageController@store');
+Route::get('getmessages/{id}', 'MessageController@getMessages');
 Route::get('getallusers', 'UserController@index');
 Route::get('teaminvites/{userid}', 'TeamInvitationController@index');
 Route::get('deleteinvite/{id}', 'TeamInvitationController@remove');
