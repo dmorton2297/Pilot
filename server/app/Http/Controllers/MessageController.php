@@ -49,7 +49,7 @@ class MessageController extends Controller
         DB::table('message')->where('id','=',$id)->delete();
     }
 
-    public function getUserInvitations($id) {
+    /*public function getUserInvitations($id) {
 		$result = DB::table('message') 
 		-> join('users', 'message.senderid', '=', 'users.id')
 		-> select('message.id', 'users.email', 'users.name as From')
@@ -57,5 +57,5 @@ class MessageController extends Controller
 		-> get();
 
 		return $result;
-	}
+	}*/
 }

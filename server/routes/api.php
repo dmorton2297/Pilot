@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 |
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| is assig  d the "api" middleware group. Enjoy building your API!
 |
 */
 
@@ -29,7 +29,8 @@ Route::get('deletetask/{id}', 'TaskController@destroy');
 Route::get('getSelectedReqs/{id}', 'TaskController@showReqs');
 Route::post('savereq', 'FunctionalRequirementController@store');
 Route::get('getfuncreqs/{id}', 'FunctionalRequirementController@teamIndex');
-Route::get('getuserid/{username}', 'UserController@getUserId');
+Route::get('getuserid/{email}', 'UserController@getUserId');
+Route::post('getuseridfromname', 'UserController@getUserIdFromName');
 Route::get('getcriterian/{id}', 'TaskController@showCriterian');
 Route::post('createteam', 'TeamController@store');
 Route::get('getteam/{id}', 'TeamController@show');
@@ -41,6 +42,7 @@ Route::get('addteammember/{userid}/{teamid}', 'TeamAssignmentController@add');
 Route::get('teammembers/{teamid}', 'TeamAssignmentController@index');
 Route::get('teamremove/{userid}/{teamid}', 'TeamAssignmentController@kick');
 Route::get('getmessages/{id}', 'MessageController@getMessages');
+Route::post('newmessage', 'MessageController@store');
 Route::get('getallusers', 'UserController@index');
 Route::get('teaminvites/{userid}', 'TeamInvitationController@index');
 Route::get('deleteinvite/{id}', 'TeamInvitationController@remove');

@@ -20,8 +20,10 @@ import { startWith, map } from 'rxjs/operators';
 
 export class NewMessageComponent {
   newMessage = this.fb.group({
-    receiver: ['', Validators.required],
+    receiver: [''],
+    //receiver: [''],
     message: ['', Validators.required]
+    //message: ['']
   });
 
   public uID : number;
@@ -33,16 +35,6 @@ export class NewMessageComponent {
   public searchResult = [];
   public messageForm : FormControl = new FormControl();
   filteredUsers: Observable<User[]>;
-  public userForm = this.fb.group({
-    userInput : null
-  })
-  //public filteredUsers = this.userForm
-    //.get('userInput')
-    //.valueChanges
-    //.pipe(
-    //    debounceTime(300),
-     //   switchMap(value => this.appService.search({name : value}, 1))
-    //);
   
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
     this.sender = this.auth.getUserId();
@@ -63,16 +55,29 @@ export class NewMessageComponent {
     //get receiving user's name and find his id
     //this.msg = this.newMessage.get('message').value as string;
     //alert(this.newMessage.get('receiver'))
-    let request : NewMessage = {
-      receiver: this.newMessage.get('receiver').value as string,
-      message: this.newMessage.get('message').value as string,
-      sender: this.sender
-    }
+
+    
     if (this.users.find(x=>x.name == this.receiver) != undefined) {
         //user is found in user table
     }
-    this.http.post('http://localhost:8000/api/newmessage', request).subscribe((res) => {
+    let nameReq: NameRequest = {
+      name : this.receiver
+    }
+    this.http.post('http://localhost:8000/api/getuseridfromname', nameReq).subscribe((res) => {
+      let temp = res.json() as NameResponse[];
+      if (temp.length == 0) {
+        return;
+      } 
+
+      let id = temp[0].id;
+      let request : NewMessage = {
+        receiver: id,
+        message: this.newMessage.get('message').value as string,
+        sender: this.sender
+      }
+      this.http.post('http://localhost:8000/api/newmessage', request).subscribe((res) => {
       console.log(res);
+      });
     });
   }
 
@@ -84,6 +89,8 @@ export class NewMessageComponent {
   private filterUsers(value: string): User[] {
     if (value != undefined) {
       const name = value.toLowerCase();
+      //this.receiver = value;
+      //this.newMessage.controls['receiver'].setErrors({incorrect: false});
       return this.users.filter(user => user.name.toLowerCase().indexOf(name) === 0);
     }
   }
@@ -92,7 +99,7 @@ export class NewMessageComponent {
 }
 
 interface NewMessage {
-  receiver: string,
+  receiver: number,
   message: string,
   sender: number
 }
@@ -105,4 +112,12 @@ interface User {
   remember_token: number,
   created_at: string,
   updated_at: string
+}
+
+interface NameRequest {
+  name: string
+}
+
+interface NameResponse {
+  id: number
 }

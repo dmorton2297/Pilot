@@ -91,6 +91,16 @@ class UserController extends Controller
         return $results;
     }
 
+    public function getUserIdFromUser($request) {
+        $name = $request -> input('name');
+
+        $results = DB::select('select id from users where name = :name', ['name' => $name]);
+        if (!$results) {
+            return -1;
+        }
+        return $results;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
