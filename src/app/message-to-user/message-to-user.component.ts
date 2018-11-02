@@ -29,7 +29,7 @@ export class MessageToUserComponent implements OnInit {
   public users : User[] = [];
   public displayedUsers: User[] = [];
   public messageForm : FormControl = new FormControl();
-  constructor(private fb: FormBuilder, private http: Http, private activatedRoute: ActivatedRoute, private auth: AuthService, public snackBar: MatSnackBar, private router: Router) { 
+  constructor(private fb: FormBuilder, private http: Http, private activatedRoute: ActivatedRoute, private location: Location, private auth: AuthService, public snackBar: MatSnackBar, private router: Router) { 
     let recieverId = this.activatedRoute.snapshot.paramMap.get('id');
 
     this.sender = this.auth.getUserId();
@@ -64,6 +64,9 @@ export class MessageToUserComponent implements OnInit {
     }
     this.http.post('http://localhost:8000/api/newmessage', request).subscribe((res) => {
       console.log(res);
+      this.snackBar.open('Message sent', 'Ok', {
+        duration: 3000
+      });
     });
 
     
@@ -71,7 +74,8 @@ export class MessageToUserComponent implements OnInit {
 
   onCancel() {
     this.message.reset();
-    this.router.navigateByUrl('/messages');
+    this.location.back();
+   
   }
 
 

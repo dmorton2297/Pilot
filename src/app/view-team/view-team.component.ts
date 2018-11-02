@@ -76,13 +76,16 @@ export class ViewTeamComponent implements OnInit {
   }
   
   onDeletePressed(id) {
-    this.http.get('http://localhost:8000/api/teamremove/' + id + '/' + this.teamId).subscribe((res) => {
-      this.snackBar.open('Member removed', 'Ok', {
-        duration: 3000
+    if (confirm('Are you sure you want to remove this team member?')) {
+      this.http.get('http://localhost:8000/api/teamremove/' + id + '/' + this.teamId).subscribe((res) => {
+        this.snackBar.open('Member removed', 'Ok', {
+          duration: 3000
+        });
+  
+        this.getTeamMembers();
       });
-
-      this.getTeamMembers();
-    });
+    }
+    
   }
 
   onMessagePressed(id) {
