@@ -80,6 +80,7 @@ class TeamController extends Controller
         $invitemsg = $request -> input('invitemsg');
         $color = $request -> input('color');
         $creatorId = $request -> input('creatorId');
+        $timeout = $request  -> input('timeout');
 
         $teamId = DB::table('team')->insertGetId(
             ['name' => $name,
@@ -87,6 +88,7 @@ class TeamController extends Controller
              'color' => $color,
              'invitemsg' => $invitemsg,
              'creatorId' => $creatorId,
+             'timeout' => $timeout,
              'created_at' => Carbon::now()->toDateTimeString(),
              'updated_at' => Carbon::now()->toDateTimeString()
             ]
@@ -138,6 +140,7 @@ class TeamController extends Controller
         $description = $request -> input('description');
         $invitemsg = $request -> input('invitemsg');
         $color = $request -> input('color');
+        $timeout = $request -> input('timeout');
 
         DB::table('team')
 			->where('id', $id)
@@ -146,6 +149,7 @@ class TeamController extends Controller
              'description' => $description,
              'invitemsg' => $invitemsg,
              'color' => $color,
+             'timeout' => $timeout,
              'updated_at' => Carbon::now()->toDateTimeString()
 			]);
 			

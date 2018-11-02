@@ -6,9 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import {MatSnackBar} from '@angular/material';
 
-
-
-
 @Component({
   selector: 'app-invite-to-team',
   templateUrl: './invite-to-team.component.html',
@@ -29,19 +26,16 @@ export class InviteToTeamComponent implements OnInit {
     this.teamId = this.activatedRoute.snapshot.paramMap.get('teamid'); 
     this.loadTeamName();
     this.loadCurrentInvites();
-
-    
-
-
   }
 
+  public team : Team[];
   loadTeamName() {
     this.http.get('http://localhost:8000/api/getteam/'+this.teamId).subscribe((res) => {
-      let r = res.json() as Team[];
-      this.teamName = r[0].name;
+      this.team = res.json() as Team[];
+      this.teamName = this.team[0].name;
+      this.taskForm.patchValue({invmessage: this.team[0].invitemsg});
     });
   }
-
   loadCurrentInvites() {
     this.http.get('http://localhost:8000/api/allsentinvites/' + this.auth.getUserId()).subscribe(res => {
       let r = res.json() as Invite[];

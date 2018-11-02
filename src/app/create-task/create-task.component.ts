@@ -51,7 +51,6 @@ export class CreateTaskComponent {
     });
   } 
   
-
   /**
    * Gets criterian for the view.
    */
@@ -91,10 +90,6 @@ export class CreateTaskComponent {
     }
   }
 
-  getMembers() { 
-
-  }
-
   onSubmit() {
     this.cleanCriteria();
 
@@ -116,13 +111,9 @@ export class CreateTaskComponent {
       this.snackBar.open('Task created', 'Ok', {
         duration: 3000
       });
-      this.location.back();
-        });
+     });
 
-    //this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
-
-    
-
+    this.router.navigateByUrl('/backlog');
   }
 
   onCancel() {
