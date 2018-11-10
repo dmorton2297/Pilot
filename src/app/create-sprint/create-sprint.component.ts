@@ -8,11 +8,6 @@ import { StateService } from '../state.service';
 import { AuthService } from '../auth.service';
 import { MatSnackBar } from '@angular/material';
 
-
-
-
-
-
 @Component({
   selector: 'app-create-sprint',
   templateUrl: './create-sprint.component.html',
@@ -64,7 +59,17 @@ export class CreateSprintComponent {
 
   // if the user clicks submit
   onSubmit() {
-    window.alert('form submit clicked');
+    let request : SprintRequest = {
+      name: this.sprintForm.get('name').value as string,
+      description: this.sprintForm.get('description').value as string,
+      start: this.sprintForm.get('start').value as Date,
+      end: this.sprintForm.get('end').value as Date,
+      tasks: this.selectedTasks
+    }
+
+    this.http.post('http://localhost:8000/api/createsprint', request).subscribe((res) => {
+      console.log(res);
+    });
   }
 
   // if the user checks or unchecks a task 
@@ -86,4 +91,12 @@ interface Task {
   name: string,
   description: string,
   sprint: number
+}
+
+interface SprintRequest {
+  name: string,
+  description: string,
+  start: Date,
+  end: Date,
+  tasks: number[]
 }
