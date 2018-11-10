@@ -15,6 +15,7 @@ class CreateSprintTable extends Migration
     {
         Schema::create('sprint', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->string('description');
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
