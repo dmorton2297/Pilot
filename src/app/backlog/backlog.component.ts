@@ -36,6 +36,10 @@ export class BacklogComponent implements OnInit{
     this.router.navigateByUrl('/funcreq');
   }
 
+  onCreateSprint() {
+    this.router.navigateByUrl('/createsprint');
+  }
+
   updateSignal() {
     this.signalEvent.emit("SIG_UPDATE_TASKS");
   }
