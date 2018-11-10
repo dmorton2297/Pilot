@@ -6,6 +6,30 @@ table {
       float: right;
   }
 
+  #menuButton {
+      float: right;
+  }
   #create-funcreq {
       float: right;
+  }
+
+  #edit {
+      font-size: 30px;
+      color: lightslategray;
+      width: 35px;
+      background: transparent;
+      border: none;
+
+  }
+
+  #delete {
+    font-size: 30px;
+    color: lightcoral;
+    width: 35px;
+    background: transparent;
+    border: none;
+  }
+
+  #actions {
+      width: 100px;
   }

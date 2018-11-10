@@ -6,8 +6,14 @@
         <h1 class="heading">Product Backlog</h1>
     </div>
     <div class="col-md-4">
-        <button mat-button id="create-task" (click)="onCreateTask()">Create Task</button>
-        <button mat-button id="create-funcreq" (click)="onCreateFuncReq()">Create Functional Requirement</button>
+        <mat-menu #appMenu="matMenu">
+            <button mat-menu-item id="create-task" (click)="onCreateTask()">Create Task</button>
+            <button mat-menu-item id="create-funcreq" (click)="onCreateFuncReq()">Create Functional Requirement</button>
+          </mat-menu>
+          
+          <button id="menuButton" mat-icon-button [matMenuTriggerFor]="appMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
     </div>
     <button mat-button (click)="onSortNamePressed()">Sort by name</button>
     <button mat-button (click)="onSortPrioPressed()">Sort by priority</button>
@@ -71,9 +77,10 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
-        <td mat-cell *matCellDef="let element"> 
-          <button mat-button style="background-color: lightblue;" id="element.id" (click)="onModifyPressed(element.id)">Modify</button>
-          <button mat-button style="background-color: lightcoral;" id="element.id" (click)="onDeletePressed(element.id)">Delete</button>
+        <td id="actions" mat-cell *matCellDef="let element"> 
+          <button id="edit" (click)="onModifyPressed(element.id)"><i class="fa fa-pencil-square" aria-hidden="true"></i>
+          </button>
+          <button id="delete" (click)="onDeletePressed(element.id)"><i class="fa fa-minus-square" aria-hidden="true"></i></button>
         </td>
     </ng-container>
       
