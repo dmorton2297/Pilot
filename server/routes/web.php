@@ -11,6 +11,11 @@
 |
 */
 
+Route::get('/', function() {
+    View::addExtension('html', 'php');
+    return View::make('index');
+});
+
 Route::get('/home', function () {
     return 'hello';
 });
