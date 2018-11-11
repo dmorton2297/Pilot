@@ -40,6 +40,17 @@ class TaskController extends Controller
         return $tasks;
     }
 
+    public function sprintTasks($sprintId) {
+        $tasks = DB::table('task') 
+        -> join('sprinttask', 'task.id', '=','sprinttask.taskid')
+        -> join('sprint', 'sprinttask.sprintid', '=', 'sprint.id')
+        -> where ('sprint.id', $sprintId)
+        -> select('task.id', 'task.name', 'task.description', 'task.priority', 'task.estimate', 'task.status', 'sprint.id as sprintId', 'sprint.name as sprintName', 'sprint.description as sprintDescription')
+        -> get();
+
+        return $tasks;
+    }
+
     public function changeStatus(Request $request)
     {
         $taskId = $request -> input('taskId');

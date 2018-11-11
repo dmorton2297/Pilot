@@ -56,5 +56,6 @@ Route::get('deletemessage/{id}', 'MessageController@delete');
 Route::post('setrole', 'TeamController@setRole');
 Route::post('getrole', 'TeamController@getRole');
 Route::post('createsprint', 'SprintController@store');
+Route::get('getsprinttasks/{sprintId}', 'TaskController@sprintTasks');
 
 

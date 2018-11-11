@@ -32,7 +32,7 @@ export class CreateSprintComponent {
   public displayedColumns: string[] = ['name', 'description', 'action'];
 
   // on this component loading
-  constructor(private fb: FormBuilder, public location: Location, private http: Http, private state: StateService, private auth: AuthService) {
+  constructor(private fb: FormBuilder, public location: Location, private http: Http, private state: StateService, private auth: AuthService, private snackBar: MatSnackBar) {
     this.loadTaskData();
   }
 
@@ -69,6 +69,10 @@ export class CreateSprintComponent {
 
     this.http.post('http://localhost:8000/api/createsprint', request).subscribe((res) => {
       console.log(res);
+      this.sprintForm.disable();
+      this.snackBar.open('Sprint Created', 'Ok', {
+        duration: 3000
+      });
     });
   }
 
