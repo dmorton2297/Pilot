@@ -40,11 +40,23 @@ class TaskController extends Controller
         return $tasks;
     }
 
-    public function sprintTasks($sprintId) {
+    public function sprintTasksForUser($userId) {
         $tasks = DB::table('task') 
         -> join('sprinttask', 'task.id', '=','sprinttask.taskid')
         -> join('sprint', 'sprinttask.sprintid', '=', 'sprint.id')
-        -> where ('sprint.id', $sprintId)
+        -> where ('task.creatorid', $userId)
+        -> where ('task.teamid', '0')
+        -> select('task.id', 'task.name', 'task.description', 'task.priority', 'task.estimate', 'task.status', 'sprint.id as sprintId', 'sprint.name as sprintName', 'sprint.description as sprintDescription')
+        -> get();
+
+        return $tasks;
+    }
+
+    public function sprintTasksForTeam($teamId) {
+        $tasks = DB::table('task') 
+        -> join('sprinttask', 'task.id', '=','sprinttask.taskid')
+        -> join('sprint', 'sprinttask.sprintid', '=', 'sprint.id')
+        -> where ('task.teamid', $teamId)
         -> select('task.id', 'task.name', 'task.description', 'task.priority', 'task.estimate', 'task.status', 'sprint.id as sprintId', 'sprint.name as sprintName', 'sprint.description as sprintDescription')
         -> get();
 
