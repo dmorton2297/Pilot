@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, EmailValidator } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../auth.service';
 import { StateService } from '../state.service';
+import { UserMessagesComponent } from '../user-messages/user-messages.component';
 
 @Component({
   selector: 'app-create-task',
@@ -33,7 +34,7 @@ export class CreateTaskComponent {
 });
 
   public priorities = ['1', '2', '3'];
-  public users = []; 
+  public users : TeamMember[] = [];
   public req : FunctionalRequirement[];
   public teamId = 0;
   public taskId : string;
@@ -41,16 +42,55 @@ export class CreateTaskComponent {
   constructor(private fb: FormBuilder, private http: Http, private state: StateService, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
     this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
       this.req = res.json() as FunctionalRequirement[];
-      this.getUsers();
     });
+    this.loadUsers();
   }
 
-  getUsers() {
-    this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
-      this.users = res.json() as User[];
-    });
-  } 
-  
+  /**
+   * Insert unassigned in assigned user input field.
+   */
+  insertUnassigned() {
+   let request : TeamMember = {
+      id : -1,
+      email : "Unassigned",
+      memberName : "Unassigned",
+      teamId : -1, 
+      teamName : "Unassigned",
+      teamRole : "Unassigned"
+   }
+   this.users[this.users.length] = request;
+   this.taskForm.patchValue({assignedUser: request});
+  }
+
+  /**
+   * Load users from team into assignment dropdown.
+   */
+  temp : User;
+  loadUsers() {
+    // "Me" backlog view
+    if (this.state.getCurrentStateId() == 0) {
+      this.http.get('http://localhost:8000/api/getuser/' + this.auth.getUserId()).subscribe((res) => {
+        this.temp = res.json() as User;
+        // Get user returns User Object, change that to a team member object for user array.
+        let request : TeamMember = {
+          id : this.temp[0].id,
+          email : this.temp[0].email,
+          memberName : this.temp[0].name,
+          teamId : -1,
+          teamName : "0",
+          teamRole : "0"
+        }
+        this.users.push(request);
+        this.insertUnassigned();
+      });
+    } else {
+      // Team backlog view
+      this.http.get('http://localhost:8000/api/getteammembers/' + this.state.getCurrentStateId()).subscribe((res) => {
+        this.users = res.json() as TeamMember[];
+        this.insertUnassigned();
+      });
+    }
+  }
 
   /**
    * Gets criterian for the view.
@@ -91,13 +131,8 @@ export class CreateTaskComponent {
     }
   }
 
-  getMembers() { 
-
-  }
-
   onSubmit() {
     this.cleanCriteria();
-
     let request : TaskRequest = {
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
@@ -118,20 +153,11 @@ export class CreateTaskComponent {
       });
       this.location.back();
         });
-
-    //this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
-
-    
-
   }
 
   onCancel() {
       this.taskForm.reset();
       this.router.navigateByUrl('/');
-  }
-
-  openSnackBar(maessage: string) {
-    
   }
 }
 
@@ -139,6 +165,15 @@ interface User {
   id: number,
   name: string,
   email: string
+}
+
+interface TeamMember {
+  id : number,
+  email : string,
+  memberName : string,
+  teamId : number, 
+  teamName : string,
+  teamRole : string
 }
 
 interface FunctionalRequirement {
