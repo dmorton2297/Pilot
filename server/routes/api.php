@@ -61,8 +61,8 @@ Route::get('getteamsprinttasks/{sprintId}', 'TaskController@sprintTasksForTeam')
 Route::post('updatetime', 'TaskController@updateTime');
 Route::get('gettimespent/{id}', 'TaskController@getTimeSpentForTask');
 
-
 // Statistics routes
 Route::get('getStatusDistributionForUser/{userId}', 'StatisticsController@getStatusDistributionForUser');
+Route::get('getUserTimeSpent/{userId}', 'StatisticsController@getTimeSpentForUser');
 
 

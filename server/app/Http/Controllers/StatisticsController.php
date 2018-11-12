@@ -35,4 +35,22 @@ class StatisticsController extends Controller
 
         return '['.$p1.','.$p2.','.$p3.']';
     }
+
+    public function getTimeSpentForUser($userId) {
+        $timeSpent = 0;
+
+        $userName = DB::table('users')
+        ->where('id', $userId)
+        ->value('name');
+
+        $taskTimes = DB::table('task')
+        ->where('creatorid', $userId)
+        ->where('teamid', 0)
+        ->pluck('timespent');
+        foreach($taskTimes as $time) {
+            $timeSpent = $timeSpent + $time;
+        }
+        $entry = '{"name":"'.$userName.'", "value":'.$timeSpent.'}';
+        return $entry;
+    }
 }
