@@ -181,6 +181,26 @@ class TaskController extends Controller
 		return $name;
     }
 
+    public function updateTime(Request $request) {
+        $taskId = $request -> input('taskId');
+        $time = $request -> input('time');
+
+        DB::table('task') 
+        -> where('id', $taskId)
+        -> update(['timespent' => $time]);
+
+        return $taskId;
+    }
+
+    public function getTimeSpentForTask($id) {
+        $timespent = DB::table('task')
+        -> where('id', $id)
+        -> select ('task.timespent')
+        -> get();
+
+        return $timespent;
+    }
+
     /**
      * Remove the specified resource from storage.
      *

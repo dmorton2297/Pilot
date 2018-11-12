@@ -66,7 +66,8 @@ const appRoutes: Routes = [
   { path: 'newmessage', component: NewMessageComponent, canActivate: [AuthService] },
   { path: 'sendmessagetouser/:id', component: MessageToUserComponent, canActivate: [AuthService] },
   { path: 'managerole/:userid/:teamid', component: ManageTeamRoleComponent, canActivate: [AuthService]} ,
-  {  path: 'createsprint', component: CreateSprintComponent, canActivate: [AuthService] }
+  {  path: 'createsprint', component: CreateSprintComponent, canActivate: [AuthService] },
+  { path: 'modifytime/:taskId', component: ModifyTimeComponent, canActivate: [AuthService] }
 ];
 
 export function getGoogleConfigs() {

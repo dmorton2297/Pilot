@@ -80,9 +80,12 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td id="actions" mat-cell *matCellDef="let element"> 
+          <button id="time" (click)="onTimePressed(element.id)"><i class="fa fa-clock-o" aria-hidden="true"></i>
+          </button>
           <button id="edit" (click)="onModifyPressed(element.id)"><i class="fa fa-pencil-square" aria-hidden="true"></i>
           </button>
           <button id="delete" (click)="onDeletePressed(element.id)"><i class="fa fa-minus-square" aria-hidden="true"></i></button>
+          
         </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -147,10 +150,7 @@
                     <ng-container matColumnDef="actions">
                         <th mat-header-cell *matHeaderCellDef> Actions </th>
                         <td id="actions" mat-cell *matCellDef="let element"> 
-                          <button id="edit" (click)="onModifyPressed(element.id)"><i class="fa fa-pencil-square" aria-hidden="true"></i>
-                          </button>
-                          <button id="edit" (click)="onTimePressed(element.id)"><i class="fa fa-pencil-square" aria-hidden="true"></i>
-                          </button>
+                          
                         </td>
                     </ng-container>
 
