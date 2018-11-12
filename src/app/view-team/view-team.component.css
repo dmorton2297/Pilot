@@ -9,3 +9,13 @@ mat-card {
 table {
     width: 100%;
 }
+
+.mat-button-toggle {
+    color: black;
+    width: 130.75px;
+  }
+  
+  .mat-button-toggle-checked {
+    color: black;
+    width: 130.75px;
+  }
