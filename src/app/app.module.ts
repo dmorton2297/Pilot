@@ -46,6 +46,7 @@ import { MessageToUserComponent } from './message-to-user/message-to-user.compon
 import { ManageTeamRoleComponent } from './manage-team-role/manage-team-role.component';
 import { SendMessageToTeamComponent } from './send-message-to-team/send-message-to-team.component';
 import { CreateSprintComponent } from './create-sprint/create-sprint.component';
+import { ModifyTimeComponent } from './modify-time/modify-time.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -65,7 +66,8 @@ const appRoutes: Routes = [
   { path: 'newmessage', component: NewMessageComponent, canActivate: [AuthService] },
   { path: 'sendmessagetouser/:id', component: MessageToUserComponent, canActivate: [AuthService] },
   { path: 'managerole/:userid/:teamid', component: ManageTeamRoleComponent, canActivate: [AuthService]} ,
-  {  path: 'createsprint', component: CreateSprintComponent, canActivate: [AuthService] }
+  {  path: 'createsprint', component: CreateSprintComponent, canActivate: [AuthService] },
+  { path: 'modifytime/:taskId', component: ModifyTimeComponent, canActivate: [AuthService] }
 ];
 
 export function getGoogleConfigs() {
@@ -105,6 +107,7 @@ export function getGoogleConfigs() {
     ManageTeamRoleComponent,
     SendMessageToTeamComponent,
     CreateSprintComponent,
+    ModifyTimeComponent,
     ],
   imports: [
   BrowserModule,
