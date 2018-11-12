@@ -169,6 +169,10 @@ export class BacklogComponent implements OnInit{
     this.updateSignal();
   }
 
+  onTimePressed(id) {
+    this.router.navigateByUrl('/modifytime/' + id);
+  }
+
   onModifyPressed(id) {
     this.router.navigateByUrl('/modifytask/' + id);
   }
