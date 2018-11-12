@@ -17,4 +17,7 @@
     <mat-tab label="Scrum"> 
       <app-scrum-board (signalEvent)="receiveSignal($event)"></app-scrum-board>  
     </mat-tab>
+    <mat-tab label="Performance Dashboard">
+      <app-performance-dashboard (signalEvent)="receiveSignal($event)"></app-performance-dashboard>
+    </mat-tab>
   </mat-tab-group>
