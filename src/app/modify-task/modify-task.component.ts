@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, EmailValidator } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { AuthService } from '../auth.service';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-modify-task',
@@ -29,42 +31,62 @@ export class ModifyTaskComponent {
       ])
 });
 
-  public users : User[];
+  public users : TeamMember[] = [];
   public priorities : string[] = ['1', '2', '3'];
   public task : Task;
   public req : FunctionalRequirement[];
   public selectedReqs: FunctionalRequirement[];
   public taskId : string;
   public teamId = 0;
+  public flag = 0;
+  public assigneduser: User;
 
-  constructor(private fb: FormBuilder, private http: Http, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) { 
+  constructor(private fb: FormBuilder, private http: Http, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router, private state: StateService, private auth: AuthService) { 
     this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
-
-    /* Getting task form values */
     this.http.get('http://localhost:8000/api/gettask/' + this.taskId).subscribe((res) => {
       this.task = res.json() as Task;
+      console.log(res.json());
       this.taskForm.patchValue({name: this.task[0].name});
       this.taskForm.patchValue({description: this.task[0].description});
       this.taskForm.patchValue({priority: this.priorities[this.task[0].priority - 1]});
-      this.taskForm.patchValue({status: this.task[0].status});
       this.taskForm.patchValue({estimate: this.task[0].estimate});
       this.taskForm.patchValue({teamID: this.task[0].teamid});
       this.taskForm.patchValue({creatorID: this.task[0].creatorid});
       this.taskForm.patchValue({assignedUserID: this.task[0].assigneduserid}); 
-      this.taskForm.patchValue({assignedUser: this.users[this.task[0].assigneduserid]});
+      this.teamId = this.task[0].teamid;
+      this.loadUsers();
+      this.http.get('http://localhost:8000/api/getuser/' + this.task[0].assigneduserid).subscribe((res) => {
+        this.assigneduser = res.json() as User;
+        if (res.json() == "") {
+          // Unassigned user always last in array.
+          this.taskForm.patchValue({assignedUser: this.users[this.users.length-1]});
+        } 
+        else {
+          // Find assigned user in user array.
+          for (var i = 0; i < this.users.length; i++) {
+            if (this.users[i].id == this.assigneduser[0].id) {
+              this.taskForm.patchValue({assignedUser: this.users[i]});
+            }
+          }
+        } 
+      });
     });  
 
-    /* Getting functional requirements the user selected on creation */
+    // TODO: This is causing error.
+
+    /* Getting ALL functional requirements associated with task */
+    this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
+      this.req = res.json() as FunctionalRequirement[];
+      if (res.json() == undefined) this.flag = 1;
+    });
+
+    /* Get functional requirements selected for task */
     this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
       this.selectedReqs = res.json() as FunctionalRequirement[];
       this.taskForm.patchValue({funcreq: this.selectedReqs});
+      this.removeDuplicate();
     });
 
-    /* Getting all criteria associated with team */
-    this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
-      this.req = res.json() as FunctionalRequirement[];
-    });
-  
     /* Getting all acceptance criteria associated with team */
     var criteria: string[];
     this.http.get('http://localhost:8000/api/getcriterian/' + this.taskId).subscribe((res) => {
@@ -72,34 +94,53 @@ export class ModifyTaskComponent {
       for (var i = 0; i < criteria.length; i++) {
         this.pushCriteria(criteria[i]);
       } 
-
-      this.removeDuplicate();
       this.cleanCriteria();
     });
+}
 
-    this.getUsers();
- }
+  /**
+   * Insert unassigned in assigned user input field.
+   */
+  insertUnassigned() {
+    let request : TeamMember = {
+       id : -1,
+       email : "Unassigned",
+       memberName : "Unassigned",
+       teamId : -1, 
+       teamName : "Unassigned",
+       teamRole : "Unassigned"
+    }
+    this.users[this.users.length] = request;
+   }
 
-  getSelectedReq() {
-
-  } 
-
-  getAllReq() {
-
-  }
-
-  getCriterion() {
-
-  }
-
-  getSelectedRequirment() {
-
-  }
-
-  getUsers() {
-    this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
-      this.users = res.json() as User[];
-    });
+  /**
+   * Load users from team into assignment dropdown.
+   */
+  temp : User;
+  loadUsers() {
+    if (this.teamId == 0) {
+      this.http.get('http://localhost:8000/api/getuser/' + this.auth.getUserId()).subscribe((res) => {
+        this.temp = res.json() as User;
+        let request : TeamMember = {
+          id : this.temp[0].id,
+          email : this.temp[0].email,
+          memberName : this.temp[0].name,
+          teamId : -1,
+          teamName : "0",
+          teamRole : "0"
+        }
+        this.users.push(request);
+        this.insertUnassigned();
+      });
+    } else {
+      this.http.get('http://localhost:8000/api/getteammembers/' + this.teamId).subscribe((res) => {
+        this.users = res.json() as TeamMember[];
+        console.log(res.json());
+        this.insertUnassigned();
+        console.log("Users");
+        console.log(this.users);
+      });
+    }
   }
 
   /**
@@ -123,7 +164,6 @@ export class ModifyTaskComponent {
     return this.taskForm.get('criterian') as FormArray;
   }
 
-  // TODO: Do I need this function.
   /**
    *  Adds criteria from view to criterian array.
    */
@@ -167,10 +207,6 @@ export class ModifyTaskComponent {
     } 
   }
 
-  getMembers() {
-
-  }
-
   onSubmit() {
     this.cleanCriteria();
     let request : Task = {
@@ -182,9 +218,9 @@ export class ModifyTaskComponent {
       funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
-      creatorid: 0,
+      creatorid: this.taskForm.get('creatorID').value as number,
       teamid: 0,
-      assigneduserid: 0,
+      assigneduserid: this.taskForm.get('assignedUser').value.id as number,
       criterian: this.taskForm.get('criterian').value
     }
     this.http.post('http://localhost:8000/api/modifytask/' + this.taskId, request, this.taskId).subscribe((res) => {
@@ -205,14 +241,13 @@ export class ModifyTaskComponent {
         duration: 3000
       });
       this.router.navigateByUrl('/');
-
     });
-    
   }
 
   onCancel() {
     this.router.navigateByUrl('/backlog');
   }
+
 }
 
 interface User {
@@ -239,4 +274,13 @@ interface Task {
   creatorid: number,
   assigneduserid: number,
   criterian: any
+}
+
+interface TeamMember {
+  id : number,
+  email : string,
+  memberName : string,
+  teamId : number, 
+  teamName : string,
+  teamRole : string
 }

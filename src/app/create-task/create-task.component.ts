@@ -27,7 +27,7 @@ export class CreateTaskComponent {
         teamID: [''],
         creatorID: [''],
         assignedUser: ['', Validators.required],
-        assignedUserID: [''],
+        assignedUserid: [''],
         criterian: this.fb.array([
          this.fb.control('')
       ])
@@ -143,9 +143,14 @@ export class CreateTaskComponent {
       timespent: 0,
       creatorid: this.auth.getUserId(),
       teamid: this.state.getCurrentStateId(),
-      assigneduserid: 0,
+      assigneduserid: this.taskForm.get('assignedUser').value.id as number,
       criterian: this.taskForm.get('criterian').value,
     }
+    console.log("Assigned user id");
+    console.log(this.taskForm.get('assignedUser').value.id as number)
+    console.log(this.taskForm.get('assignedUser').value.id)
+
+    
 
     this.http.post('http://localhost:8000/api/savetask', request).subscribe((res) => {
       this.snackBar.open('Task created', 'Ok', {

@@ -21,7 +21,7 @@
 
             <!-- Assigned user drop down box -->
             <mat-form-field>
-                   <mat-select formControlName="assignedUser" placeholder="Assignment"> 
+                   <mat-select formControlName="assignedUser" placeholder="Assignment" required> 
                         <mat-option *ngFor="let u of users; let i=index;" [value]="u">{{u.memberName}}</mat-option>
                     </mat-select>  
             </mat-form-field> 

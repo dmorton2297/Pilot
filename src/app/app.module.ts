@@ -24,10 +24,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { FuncReqFormComponent } from './func-req-form/func-req-form.component';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from './auth.service';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 
@@ -106,37 +106,37 @@ export function getGoogleConfigs() {
     SendMessageToTeamComponent,
     ],
   imports: [
-  BrowserModule,
-  HttpModule,
-  MatAutocompleteModule,
-  MatCardModule,
-  MatSnackBarModule,
-  MatTabsModule,
-  MatButtonModule,
-  MatSelectModule,
-  MatFormFieldModule,
-  MatToolbarModule,
-  MatButtonToggleModule,
-  MatExpansionModule,
-  
-  MatTableModule,
-  FormsModule,
-  ReactiveFormsModule,
-  SocialLoginModule,
-  BrowserAnimationsModule,
-  BrowserModule,
-  MatCardModule,
-  MatMenuModule,
-  MatInputModule,
-  BrowserAnimationsModule,
-  MatSelectModule,
-  MatButtonModule,
-  MatListModule,
-  MatIconModule,
-  RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    )
+    BrowserModule,
+    HttpModule,
+    MatAutocompleteModule,
+    MatCardModule,
+    MatSnackBarModule,
+    MatTabsModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatToolbarModule,
+    MatButtonToggleModule,
+    MatExpansionModule,
+    
+    MatTableModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SocialLoginModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    MatCardModule,
+    MatMenuModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatListModule,
+    MatIconModule,
+    RouterModule.forRoot(
+        appRoutes,
+        { enableTracing: true } // <-- debugging purposes only
+      )
   ],
   providers: [
     AuthService,
