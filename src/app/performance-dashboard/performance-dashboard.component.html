@@ -1,3 +1,9 @@
-<mat-card> 
-  <app-task-distribution height="100" width="100"></app-task-distribution>
-</mat-card>
+
+<mat-tab-group *ngIf="visible" [selectedIndex]="1" #tabGroup>
+  <mat-tab label="Overall">
+    <div id="taskDist" >
+     <app-task-distribution height="250" width="600"></app-task-distribution> 
+    </div>
+  </mat-tab>
+</mat-tab-group>
+

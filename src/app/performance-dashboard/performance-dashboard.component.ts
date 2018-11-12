@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 
 
@@ -10,13 +10,18 @@ import { EventEmitter } from '@angular/core';
 export class PerformanceDashboardComponent implements OnInit {
 
   @Output() signalEvent = new EventEmitter<string>();
-  constructor() { }
+  visible: boolean = false;
+
+  constructor() {
+   }
 
   updateSignal() {
     this.signalEvent.emit("SIG_UPDATE_TASKS");
   }
 
   ngOnInit() {
+    console.log('Rendering performance dashboard');
   }
 
 }
+

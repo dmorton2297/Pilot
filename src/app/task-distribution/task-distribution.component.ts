@@ -42,7 +42,6 @@ export class TaskDistributionComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(width);
 
   }
 
