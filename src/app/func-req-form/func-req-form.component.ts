@@ -2,8 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Http } from '@angular/http';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { StateService } from '../state.service';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-func-req-form',
@@ -20,21 +24,21 @@ export class FuncReqFormComponent {
 
   public tasks : Task[] = [];
   
-  constructor(private fb: FormBuilder, private http: Http, private router: Router) { 
-    this.http.get('http://localhost:8000/api/getusertasks/0').subscribe((res) => {
-        this.tasks = res.json() as Task[];
-      });
+  constructor(private fb: FormBuilder, private http: Http, public snackBar: MatSnackBar, private location: Location,  private router: Router, private state: StateService, private auth: AuthService) { 
+
   }
 
   onSubmit() {
     let request : FunctionalRequirement = {
       name: this.reqForm.get('name').value as string,
       description: this.reqForm.get('description').value as string,
-      teamid: 0
+      teamid: this.state.getCurrentStateId()
     }
-      this.http.post('http://localhost:8000/api/savereq', request).subscribe();
-      window.alert('Requirement Added');
-      this.reqForm.reset();
+    this.http.post('http://localhost:8000/api/savereq', request).subscribe();
+      this.snackBar.open('Functional Requirement Created', 'Ok', {
+        duration: 3000
+    });
+      this.location.back();
     }
 
   onBack() {

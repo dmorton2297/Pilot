@@ -110,6 +110,7 @@ class TaskController extends Controller
     public function showReqs($id) 
     {
         $funcreqs = json_decode(DB::table('task')->where('id', $id)->value('funcreq'), true);
+        if ($funcreqs == NULL) return -1;
         return $funcreqs;
     }
 

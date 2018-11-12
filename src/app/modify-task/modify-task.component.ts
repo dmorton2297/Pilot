@@ -75,16 +75,18 @@ export class ModifyTaskComponent {
     // TODO: This is causing error.
 
     /* Getting ALL functional requirements associated with task */
-    this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
-      this.req = res.json() as FunctionalRequirement[];
-      if (res.json() == undefined) this.flag = 1;
+    this.http.get('http://localhost:8000/api/getfuncreqs/' + this.state.getCurrentStateId()).subscribe((res) => {
+      if (res.json() != "") this.req = res.json() as FunctionalRequirement[];
+
     });
 
     /* Get functional requirements selected for task */
     this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
-      this.selectedReqs = res.json() as FunctionalRequirement[];
-      this.taskForm.patchValue({funcreq: this.selectedReqs});
-      this.removeDuplicate();
+      if (res.json() != -1) {
+        this.selectedReqs = res.json() as FunctionalRequirement[];
+        this.taskForm.patchValue({funcreq: this.selectedReqs});
+        this.removeDuplicate();
+      }
     });
 
     /* Getting all acceptance criteria associated with team */
@@ -137,8 +139,6 @@ export class ModifyTaskComponent {
         this.users = res.json() as TeamMember[];
         console.log(res.json());
         this.insertUnassigned();
-        console.log("Users");
-        console.log(this.users);
       });
     }
   }

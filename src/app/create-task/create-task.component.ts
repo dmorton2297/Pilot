@@ -40,8 +40,12 @@ export class CreateTaskComponent {
   public taskId : string;
 
   constructor(private fb: FormBuilder, private http: Http, private state: StateService, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
-    this.http.get('http://localhost:8000/api/getfuncreqs/' + this.teamId).subscribe((res) => {
-      this.req = res.json() as FunctionalRequirement[];
+    this.http.get('http://localhost:8000/api/getfuncreqs/' + this.state.getCurrentStateId()).subscribe((res) => {
+      if (res.json() != -1) {
+        this.req = res.json() as FunctionalRequirement[];
+        console.log("func req");
+        console.log(this.req);
+      }
     });
     this.loadUsers();
   }
@@ -146,18 +150,13 @@ export class CreateTaskComponent {
       assigneduserid: this.taskForm.get('assignedUser').value.id as number,
       criterian: this.taskForm.get('criterian').value,
     }
-    console.log("Assigned user id");
-    console.log(this.taskForm.get('assignedUser').value.id as number)
-    console.log(this.taskForm.get('assignedUser').value.id)
-
     
-
     this.http.post('http://localhost:8000/api/savetask', request).subscribe((res) => {
       this.snackBar.open('Task created', 'Ok', {
         duration: 3000
       });
       this.location.back();
-        });
+    });
   }
 
   onCancel() {

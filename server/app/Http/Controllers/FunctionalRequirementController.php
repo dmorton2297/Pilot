@@ -27,7 +27,7 @@ class FunctionalRequirementController extends Controller
      */
     public function teamIndex($teamId) {
         $reqs = DB::table('funcreqs')->where('teamid', $teamId)->get();
-
+        if ($reqs->isEmpty()) return -1;
         return $reqs;
     }
 
