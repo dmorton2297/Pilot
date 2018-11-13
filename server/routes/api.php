@@ -65,5 +65,9 @@ Route::get('getusersprints/{userId}', 'SprintController@userIndex');
 
 // Statistics routes
 Route::get('getStatusDistributionForUser/{userId}', 'StatisticsController@getStatusDistributionForUser');
+Route::post('addFavorite', 'FavoriteController@store');
+Route::get('removeFavorite/{userid}/{favoriteid}', 'FavoriteController@destroy');
+Route::get('getallfav', 'FavoriteController@index');
+Route::get('checkfavorite/{userid}', 'FavoriteController@indexUser');
 
 

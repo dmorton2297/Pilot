@@ -9,3 +9,8 @@ mat-card {
 table {
     width: 100%;
 }
+
+.mat-raised-button {
+    width: 150px;
+}
+    
