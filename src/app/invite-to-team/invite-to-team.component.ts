@@ -39,6 +39,7 @@ export class InviteToTeamComponent implements OnInit {
     this.http.get('http://localhost:8000/api/getteam/'+this.teamId).subscribe((res) => {
       let r = res.json() as Team[];
       this.teamName = r[0].name;
+      this.taskForm.patchValue({invmessage: r[0].invitemsg});
     });
   }
 
