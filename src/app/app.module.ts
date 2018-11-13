@@ -21,6 +21,8 @@ import { MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule}  from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { FuncReqFormComponent } from './func-req-form/func-req-form.component';
@@ -28,12 +30,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AuthService } from './auth.service';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {MatExpansionModule} from '@angular/material/expansion';
-
-
-
-
+import {MatNativeDateModule} from '@angular/material';
 import { BacklogComponent } from './backlog/backlog.component';
-
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular5-social-login";
 import { MainComponent } from './main/main.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
@@ -44,6 +42,11 @@ import { TeaminvitationsComponent } from './teaminvitations/teaminvitations.comp
 import { NewMessageComponent } from './new-message/new-message.component';
 import { UserMessagesComponent } from './user-messages/user-messages.component';
 import { InviteToTeamComponent } from './invite-to-team/invite-to-team.component';
+import { MessageToUserComponent } from './message-to-user/message-to-user.component';
+import { ManageTeamRoleComponent } from './manage-team-role/manage-team-role.component';
+import { SendMessageToTeamComponent } from './send-message-to-team/send-message-to-team.component';
+import { CreateSprintComponent } from './create-sprint/create-sprint.component';
+import { ModifyTimeComponent } from './modify-time/modify-time.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -58,9 +61,19 @@ const appRoutes: Routes = [
   { path: 'modifyteam/:id', component: ModifyTeamComponent, canActivate: [AuthService] },
   { path: 'teams', component: TeamsComponent, canActivate: [AuthService]},
   { path: 'viewteam/:id', component: ViewTeamComponent, canActivate: [AuthService]},
+<<<<<<< HEAD
   { path: 'inviteToTeam/:teamid', component: InviteToTeamComponent, canActivate: [AuthService]},
   { path: 'newmessage', component: NewMessageComponent, canActivate: [AuthService]},
   { path: 'usermessages', component: UserMessagesComponent, canActivate: [AuthService]}
+=======
+  { path: 'inviteToTeam/:teamid', component: InviteToTeamComponent, canActivate: [AuthService]}, 
+  { path: 'messages', component: UserMessagesComponent, canActivate: [AuthService]},
+  { path: 'newmessage', component: NewMessageComponent, canActivate: [AuthService] },
+  { path: 'sendmessagetouser/:id', component: MessageToUserComponent, canActivate: [AuthService] },
+  { path: 'managerole/:userid/:teamid', component: ManageTeamRoleComponent, canActivate: [AuthService]} ,
+  {  path: 'createsprint', component: CreateSprintComponent, canActivate: [AuthService] },
+  { path: 'modifytime/:taskId', component: ModifyTimeComponent, canActivate: [AuthService] }
+>>>>>>> 11eb509c9d4fe37942682c64d9037d39730e868b
 ];
 
 export function getGoogleConfigs() {
@@ -96,6 +109,11 @@ export function getGoogleConfigs() {
     ViewTeamComponent,
     TeaminvitationsComponent,
     InviteToTeamComponent,
+    MessageToUserComponent,
+    ManageTeamRoleComponent,
+    SendMessageToTeamComponent,
+    CreateSprintComponent,
+    ModifyTimeComponent,
     ],
   imports: [
   BrowserModule,
@@ -110,7 +128,9 @@ export function getGoogleConfigs() {
   MatToolbarModule,
   MatButtonToggleModule,
   MatExpansionModule,
-  
+  MatDatepickerModule,
+  MatCheckboxModule,
+  MatNativeDateModule,
   MatTableModule,
   FormsModule,
   ReactiveFormsModule,

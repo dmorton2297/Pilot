@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('savetask', 'TaskController@store');
 Route::get('getusertasks/{userId}', 'TaskController@userIndex');
+Route::get('getteamtasks/{teamId}', 'TaskController@teamIndex');
 Route::get('gettask/{id}', 'TaskController@show');
 Route::post('changestatus', 'TaskController@changeStatus');
 Route::post('saveuser', 'UserController@store');
@@ -48,8 +49,21 @@ Route::get('teaminvites/{userid}', 'TeamInvitationController@index');
 Route::get('deleteinvite/{id}', 'TeamInvitationController@remove');
 Route::post('inviteuser', 'TeamInvitationController@invite');
 Route::get('allsentinvites/{id}', 'TeamInvitationController@detailedUserIndex');
-Route::Get('allrecievedinvites/{id}', 'TeamInvitationController@getUserInvitations');
+Route::get('allrecievedinvites/{id}', 'TeamInvitationController@getUserInvitations');
+Route::get('getteammembers/{teamId}', 'TeamAssignmentController@getTeamMembers');
+Route::get('getjoinedteams/{userId}', 'TeamController@joinedTeams');
+Route::get('getuser/{id}', 'UserController@userWithId');
+Route::get('deletemessage/{id}', 'MessageController@delete');
+Route::post('setrole', 'TeamController@setRole');
+Route::post('getrole', 'TeamController@getRole');
+Route::post('createsprint', 'SprintController@store');
+Route::get('getsprinttasks/{userId}', 'TaskController@sprintTasksForUser');
+Route::get('getteamsprinttasks/{sprintId}', 'TaskController@sprintTasksForTeam');
+Route::post('updatetime', 'TaskController@updateTime');
+Route::get('gettimespent/{id}', 'TaskController@getTimeSpentForTask');
 
 
+// Statistics routes
+Route::get('getStatusDistributionForUser/{userId}', 'StatisticsController@getStatusDistributionForUser');
 
 

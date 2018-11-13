@@ -31,7 +31,35 @@ class TaskController extends Controller
      */
     public function userIndex($userId) 
     {
-        $tasks = DB::table('task')->where('creatorid', $userId)->get();
+        $tasks = DB::table('task')->where('creatorid', $userId) -> where('teamid', 0)->get();
+        return $tasks;
+    }
+
+    public function teamIndex($teamId) {
+        $tasks = DB::table('task')->where('teamid', $teamId)->get();
+        return $tasks;
+    }
+
+    public function sprintTasksForUser($userId) {
+        $tasks = DB::table('task') 
+        -> join('sprinttask', 'task.id', '=','sprinttask.taskid')
+        -> join('sprint', 'sprinttask.sprintid', '=', 'sprint.id')
+        -> where ('task.creatorid', $userId)
+        -> where ('task.teamid', '0')
+        -> select('task.id', 'task.name', 'task.description', 'task.priority', 'task.estimate', 'task.status', 'sprint.id as sprintId', 'sprint.name as sprintName', 'sprint.description as sprintDescription')
+        -> get();
+
+        return $tasks;
+    }
+
+    public function sprintTasksForTeam($teamId) {
+        $tasks = DB::table('task') 
+        -> join('sprinttask', 'task.id', '=','sprinttask.taskid')
+        -> join('sprint', 'sprinttask.sprintid', '=', 'sprint.id')
+        -> where ('task.teamid', $teamId)
+        -> select('task.id', 'task.name', 'task.description', 'task.priority', 'task.estimate', 'task.status', 'sprint.id as sprintId', 'sprint.name as sprintName', 'sprint.description as sprintDescription')
+        -> get();
+
         return $tasks;
     }
 
@@ -151,6 +179,26 @@ class TaskController extends Controller
 			]);
 			
 		return $name;
+    }
+
+    public function updateTime(Request $request) {
+        $taskId = $request -> input('taskId');
+        $time = $request -> input('time');
+
+        DB::table('task') 
+        -> where('id', $taskId)
+        -> update(['timespent' => $time]);
+
+        return $taskId;
+    }
+
+    public function getTimeSpentForTask($id) {
+        $timespent = DB::table('task')
+        -> where('id', $id)
+        -> select ('task.timespent')
+        -> get();
+
+        return $timespent;
     }
 
     /**

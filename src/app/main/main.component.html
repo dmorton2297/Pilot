@@ -1,3 +1,15 @@
+  <div style="margin-bottom: -40px; margin-top: 8px;" class="row" id="main">
+    <div class="col-md-8">
+      <span flex></span>
+    </div>
+    <div class="col-md-4">
+        <button style="z-index: 100; float: right;" mat-button [matMenuTriggerFor]="menu" *ngIf="teamsLoaded">{{selectedViewOption}}</button>
+        <mat-menu  id="menu" #menu="matMenu">
+            <button *ngFor="let a of viewOptions" style="z-index: 10001; font-size: 10pt;" mat-menu-item (click)="onMenuItemPressed(a)">{{a}}</button>
+          </mat-menu>
+    </div>
+  </div>
+    
 <mat-tab-group>
     <mat-tab label="Backlog"> 
         <app-backlog (signalEvent)="receiveSignal($event)"></app-backlog>

@@ -1,0 +1,12 @@
+mat-form-field {
+    width: 96%;
+}
+
+.button-row button,
+.button-row a {
+  margin-right: 8px;
+}
+
+table {
+    width: 100%;
+}

@@ -18,21 +18,17 @@ import { startWith, map } from 'rxjs/operators';
   styleUrls: ['./new-message.component.css']
 })
 
-export class NewMessageComponent {
+export class NewMessageComponent implements OnInit {
   newMessage = this.fb.group({
     receiver: [''],
-    //receiver: [''],
-    message: ['', Validators.required]
-    //message: ['']
+    message: ['']
   });
 
-  public uID : number;
+  public options = [];
   public sender : number;
   public receiver : string;
   public users : User[] = [];
-  public usernames : string[] = [];
-  public userids : number[] = [];
-  public searchResult = [];
+  public displayedUsers: User[] = [];
   public messageForm : FormControl = new FormControl();
   filteredUsers: Observable<User[]>;
   
@@ -40,13 +36,28 @@ export class NewMessageComponent {
     this.sender = this.auth.getUserId();
     this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
       this.users = res.json() as User[];
+      this.displayedUsers = this.users;
+      this.loadOptions();
     });
-    this.filteredUsers = this.messageForm.valueChanges
-      .pipe(
-        startWith(''),
-        map(user => user ? this.filterUsers(user) : this.users.slice())
-      );
       
+  }
+
+  loadOptions() {
+    this.options = [];
+    for (var i = 0; i < this.displayedUsers.length; i++) {
+      this.options.push(this.displayedUsers[i].name + '  |  ' + this.displayedUsers[i].email);
+    }
+  }
+
+  ngOnInit() {
+    var input = document.getElementById('to');
+
+    // add event listener to the too field to capture every time the user updates the input
+    let that = this;
+    input.addEventListener('input', function(){   
+      console.log(that.newMessage.get('receiver').value as string);
+      that.filterUsers(that.newMessage.get('receiver').value as string);
+    });
   }
 
   onSubmit() {
@@ -55,8 +66,24 @@ export class NewMessageComponent {
     //get receiving user's name and find his id
     //this.msg = this.newMessage.get('message').value as string;
     //alert(this.newMessage.get('receiver'))
+    let recipient = this.newMessage.get('receiver').value;
+    let recipientId = -1;
+    for (var i = 0; i < this.users.length; i++) {
+      if (recipient.includes(this.users[i].name) && recipient.includes(this.users[i].email)) {
+        recipientId = this.users[i].id;
+      }
+    }
 
-    
+    if (recipientId == -1) {
+      window.alert('The user could not be found')
+      return;
+    }
+
+    let request : NewMessage = {
+      recipient: recipientId,
+      message: this.newMessage.get('message').value as string,
+      sender: this.sender
+    }
     if (this.users.find(x=>x.name == this.receiver) != undefined) {
         //user is found in user table
     }
@@ -71,7 +98,7 @@ export class NewMessageComponent {
 
       let id = temp[0].id;
       let request : NewMessage = {
-        receiver: id,
+        recipient: id,
         message: this.newMessage.get('message').value as string,
         sender: this.sender
       }
@@ -83,23 +110,34 @@ export class NewMessageComponent {
 
   onCancel() {
     this.newMessage.reset();
-    this.router.navigateByUrl('/usermessages');
+    this.router.navigateByUrl('/messages');
   }
 
-  private filterUsers(value: string): User[] {
-    if (value != undefined) {
-      const name = value.toLowerCase();
-      //this.receiver = value;
-      //this.newMessage.controls['receiver'].setErrors({incorrect: false});
-      return this.users.filter(user => user.name.toLowerCase().indexOf(name) === 0);
+  private filterUsers(exp: string) {
+    this.displayedUsers = [];
+    for (var i = 0; i < this.users.length; i++) {
+      let n = this.users[i].name;
+      let e = this.users[i].email;
+
+
+      if (n.includes(exp) || e.includes(exp)) {
+        this.displayedUsers.push(this.users[i]);
+      }
     }
+
+    console.log(this.displayedUsers);
+    this.loadOptions();
+  }
+
+  displayFn(user?: string): string | undefined {
+    return user ? user : undefined;
   }
 
 
 }
 
 interface NewMessage {
-  receiver: number,
+  recipient: number,
   message: string,
   sender: number
 }

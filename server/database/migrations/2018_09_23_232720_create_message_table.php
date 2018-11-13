@@ -17,15 +17,14 @@ class CreateMessageTable extends Migration
             $table->increments('id');
             $table->string('message');
             $table->unsignedInteger('sender');
-            $table->unsignedInteger('receiver');
+            $table->unsignedInteger('recipient');
             $table->unsignedInteger('team');
 
             $table->foreign('sender')->references('id')->on('users')
             ->onDelete('cascade');
-            $table->foreign('receiver')->references('id')->on('users')
+            $table->foreign('recipient')->references('id')->on('users')
             ->onDelete('cascade');
-            $table->foreign('team')->references('id')->on('team')
-            ->onDelete('cascade');
+          
 
             $table->timestamps();
         });

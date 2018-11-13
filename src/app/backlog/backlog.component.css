@@ -2,10 +2,68 @@ table {
     width: 100%;
   }
 
+  #main-view {
+    overflow-y: hidden;
+
+  }
+
   #create-task {
       float: right;
   }
 
+  #menuButton {
+      float: right;
+  }
   #create-funcreq {
       float: right;
+  }
+
+  #table-container {
+      transition: left 3s liner;
+  }
+  
+  #sprintContainer {
+      display: none;
+      opacity: 0;
+      overflow-x: hidden;
+      height: 100%;
+  }
+
+  #sprint-content {
+      height: 100%;
+  }
+
+  #sprint-tables {
+      margin-top: 8px;
+      height: 80%;
+      overflow: scroll;
+  }
+
+  #time {
+    font-size: 30px;
+    color: darkslategray;
+    width: 25px;
+    background: transparent;
+    border: none;
+  }
+
+  #edit {
+      font-size: 30px;
+      color: lightslategray;
+      width: 25px;
+      background: transparent;
+      border: none;
+
+  }
+
+  #delete {
+    font-size: 30px;
+    color: lightcoral;
+    width: 25px;
+    background: transparent;
+    border: none;
+  }
+
+  #actions {
+      width: 100px;
   }
