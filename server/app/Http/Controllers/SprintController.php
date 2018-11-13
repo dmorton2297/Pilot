@@ -50,6 +50,7 @@ class SprintController extends Controller
         $end = $request -> input('end');
         $tasks = $request -> input('tasks');
         $creatorId = $request -> input('creatorid');
+        $teamId = $request -> input('teamid');
 
         // create the sprint in the database
         $sprintId = DB::table('sprint')->insertGetId(
@@ -58,7 +59,8 @@ class SprintController extends Controller
                 'description' => $description,
                 'start_date' => $start,
                 'end_date' => $end,
-                'creatorid' => $creatorId
+                'creatorid' => $creatorId,
+                'teamid' => $teamId
             ]
         );
 

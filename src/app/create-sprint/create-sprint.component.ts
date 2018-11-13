@@ -66,7 +66,8 @@ export class CreateSprintComponent {
       start: this.sprintForm.get('start').value as Date,
       end: this.sprintForm.get('end').value as Date,
       tasks: this.selectedTasks,
-      creatorid: this.auth.getUserId()
+      creatorid: this.auth.getUserId(),
+      teamid: this.state.getCurrentStateId()
     }
 
     this.http.post('http://localhost:8000/api/createsprint', request).subscribe((res) => {
@@ -105,5 +106,6 @@ interface SprintRequest {
   start: Date,
   end: Date,
   tasks: number[],
-  creatorid: number
+  creatorid: number,
+  teamid: number
 }
