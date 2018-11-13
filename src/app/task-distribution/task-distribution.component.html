@@ -1,0 +1,15 @@
+<h2>Task Status Distribution</h2>
+<ngx-charts-bar-vertical *ngIf="view"
+  [view]="[width, height]"
+  [scheme]="colorScheme"
+  [results]="data"
+  [gradient]="gradient"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [legend]="showLegend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  (select)="onSelect($event)">
+</ngx-charts-bar-vertical>

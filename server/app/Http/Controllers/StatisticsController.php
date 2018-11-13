@@ -23,11 +23,16 @@ class StatisticsController extends Controller
         ->count();
 
         $complete = DB::table('task')
-        ->where('status', 3)
+        ->where('status', 2)
         ->where('creatorid', $userId)
         ->where('teamid', 0)
         ->count();
 
-        return '{"notStarted":'.$notStarted.', "started":'.$started.', "complete":'.$complete.'}' ;
+        $p1 = '{"name":"notStarted", "value":'.$notStarted.'}';
+        $p2 = '{"name":"started", "value":'.$started.'}';
+        $p3 = '{"name":"complete", "value":'.$complete.'}';
+
+
+        return '['.$p1.','.$p2.','.$p3.']';
     }
 }

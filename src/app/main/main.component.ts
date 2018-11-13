@@ -4,6 +4,9 @@ import { BacklogComponent } from '../backlog/backlog.component';
 import { Http } from '@angular/http';
 import { AuthService } from '../auth.service';
 import { StateService } from '../state.service';
+import { MatTabChangeEvent } from '@angular/material';
+
+import { PerformanceDashboardComponent } from '../performance-dashboard/performance-dashboard.component';
 
 @Component({
   selector: 'app-main',
@@ -19,6 +22,7 @@ export class MainComponent implements OnInit {
 
   @ViewChild(ScrumBoardComponent) scrum;
   @ViewChild(BacklogComponent) backlog;
+  @ViewChild(PerformanceDashboardComponent) performanceDashboard;
   constructor(private http: Http, private auth: AuthService, private state: StateService) { 
     this.http.get('http://localhost:8000/api/getjoinedteams/' + this.auth.getUserId()).subscribe((res) => {
       this.teams = res.json() as Team[];
@@ -27,6 +31,14 @@ export class MainComponent implements OnInit {
       }
       this.teamsLoaded = true;
     });
+  }
+
+  onTabClick(event: MatTabChangeEvent) {
+    if (event.index == 2) {
+      this.performanceDashboard.visible = true;
+    } else {
+      this.performanceDashboard.visible = false;
+    }
   }
 
   ngOnInit() {

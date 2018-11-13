@@ -91,6 +91,7 @@ class TaskController extends Controller
         $teamid = $request -> input('teamid');
         $creatorid = $request -> input('creatorid');
         $criterian = json_encode($request -> input('criterian'));
+        $assigneduserid = $request -> input ('assigneduserid');
 
         DB::table('task')->insert(
             ['name' => $name,
@@ -103,6 +104,7 @@ class TaskController extends Controller
              'teamid' => $teamid,
              'creatorid' => $creatorid,
              'criterian' => $criterian,
+             'assigneduserid' => $assigneduserid,
              'created_at' => Carbon::now()->toDateTimeString(),
              'updated_at' => Carbon::now()->toDateTimeString()
             ]
@@ -131,6 +133,7 @@ class TaskController extends Controller
     public function showReqs($id) 
     {
         $funcreqs = json_decode(DB::table('task')->where('id', $id)->value('funcreq'), true);
+        if ($funcreqs == NULL) return -1;
         return $funcreqs;
     }
 
@@ -163,6 +166,7 @@ class TaskController extends Controller
         $estimate = $request -> input('estimate');
         $timespent = $request -> input('timespent');
         $criterian = json_encode($request -> input('criterian'));
+        $assigneduserid = $request -> input('assigneduserid');
 
         DB::table('task')
 			->where('id', $id)
@@ -175,6 +179,7 @@ class TaskController extends Controller
              'estimate' => $estimate,
              'timespent' => $timespent,
              'criterian' => $criterian,
+             'assigneduserid' => $assigneduserid,
              'updated_at' => Carbon::now()->toDateTimeString()
 			]);
 			

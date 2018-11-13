@@ -19,12 +19,12 @@
           </mat-select>
       </mat-form-field> 
 
-      <!-- Assigned user drop down box-->
-      <mat-form-field>
-             <mat-select formControlName="assignedUser" placeholder="Assignment" required> 
-                  <mat-option *ngFor="let u of users" [value]="u">{{u.name}}</mat-option>
-              </mat-select>  
-      </mat-form-field> 
+        <!-- Assigned user drop down box -->
+        <mat-form-field>
+            <mat-select formControlName="assignedUser" placeholder="Assignment" required> 
+                    <mat-option *ngFor="let u of users; let i=index;" [value]="u">{{u.memberName}}</mat-option>
+                </mat-select>  
+        </mat-form-field> 
 
       <!-- Function requirement drop down box -->
       <mat-form-field>
@@ -60,5 +60,10 @@
 
     </div>
   </form>
+
+  <p>
+    Form Value: {{ taskForm.value | json }}
+  </p>
+
 </mat-card-content>
 </mat-card>

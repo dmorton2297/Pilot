@@ -19,7 +19,8 @@ export class CreateSprintComponent {
           name: ['', Validators.required],
           description: ['', Validators.required],
           start: [Date.now()],
-          end: [Date.now()]
+          end: [Date.now()],
+          
         });
   
   // task data for table
@@ -64,7 +65,9 @@ export class CreateSprintComponent {
       description: this.sprintForm.get('description').value as string,
       start: this.sprintForm.get('start').value as Date,
       end: this.sprintForm.get('end').value as Date,
-      tasks: this.selectedTasks
+      tasks: this.selectedTasks,
+      creatorid: this.auth.getUserId(),
+      teamid: this.state.getCurrentStateId()
     }
 
     this.http.post('http://localhost:8000/api/createsprint', request).subscribe((res) => {
@@ -102,5 +105,7 @@ interface SprintRequest {
   description: string,
   start: Date,
   end: Date,
-  tasks: number[]
+  tasks: number[],
+  creatorid: number,
+  teamid: number
 }

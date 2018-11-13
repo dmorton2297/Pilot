@@ -26,7 +26,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { FuncReqFormComponent } from './func-req-form/func-req-form.component';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from './auth.service';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -46,7 +46,12 @@ import { MessageToUserComponent } from './message-to-user/message-to-user.compon
 import { ManageTeamRoleComponent } from './manage-team-role/manage-team-role.component';
 import { SendMessageToTeamComponent } from './send-message-to-team/send-message-to-team.component';
 import { CreateSprintComponent } from './create-sprint/create-sprint.component';
+import { PerformanceDashboardComponent } from './performance-dashboard/performance-dashboard.component';
 import { ModifyTimeComponent } from './modify-time/modify-time.component';
+import { TaskDistributionComponent } from './task-distribution/task-distribution.component';
+
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -107,10 +112,13 @@ export function getGoogleConfigs() {
     ManageTeamRoleComponent,
     SendMessageToTeamComponent,
     CreateSprintComponent,
+    PerformanceDashboardComponent,
     ModifyTimeComponent,
+    TaskDistributionComponent,
     ],
   imports: [
   BrowserModule,
+  NgxChartsModule,
   HttpModule,
   MatAutocompleteModule,
   MatCardModule,
