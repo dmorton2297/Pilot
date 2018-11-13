@@ -51,6 +51,7 @@ import { ModifyTimeComponent } from './modify-time/modify-time.component';
 import { TaskDistributionComponent } from './task-distribution/task-distribution.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { TimeDistributionComponent } from './time-distribution/time-distribution.component';
 
 
 const appRoutes: Routes = [
@@ -115,6 +116,7 @@ export function getGoogleConfigs() {
     PerformanceDashboardComponent,
     ModifyTimeComponent,
     TaskDistributionComponent,
+    TimeDistributionComponent,
     ],
   imports: [
   BrowserModule,
