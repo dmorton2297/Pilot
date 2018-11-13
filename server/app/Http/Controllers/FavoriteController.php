@@ -1,12 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-
 class FavoriteController extends Controller
 {
     /**
@@ -19,14 +15,12 @@ class FavoriteController extends Controller
         $fav = DB::table('favorite')->get();
         return $fav;
     }
-
     public function indexUser($userid) 
     {
         $fav = DB::table('favorite')->where('userid', '=', $userid)->get();
+        if ($fav->isEmpty()) return -1;
         return $fav;
     }
-
-
     /**
      * Store a newly created resource in storage.
      *
@@ -37,16 +31,13 @@ class FavoriteController extends Controller
     {
         $userid = $request -> input('userid');
         $favoriteid = $request -> input('favoriteid');
-
         DB::table('favorite')->insert(
             ['userid' => $userid,
              'favoriteid' => $favoriteid
             ]
         );
-
         return $userid;
     }
-
     /**
      * Display the specified resource.
      *
@@ -58,7 +49,6 @@ class FavoriteController extends Controller
         $fav = DB::table('favorite')->where('id', $id)->get();
 		return $fav;
     }
-
     
     /**
      * Update the specified resource in storage.
@@ -81,7 +71,6 @@ class FavoriteController extends Controller
 			
 		return $userid;
     }
-
     /**
      * Remove the specified resource from storage.
      *
