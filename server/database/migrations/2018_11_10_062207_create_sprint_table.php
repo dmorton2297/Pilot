@@ -17,9 +17,13 @@ class CreateSprintTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
+            $table->unsignedInteger('creatorid');
             $table->string('start_date')->nullable();
             $table->string('end_date')->nullable();
             $table->timestamps();
+
+            $table->foreign('creatorid')->references('id')->on('users')
+            ->onDelete('cascade');
         });
     }
 

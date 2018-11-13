@@ -18,6 +18,14 @@ class SprintController extends Controller
         //
     }
 
+    public function userIndex($userId) {
+        $results = DB::table('sprint') 
+        -> where('creatorid', $userId)
+        -> get();
+
+        return $results;
+    }  
+
     /**
      * Show the form for creating a new resource.
      *
@@ -41,6 +49,7 @@ class SprintController extends Controller
         $start = $request -> input('start');
         $end = $request -> input('end');
         $tasks = $request -> input('tasks');
+        $creatorId = $request -> input('creatorid');
 
         // create the sprint in the database
         $sprintId = DB::table('sprint')->insertGetId(
@@ -48,7 +57,8 @@ class SprintController extends Controller
                 'name' => $name,
                 'description' => $description,
                 'start_date' => $start,
-                'end_date' => $end
+                'end_date' => $end,
+                'creatorid' => $creatorId
             ]
         );
 

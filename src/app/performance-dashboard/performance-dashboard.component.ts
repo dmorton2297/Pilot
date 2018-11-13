@@ -11,6 +11,8 @@ export class PerformanceDashboardComponent implements OnInit {
 
   @Output() signalEvent = new EventEmitter<string>();
   visible: boolean = false;
+  public sprints: Sprint[] = [];
+
 
   constructor() {
    }
@@ -23,5 +25,11 @@ export class PerformanceDashboardComponent implements OnInit {
     console.log('Rendering performance dashboard');
   }
 
+}
+
+interface Sprint {
+  sprintId: number,
+  sprintName: string,
+  sprintDescription: string,
 }
 

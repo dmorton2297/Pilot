@@ -41,16 +41,6 @@ export class CreateTeamComponent{
     });
   }
 
-  inviteUsers() {
-    var to_invite : User[] = this.teamForm.get('toInvite').value as User[];
-    for (var i = 0; i < to_invite.length; i++) {
-      let request : Invite = {
-        userid: to_invite[i].id,
-        teamid: this.teamId
-      }
-      this.http.post('http://localhost:8000/api/inviteuser', request);
-    }
-  } 
 
   onSubmit() {
     console.log(this.teamForm);
@@ -73,8 +63,6 @@ export class CreateTeamComponent{
           this.snackBar.open('Team Created', 'Ok', {
             duration: 3000
           });
-          this.teamId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-          this.inviteUsers();
         });
       }
     });
