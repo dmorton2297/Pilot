@@ -46,8 +46,8 @@ class TeamAssignmentController extends Controller
 		-> join('users', 'teamassignment.userid', '=', 'users.id')
         -> join('team', 'teamassignment.teamid', '=', 'team.id')
         -> join('teamrole', 'teamassignment.userid', '=', 'teamrole.userid')
-		-> select('users.id', 'users.email', 'users.name as memberName', 'teamassignment.teamid as teamId', 'team.name as teamName', 'teamrole.role')
-		-> where('teamassignment.teamid', $teamId)
+        -> select('users.id', 'users.email', 'users.name as memberName', 'teamassignment.teamid as teamId', 'team.name as teamName', 'teamrole.role')
+        -> distinct('teamassignment.id')
 		-> get();
 
 		return $result;
