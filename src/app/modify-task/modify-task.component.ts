@@ -141,6 +141,13 @@ export class ModifyTaskComponent {
         this.insertUnassigned();
       });
     }
+   // this.getUsers();
+ }
+
+  getUsers() {
+    this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
+     // this.users = res.json() as User[];
+    });
   }
 
   /**

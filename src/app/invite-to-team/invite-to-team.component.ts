@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import {MatSnackBar} from '@angular/material';
+import { UserMessagesComponent } from '../user-messages/user-messages.component';
 
 
 
@@ -24,14 +25,36 @@ export class InviteToTeamComponent implements OnInit {
   public id : number;
   public currentInvites : Invite[];
   public displayedColumns: String[] = ['name', 'email'];
+  public users: User[] = [];
+  public favorites: Favorite[] = [];
 
   constructor(private fb: FormBuilder, private http: Http, private activatedRoute: ActivatedRoute, private auth: AuthService, private router: Router, public snackBar: MatSnackBar) { 
     this.teamId = this.activatedRoute.snapshot.paramMap.get('teamid'); 
     this.loadTeamName();
     this.loadCurrentInvites();
+    this.loadAutoComplete();
+  }
 
-    
-
+  user : User;
+  loadAutoComplete() {
+    this.http.get('http://localhost:8000/api/getuserfavorites/' + this.auth.getUserId()).subscribe((res) => {
+      if (res.json() != "" && res.json() != -1) {
+        this.favorites = res.json() as Favorite[];
+        console.log("favorites");
+        console.log(this.favorites);
+        for (var i = 0; i < this.favorites.length; i++) {
+          
+          this.http.get('http://localhost:8000/api/getuser/' + this.favorites[i].favoriteid).subscribe((res) => {
+            this.user = res.json() as User;
+            console.log("User found");
+            console.log(this.user);
+            this.users.push(this.user);
+          });
+        }
+      }
+      console.log("Autocomplete loading");
+      console.log(this.users);
+    });
 
   }
 
@@ -89,6 +112,11 @@ export class InviteToTeamComponent implements OnInit {
 
 }
 
+interface Favorite {
+  userid: number,
+  favoriteid: number
+}
+
 interface InviteRequest {
   senderid: string,
   recipientid: string,
@@ -103,6 +131,12 @@ interface Invite {
 
 interface Id {
   id: number
+}
+
+interface User {
+  id: number,
+  name: string,
+  email: string
 }
 
 interface Team {
