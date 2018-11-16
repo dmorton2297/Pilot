@@ -49,7 +49,7 @@ export class ViewFuncreqsComponent {
   }
   
   onModifyPressed(id) {
-
+    this.router.navigateByUrl('/modifyfuncreq/' + id);
   }
 
   onDeletePressed(id) {

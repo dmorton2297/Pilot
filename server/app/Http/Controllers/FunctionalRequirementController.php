@@ -56,6 +56,32 @@ class FunctionalRequirementController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+		$name = $request -> input('name');
+        $description = $request -> input('description');
+        $teamid = $request -> input('teamid');
+
+        DB::table('funcreqs')
+			->where('id', $id)
+			->update(
+			['name' => $name,
+             'description' => $description,
+             'teamid' => $teamid,
+             'updated_at' => Carbon::now()->toDateTimeString()
+			]);
+			
+		return $name;
+    }
+
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -64,7 +90,7 @@ class FunctionalRequirementController extends Controller
     public function show($id)
     {
         $req = DB::table('funcreqs')->where('id', $id)->get();
-		
+		if ($req->isEmpty()) return -1;
 		return $req;
     }
 
