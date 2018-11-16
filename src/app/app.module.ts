@@ -74,7 +74,7 @@ const appRoutes: Routes = [
   { path: 'managerole/:userid/:teamid', component: ManageTeamRoleComponent, canActivate: [AuthService]} ,
   { path: 'createsprint', component: CreateSprintComponent, canActivate: [AuthService] },
   { path: 'modifytime/:taskId', component: ModifyTimeComponent, canActivate: [AuthService] },
-  { path: 'viewfuncreqs', component: ViewFuncreqsComponent, canActivate: [AuthService] }, 
+  { path: 'viewfuncreqs/:id', component: ViewFuncreqsComponent, canActivate: [AuthService] }, 
   { path: 'modifyfuncreq/:id', component: ModifyFuncreqComponent, canActivate: [AuthService]}
 ];
 

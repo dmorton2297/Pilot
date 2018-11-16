@@ -177,6 +177,10 @@ export class BacklogComponent implements OnInit{
     this.router.navigateByUrl('/modifytask/' + id);
   }
 
+  onViewFuncReq() {
+    this.router.navigateByUrl('/viewfuncreqs/' + this.state.getCurrentStateId());
+  }
+
   onSortNamePressed(){
     this.sortByName = true;
     this.sortByPriority = false;
@@ -193,9 +197,8 @@ export class BacklogComponent implements OnInit{
     this.viewSprintClicked = true;
     this.animationState = (this.animationState == 'visible' ? 'hidden' : 'visible');
     this.slideInAnimationState = (this.slideInAnimationState == 'visible' ? 'hidden' : 'visible');
-
-
   }
+
   
 	sortTableName() {
     var temp = this.tasks;
