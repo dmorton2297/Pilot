@@ -30,6 +30,8 @@ Route::get('deletetask/{id}', 'TaskController@destroy');
 Route::get('getSelectedReqs/{id}', 'TaskController@showReqs');
 Route::post('savereq', 'FunctionalRequirementController@store');
 Route::get('getfuncreqs/{id}', 'FunctionalRequirementController@teamIndex');
+Route::get('delfuncreq/{id}', 'FunctionalRequirementController@destroy');
+Route::post('modifyfuncreq/{id}', 'FunctionalRequirementController@store');
 Route::get('getuserid/{username}', 'UserController@getUserId');
 Route::get('getcriterian/{id}', 'TaskController@showCriterian');
 Route::post('createteam', 'TeamController@store');
@@ -60,6 +62,7 @@ Route::get('getsprinttasks/{userId}', 'TaskController@sprintTasksForUser');
 Route::get('getteamsprinttasks/{sprintId}', 'TaskController@sprintTasksForTeam');
 Route::post('updatetime', 'TaskController@updateTime');
 Route::get('gettimespent/{id}', 'TaskController@getTimeSpentForTask');
+Route::get('deleteteam/{id}', 'TeamController@destroy');
 Route::get('getusersprints/{userId}', 'SprintController@userIndex');
 
 

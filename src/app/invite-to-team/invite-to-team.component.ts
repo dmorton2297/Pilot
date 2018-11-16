@@ -29,10 +29,6 @@ export class InviteToTeamComponent implements OnInit {
     this.teamId = this.activatedRoute.snapshot.paramMap.get('teamid'); 
     this.loadTeamName();
     this.loadCurrentInvites();
-
-    
-
-
   }
 
   loadTeamName() {

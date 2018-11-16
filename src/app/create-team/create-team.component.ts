@@ -66,6 +66,8 @@ export class CreateTeamComponent{
         });
       }
     });
+    this.router.navigateByUrl('/teams');
+
   }
 
   onCancel() {

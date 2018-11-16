@@ -51,7 +51,7 @@ import { ModifyTimeComponent } from './modify-time/modify-time.component';
 import { TaskDistributionComponent } from './task-distribution/task-distribution.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-
+import { ViewFuncreqsComponent } from './view-funcreqs/view-funcreqs.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -72,7 +72,8 @@ const appRoutes: Routes = [
   { path: 'sendmessagetouser/:id', component: MessageToUserComponent, canActivate: [AuthService] },
   { path: 'managerole/:userid/:teamid', component: ManageTeamRoleComponent, canActivate: [AuthService]} ,
   {  path: 'createsprint', component: CreateSprintComponent, canActivate: [AuthService] },
-  { path: 'modifytime/:taskId', component: ModifyTimeComponent, canActivate: [AuthService] }
+  { path: 'modifytime/:taskId', component: ModifyTimeComponent, canActivate: [AuthService] },
+  { path: 'viewfuncreqs', component: ViewFuncreqsComponent, canActivate: [AuthService] }
 ];
 
 export function getGoogleConfigs() {
@@ -115,6 +116,7 @@ export function getGoogleConfigs() {
     PerformanceDashboardComponent,
     ModifyTimeComponent,
     TaskDistributionComponent,
+    ViewFuncreqsComponent,
     ],
   imports: [
   BrowserModule,

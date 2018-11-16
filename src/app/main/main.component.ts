@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ScrumBoardComponent } from '../scrum-board/scrum-board.component';
-import { BacklogComponent } from '../backlog/backlog.component';
 import { Http } from '@angular/http';
 import { AuthService } from '../auth.service';
 import { StateService } from '../state.service';
 import { MatTabChangeEvent } from '@angular/material';
 
 import { PerformanceDashboardComponent } from '../performance-dashboard/performance-dashboard.component';
+import { ScrumBoardComponent } from '../scrum-board/scrum-board.component';
+import { BacklogComponent } from '../backlog/backlog.component';
+import { ViewFuncreqsComponent } from '../view-funcreqs/view-funcreqs.component';
 
 @Component({
   selector: 'app-main',
@@ -23,6 +24,7 @@ export class MainComponent implements OnInit {
   @ViewChild(ScrumBoardComponent) scrum;
   @ViewChild(BacklogComponent) backlog;
   @ViewChild(PerformanceDashboardComponent) performanceDashboard;
+  @ViewChild(ViewFuncreqsComponent) functionalrequirements;
   constructor(private http: Http, private auth: AuthService, private state: StateService) { 
     this.http.get('http://localhost:8000/api/getjoinedteams/' + this.auth.getUserId()).subscribe((res) => {
       this.teams = res.json() as Team[];
@@ -69,6 +71,7 @@ export class MainComponent implements OnInit {
   receiveSignal($event) {
     this.backlog.loadData();
     this.scrum.loadData();
+    this.functionalrequirements.loadData();
   }
 
 }

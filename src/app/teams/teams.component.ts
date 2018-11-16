@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { AuthService } from '../auth.service';
+import { StateService } from '../state.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
+
+
 
 @Component({
   selector: 'app-teams',
@@ -12,11 +16,17 @@ export class TeamsComponent implements OnInit {
   public teams: Team[];
   public displayedColumns: String[] = ['id', 'name', 'description', 'created', 'actions'];
 
-  constructor(private router: Router, private http: Http, private auth: AuthService) { 
+  @Output() signalEvent = new EventEmitter<string>();
+  constructor(public snackBar: MatSnackBar, private state: StateService, private router: Router, private http: Http, private auth: AuthService) { 
     this.http.get('http://localhost:8000/api/getjoinedteams/' + this.auth.getUserId()).subscribe((res) => {
       this.teams = res.json() as Team[];
     });
   }
+
+  updateSignal() {
+    this.signalEvent.emit("SIG_UPDATE_TASKS");
+  }
+  
 
   ngOnInit() {
   }
@@ -30,7 +40,11 @@ export class TeamsComponent implements OnInit {
   }
 
   onDeletePressed(id: number) {
-
+    this.http.get('http://localhost:8000/api/deleteteam/' + id).subscribe((res) => {
+      this.snackBar.open('Team deleted, but view isnt updating', 'Ok', {
+        duration: 3000
+      });
+    });
   }
 
   onModifyPressed(id: number) {

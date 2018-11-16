@@ -3,14 +3,13 @@
     <div class="row">
       <div class="col-md-8">
           <h1 class="heading">{{teamName}}</h1>
-          <hr style="widht: 100%" />
+          <hr style="width: 100%" />
           <h4>{{teamDescription}}</h4>
       </div>
       <div class="col-md-4">
           <button mat-button id="invite" (click)="onInviteUsers()">Invite Users</button>
       </div>
     </div>
-    
   </mat-card>
 
   <mat-card class="table-container" *ngIf="users">

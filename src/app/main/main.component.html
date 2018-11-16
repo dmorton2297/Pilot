@@ -20,4 +20,7 @@
     <mat-tab label="Performance Dashboard">
       <app-performance-dashboard (signalEvent)="receiveSignal($event)"></app-performance-dashboard>
     </mat-tab>
+    <mat-tab label="Functional Requirements">
+      <app-view-funcreqs (signalEvent)="receiveSignal($event)"></app-view-funcreqs>
+    </mat-tab> 
   </mat-tab-group>
