@@ -39,10 +39,6 @@ export class ViewFuncreqsComponent {
       }
     });
   }
-
-  getFunctionalRequirements() {
-
-  }
   
   updateSignal() {
     this.signalEvent.emit("SIG_UPDATE_TASKS");
@@ -58,13 +54,7 @@ export class ViewFuncreqsComponent {
         duration: 3000
       });
     });
-    this.updateSignal();
   }
-
-  ngOnInit() {
-    console.log('Rendering functional requirements dashboard');
-  }
-
 }
 
 interface Team {
