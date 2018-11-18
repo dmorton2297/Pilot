@@ -72,8 +72,6 @@ export class ModifyTaskComponent {
       });
     });  
 
-    // TODO: This is causing error.
-
     /* Getting ALL functional requirements associated with task */
     this.http.get('http://localhost:8000/api/getfuncreqs/' + this.state.getCurrentStateId()).subscribe((res) => {
       if (res.json() != "") this.req = res.json() as FunctionalRequirement[];
@@ -86,6 +84,8 @@ export class ModifyTaskComponent {
         this.selectedReqs = res.json() as FunctionalRequirement[];
         this.taskForm.patchValue({funcreq: this.selectedReqs});
         this.removeDuplicate();
+      } else {
+        this.selectedReqs = [];
       }
     });
 

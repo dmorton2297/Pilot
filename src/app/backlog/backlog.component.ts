@@ -177,6 +177,10 @@ export class BacklogComponent implements OnInit{
     this.router.navigateByUrl('/modifytask/' + id);
   }
 
+  onEstimatePressed(id) {
+    this.router.navigateByUrl('/modifyestimate/' + id);
+  }
+
   onViewFuncReq() {
     this.router.navigateByUrl('/viewfuncreqs/' + this.state.getCurrentStateId());
   }

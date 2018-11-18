@@ -53,6 +53,7 @@ import { TaskDistributionComponent } from './task-distribution/task-distribution
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ViewFuncreqsComponent } from './view-funcreqs/view-funcreqs.component';
 import { ModifyFuncreqComponent } from './modify-funcreq/modify-funcreq.component';
+import { ModifyEstimateComponent } from './modify-estimate/modify-estimate.component';
 
 
 const appRoutes: Routes = [
@@ -76,7 +77,8 @@ const appRoutes: Routes = [
   { path: 'createsprint', component: CreateSprintComponent, canActivate: [AuthService] },
   { path: 'modifytime/:taskId', component: ModifyTimeComponent, canActivate: [AuthService] },
   { path: 'viewfuncreqs/:id', component: ViewFuncreqsComponent, canActivate: [AuthService] }, 
-  { path: 'modifyfuncreq/:id', component: ModifyFuncreqComponent, canActivate: [AuthService]}
+  { path: 'modifyfuncreq/:id', component: ModifyFuncreqComponent, canActivate: [AuthService]},
+  { path: 'modifyestimate/:id', component: ModifyEstimateComponent, canActivate: [AuthService]}
 ];
 
 export function getGoogleConfigs() {
@@ -121,6 +123,7 @@ export function getGoogleConfigs() {
     TaskDistributionComponent,
     ViewFuncreqsComponent,
     ModifyFuncreqComponent,
+    ModifyEstimateComponent,
     ],
   imports: [
   BrowserModule,

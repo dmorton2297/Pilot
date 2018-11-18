@@ -62,7 +62,9 @@ Route::post('createsprint', 'SprintController@store');
 Route::get('getsprinttasks/{userId}', 'TaskController@sprintTasksForUser');
 Route::get('getteamsprinttasks/{sprintId}', 'TaskController@sprintTasksForTeam');
 Route::post('updatetime', 'TaskController@updateTime');
+Route::post('updateestimate', 'TaskController@updateEstimate');
 Route::get('gettimespent/{id}', 'TaskController@getTimeSpentForTask');
+Route::get('getestimate/{id}', 'TaskController@getEstimate');
 Route::get('deleteteam/{id}', 'TeamController@destroy');
 Route::get('getusersprints/{userId}', 'SprintController@userIndex');
 
