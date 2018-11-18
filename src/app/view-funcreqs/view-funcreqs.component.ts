@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { AuthService } from '../auth.service';
@@ -54,6 +54,7 @@ export class ViewFuncreqsComponent {
         duration: 3000
       });
     });
+    this.updateSignal();
   }
 }
 

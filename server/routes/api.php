@@ -66,8 +66,17 @@ Route::get('gettimespent/{id}', 'TaskController@getTimeSpentForTask');
 Route::get('deleteteam/{id}', 'TeamController@destroy');
 Route::get('getusersprints/{userId}', 'SprintController@userIndex');
 
+Route::post('addFavorite', 'FavoriteController@store');
+Route::get('removeFavorite/{userid}/{favoriteid}', 'FavoriteController@destroy');
+Route::get('getallfav', 'FavoriteController@index');
+Route::get('getuserfavorites/{userid}', 'FavoriteController@indexUser');
+
 
 // Statistics routes
 Route::get('getStatusDistributionForUser/{userId}', 'StatisticsController@getStatusDistributionForUser');
+Route::post('addFavorite', 'FavoriteController@store');
+Route::get('removeFavorite/{userid}/{favoriteid}', 'FavoriteController@destroy');
+Route::get('getallfav', 'FavoriteController@index');
+Route::get('checkfavorite/{userid}', 'FavoriteController@indexUser');
 
 

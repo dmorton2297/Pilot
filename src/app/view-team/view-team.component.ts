@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar, SELECT_PANEL_INDENT_PADDING_X } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { AuthService } from '../auth.service';
@@ -15,14 +15,18 @@ export class ViewTeamComponent implements OnInit {
   team: Team;
   public teamName: string = "";
   public teamDescription: String = "";
-  public displayedColumns: String[] = ['id', 'name', 'email', 'role', 'actions'];
+  public displayedColumns: String[] = ['id', 'name', 'email', 'role', 'actions', 'favorite'];
   public users: User[];
   public role: string;
+  public favs: Favorite[] = [];
+  public toggle: boolean[] = []; 
 
   public canKick = false;
   public canChangeRole = false;
   public canMessage = false;
 
+  // Buttons will check the index in the array corresponding the the element.id and if it is true the button
+  // will automatically be pressed.
   public dialog;
   
   @Output() signalEvent = new EventEmitter<string>();
@@ -37,8 +41,25 @@ export class ViewTeamComponent implements OnInit {
       console.log(this.teamName);
       this.getTeamMembers();
       this.loadViewingPermissions();
-    });
+
+      for (var i = 0; i < 1000; i++) {
+        this.toggle[i] = false;
+       }
     
+      // Gets all the favorites for a user. userid is the current user, favorite id is the id of the favorited user
+      this.http.get('http://localhost:8000/api/getuserfavorites/' + this.auth.getUserId()).subscribe((res) => {
+        this.favs = res.json() as Favorite[];
+        if (res.json() != -1) {
+          for (var i = 0; i < this.favs.length ; i++) {
+            for(var j = 0; j < this.users.length; j++) {
+              if (this.favs[i].favoriteid == this.users[j].id) {
+                this.toggle[this.users[j].id] = true;
+              }
+            }
+          }
+        }
+      });
+    });
     this.dialog = MatDialog;
   }
 
@@ -65,12 +86,39 @@ export class ViewTeamComponent implements OnInit {
   }
 
   getTeamMembers() {
+
+    // Initialize toggle array to false
+    for (var i = 0; i < 1000; i++) {
+      this.toggle[i] = false;
+    }
+
     this.http.get('http://localhost:8000/api/getteammembers/' + this.teamId).subscribe((res) => {
       this.users = res.json() as User[];
-      console.log(this.users);
+
     });
+
+    //http://localhost:8000/api/getallfav
+
+    // Gets all the favorites for a user. userid is the current user, favorite id is the id of the favorited user
+    this.http.get('http://localhost:8000/api/checkfavorite/' + this.auth.getUserId()).subscribe((res) => {
+      this.favs = res.json() as Favorite[];
+      // An attempt at saving which users should have the favorite button pressed when page loads
+      console.log(this.favs);
+      for (var i = 0; i < this.favs.length ; i++) {
+        for(var j = 0; j < this.users.length; j++) {
+          if (this.favs[i].favoriteid == this.users[j].id) {
+            this.toggle[this.users[j].id] = true;
+          }
+        }
+      }
+
+    });
+
+    this.dialog = MatDialog;
   }
+
   
+
    updateSignal() {
     this.signalEvent.emit("SIG_UPDATE_TASKS");
   }
@@ -88,6 +136,24 @@ export class ViewTeamComponent implements OnInit {
     
   }
 
+  onFavoritePressed(id) {
+    if (this.toggle[id] == false || this.toggle[id] == undefined) {
+      let request : Favorite = {
+        userid: this.auth.getUserId(),
+        favoriteid : id
+      }
+      this.http.post('http://localhost:8000/api/addFavorite/', request).subscribe((res) => {
+        console.log(res);
+        this.toggle[id] = true
+      });
+    } else {
+      this.http.get('http://localhost:8000/api/removeFavorite/' + this.auth.getUserId() + "/" + id).subscribe((res) => {
+        console.log(res);
+        this.toggle[id] = false;
+     });
+    }
+  }
+
   onMessagePressed(id) {
     this.router.navigateByUrl('/sendmessagetouser/' + id);
   }
@@ -96,7 +162,30 @@ export class ViewTeamComponent implements OnInit {
     this.router.navigateByUrl('/managerole/' + id + '/' + this.teamId);
   }
 
+  updateFavorite(id: number) {
+
+      console.log(this.favs);
+      console.log(this.toggle);
+  
+    if (this.toggle[id] == false || this.toggle[id] == undefined) {
+      let request : Favorite = {
+        userid: this.auth.getUserId(),
+        favoriteid : id
+      }
+      this.http.post('http://localhost:8000/api/addFavorite/', request).subscribe((res) => {
+        console.log(res);
+        this.toggle[id] = true
+      });
+    } else {
+      this.http.get('http://localhost:8000/api/removeFavorite/' + this.auth.getUserId() + "/" + id).subscribe((res) => {
+        console.log(res);
+        this.toggle[id] = false;
+     });
+    }
+  }
+
   ngOnInit() {
+ 
   }
 
   onInviteUsers() {
@@ -104,9 +193,6 @@ export class ViewTeamComponent implements OnInit {
   }
 
 }
-
-
-  
 
 interface Team {
   id: number,
@@ -119,8 +205,10 @@ interface Team {
   updated_at: number
 }
 
-
-	
+interface Favorite {
+  userid: number,
+  favoriteid: number
+}
 
 interface User {
   id: number,
@@ -131,12 +219,10 @@ interface User {
   teamName: String
 }
 
-
 interface GetRoleRequest {
   userid: string,
   teamid: string,
 }
-
 
 interface Role {
   role: string,
