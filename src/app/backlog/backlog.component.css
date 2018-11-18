@@ -47,13 +47,6 @@ table {
     border: none;
   }
 
-  #estimate {
-    font-size: 30px;
-    color: darkslategray;
-    width: 25px;
-    background: transparent;
-    border: none;
-  }
 
   #edit {
       font-size: 30px;
@@ -73,5 +66,5 @@ table {
   }
 
   #actions {
-      width: 130px;
+      width: 100px;
   }

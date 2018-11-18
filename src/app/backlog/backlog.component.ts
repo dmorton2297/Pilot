@@ -61,6 +61,10 @@ export class BacklogComponent implements OnInit{
     this.router.navigateByUrl('/createsprint');
   }
 
+  onViewEstimates() {
+    this.router.navigateByUrl('/time-estimates/' + this.state.getCurrentStateId());
+  }
+
   updateSignal() {
     this.signalEvent.emit("SIG_UPDATE_TASKS");
   }
