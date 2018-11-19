@@ -1,0 +1,15 @@
+<h2>Team Status Distribution</h2>
+
+<ngx-charts-bar-vertical-2d *ngIf="view">
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [view]="[width, height]"
+  [scheme]="colorScheme"
+  [results]="data"
+  [legend]="showLegend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  (select)="onSelect($event)">
+</ngx-charts-bar-vertical-2d>

@@ -7,23 +7,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-time-distribution',
-  templateUrl: './time-distribution.component.html',
-  styleUrls: ['./time-distribution.component.css']
+  selector: 'app-team-task-distribution',
+  templateUrl: './team-task-distribution.component.html',
+  styleUrls: ['./team-task-distribution.component.css']
 })
-export class TimeDistributionComponent implements OnInit {
-  teamId: string;
+export class TeamTaskDistributionComponent implements OnInit {
   @Input() height: string;
   @Input() width: string;
+
+  teamId: string;
 
   view: any[];
   data: any[];
 
-  // options
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
   showLegend = true;
-  showLabels = true;
-  
-
+  showXAxisLabel = false;
+  xAxisLabel = 'User';
+  showYAxisLabel = true;
+  yAxisLabel = '# of tasks';
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
@@ -31,11 +35,13 @@ export class TimeDistributionComponent implements OnInit {
 
   constructor(private http: Http, private auth: AuthService, private activatedRoute: ActivatedRoute, private router: Router) {
     this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
-
     this.view = [200, 500];
-    this.http.get('http://localhost:8000/api/getTimeSpent/' + this.teamId).subscribe((res) => {
-    this.data = res.json();
+    this.http.get('http://localhost:8000/api/getStatusDistributionForTeam/' + this.teamId).subscribe((res) => {
+      this.data = res.json();
+
     });
+
+
   }
 
   ngOnInit() {

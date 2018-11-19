@@ -35,6 +35,29 @@ class StatisticsController extends Controller
 
         return '['.$p1.','.$p2.','.$p3.']';
     }
+
+    public function getStatusDistributionForTeam($teamId) {
+        $request = '['
+
+        $users = DB::table('teamassignment')
+        ->where('teamid',$teamid)
+        ->select('userid');
+        ->get();
+
+        foreach($users as $user) {
+            $userName = DB::table('users')
+                        ->where('id', $userId)
+                        ->value('name');
+            $request = $request.'{"name: "'.$userName.'", "series": ';
+            $request = $request.getStatusDistributionForUser($user);
+            $request = $request.'},';
+        }
+
+
+        return substr($request,0,-1).']';
+    }
+
+
     public function getTimeSpentForTeam($teamId) {
         $request = '[';
 

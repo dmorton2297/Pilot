@@ -63,6 +63,7 @@ Route::get('gettimespent/{teamid}', 'TaskController@getTimeSpentForTeam');
 
 // Statistics routes
 Route::get('getStatusDistributionForUser/{userId}', 'StatisticsController@getStatusDistributionForUser');
+Route::get('getStatusDistributionForTeam/{teamId}'. 'StatisticsController@getStatusDistributionForTeam')
 Route::get('getUserTimeSpent/{userId}', 'StatisticsController@getTimeSpentForUser');
 
 

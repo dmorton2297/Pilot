@@ -52,6 +52,7 @@ import { TaskDistributionComponent } from './task-distribution/task-distribution
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { TimeDistributionComponent } from './time-distribution/time-distribution.component';
+import { TeamTaskDistributionComponent } from './team-task-distribution/team-task-distribution.component';
 
 
 const appRoutes: Routes = [
@@ -117,6 +118,7 @@ export function getGoogleConfigs() {
     ModifyTimeComponent,
     TaskDistributionComponent,
     TimeDistributionComponent,
+    TeamTaskDistributionComponent,
     ],
   imports: [
   BrowserModule,
