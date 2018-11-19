@@ -1,23 +1,18 @@
 
 
 <mat-card>
-  <mat-card class="heading-container">
-    <div class="row">
-      <div class="col-md-8">
-        <h1 class="heading">Send New Message</h1>
-      </div>
-      <div class="col-md-4">
-          <button mat-button id="cancel" (click)="onCancel()">Cancel</button>
-        </div>
-    </div>
-  </mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Send message to {{displayName}}</h1>
+    </mat-card-title>
+  </mat-card-header>
 
   <mat-card-content>
-    <form [formGroup]="newMessage" (ngSubmit)="onSubmit()">
+    <form [formGroup]="message" (ngSubmit)="onSubmit()">
       <!-- Field for Recipient of Message -->
         <mat-form-field>
-          <input type="text" id="to" matInput placeholder="Username" aria-label="User" formControlName="receiver" [matAutocomplete]="auto"
-            placeholder="Recipient Name" required>
+          <input type="text" id="to" matInput placeholder="Teamname" aria-label="Team" formControlName="receiver" [matAutocomplete]="auto"
+            placeholder="Recipient Team Name" [value]="name" disabled required>
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let option of options" [value]="option">
                   {{option}}
@@ -31,7 +26,7 @@
       </mat-form-field>
       <!-- Submit and cancel buttons -->
       <div class="button-row">
-        <button mat-raised-button color="primary" [disabled]="!newMessage.valid" (click)="onSubmit">Send Message</button>
+        <button mat-raised-button color="primary" [disabled]="!message.valid" (click)="onSubmit">Send Message</button>
         <button mat-raised-button color="primary" (click)="onCancel()" type="button">Cancel</button>
       </div>
     </form>

@@ -103,6 +103,9 @@ export class ViewTeamComponent implements OnInit {
     this.router.navigateByUrl('/inviteToTeam/' + this.teamId);
   }
 
+  onMessageTeam() {
+    this.router.navigateByUrl('sendmessagetoteam');
+  }
 }
 
 

@@ -47,6 +47,7 @@ import { ManageTeamRoleComponent } from './manage-team-role/manage-team-role.com
 import { SendMessageToTeamComponent } from './send-message-to-team/send-message-to-team.component';
 import { CreateSprintComponent } from './create-sprint/create-sprint.component';
 import { ModifyTimeComponent } from './modify-time/modify-time.component';
+import { MessageToTeamComponent } from './message-to-team/message-to-team.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -61,11 +62,6 @@ const appRoutes: Routes = [
   { path: 'modifyteam/:id', component: ModifyTeamComponent, canActivate: [AuthService] },
   { path: 'teams', component: TeamsComponent, canActivate: [AuthService]},
   { path: 'viewteam/:id', component: ViewTeamComponent, canActivate: [AuthService]},
-<<<<<<< HEAD
-  { path: 'inviteToTeam/:teamid', component: InviteToTeamComponent, canActivate: [AuthService]},
-  { path: 'newmessage', component: NewMessageComponent, canActivate: [AuthService]},
-  { path: 'usermessages', component: UserMessagesComponent, canActivate: [AuthService]}
-=======
   { path: 'inviteToTeam/:teamid', component: InviteToTeamComponent, canActivate: [AuthService]}, 
   { path: 'messages', component: UserMessagesComponent, canActivate: [AuthService]},
   { path: 'newmessage', component: NewMessageComponent, canActivate: [AuthService] },
@@ -73,7 +69,6 @@ const appRoutes: Routes = [
   { path: 'managerole/:userid/:teamid', component: ManageTeamRoleComponent, canActivate: [AuthService]} ,
   {  path: 'createsprint', component: CreateSprintComponent, canActivate: [AuthService] },
   { path: 'modifytime/:taskId', component: ModifyTimeComponent, canActivate: [AuthService] }
->>>>>>> 11eb509c9d4fe37942682c64d9037d39730e868b
 ];
 
 export function getGoogleConfigs() {
@@ -114,6 +109,7 @@ export function getGoogleConfigs() {
     SendMessageToTeamComponent,
     CreateSprintComponent,
     ModifyTimeComponent,
+    MessageToTeamComponent,
     ],
   imports: [
   BrowserModule,

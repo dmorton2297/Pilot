@@ -21,13 +21,8 @@ export class NavigationComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-<<<<<<< HEAD
-  onMessagingPressed() {
-    this.router.navigateByUrl('/usermessages');
-=======
   onMessagesPressed() {
     this.router.navigateByUrl('/messages');
->>>>>>> 11eb509c9d4fe37942682c64d9037d39730e868b
   }
 
 }
