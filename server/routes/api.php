@@ -67,6 +67,9 @@ Route::get('gettimespent/{id}', 'TaskController@getTimeSpentForTask');
 Route::get('getestimate/{id}', 'TaskController@getEstimate');
 Route::get('deleteteam/{id}', 'TeamController@destroy');
 Route::get('getusersprints/{userId}', 'SprintController@userIndex');
+Route::get('getteamestimate/{teamid}', 'TeamEstimate@indexID');
+Route::post('saveteamestimate', 'TeamEstimate@store');
+Route::post('updateteamestimate/{teamid}', 'TeamEstimate@update');
 
 Route::post('addFavorite', 'FavoriteController@store');
 Route::get('removeFavorite/{userid}/{favoriteid}', 'FavoriteController@destroy');
