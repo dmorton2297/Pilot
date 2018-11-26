@@ -34,7 +34,8 @@ export class BacklogComponent implements OnInit{
   public viewSprintClicked = false;
   public tasks: Task[] = [];
   public displayedColumns: String[] = ['name', 'description', 'priority', 'status', 'actions'];
-  public sprints: Sprint[] = [];
+  public sprints: Sprint[] = []; 
+  public emptySprints: _Sprint[] = [];
   public sortByName = true;
   public sortByPriority = false;
 
@@ -68,6 +69,7 @@ export class BacklogComponent implements OnInit{
   loadData() {
     this.sprints = [];
     this.sprintTasks = [];
+    this.emptySprints = [];
     if (this.state.getCurrentStateId() == 0) {
       console.log('here');
       this.http.get('http://localhost:8000/api/getusertasks/'+this.auth.id).subscribe((res) => {
@@ -96,7 +98,28 @@ export class BacklogComponent implements OnInit{
       this.http.get('http://localhost:8000/api/getteamsprinttasks/' + this.state.getCurrentStateId()).subscribe((res) => {
         this.sprintTasks = res.json() as SprintTask[];
         this.sortSprintTasks();
+        this.http.get('http://localhost:8000/api/getsprintsforteam/' + this.state.getCurrentStateId()).subscribe((ress) => {
+          let temp : _Sprint[] = ress.json() as _Sprint[];
+          for (var i = 0; i < temp.length; i++) {
+            var f = false
+            for (var j = 0; j < this.sprints.length; j++) {
+              if (temp[i].id == this.sprints[j].sprintId) {
+                f = true;
+                break;
+              }
+            }
+
+            if (!f) {
+              this.emptySprints.push(temp[i]);
+            }
+          }
+
+          console.log(this.emptySprints);
+        });
+        
       });
+
+      
 
     }
     
@@ -109,7 +132,6 @@ export class BacklogComponent implements OnInit{
     var sortedSprints : Sprint[] = [];
     var knownSprintIds: number[] = [];
     for (var i = 0; i < this.sprintTasks.length; i++) {
-
       var exists = false;
       for (var j = 0; j < knownSprintIds.length; j++) {
         exists = (knownSprintIds[j] == this.sprintTasks[i].sprintId) ;
@@ -135,6 +157,7 @@ export class BacklogComponent implements OnInit{
         console.log(sortedSprints);
       }
     }
+
 
 
   }
@@ -263,4 +286,10 @@ interface Sprint {
   sprintName: string,
   sprintDescription: string,
   tasks: SprintTask[]
+}
+
+interface _Sprint {
+  id: number,
+  name: string,
+  description: string
 }
