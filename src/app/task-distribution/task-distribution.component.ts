@@ -26,7 +26,7 @@ export class TaskDistributionComponent implements OnInit {
   gradient = false;
   showLegend = true;
   showXAxisLabel = false;
-  xAxisLabel = 'Country';
+  xAxisLabel = 'Task Status';
   showYAxisLabel = true;
   yAxisLabel = '# of tasks';
 

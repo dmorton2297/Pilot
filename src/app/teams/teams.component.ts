@@ -29,6 +29,10 @@ export class TeamsComponent implements OnInit {
     this.router.navigateByUrl('/invites');
   }
 
+  onStatusPressed(id: number) {
+    this.router.navigateByUrl('/getStatusDistributionForUser/' + id);
+  }
+
   onDeletePressed(id: number) {
 
   }
