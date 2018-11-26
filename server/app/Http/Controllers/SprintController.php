@@ -21,10 +21,19 @@ class SprintController extends Controller
     public function userIndex($userId) {
         $results = DB::table('sprint') 
         -> where('creatorid', $userId)
+        -> where('teamid', 0)
         -> get();
 
         return $results;
     }  
+
+    public function teamIndex($teamId) {
+        $results = DB::table('sprint')
+        -> where('teamid', $teamId)
+        ->get();
+
+        return $results;
+    }
 
     /**
      * Show the form for creating a new resource.
