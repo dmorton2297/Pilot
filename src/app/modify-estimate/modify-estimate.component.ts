@@ -36,6 +36,13 @@ export class ModifyEstimateComponent {
       estimate: this.taskForm.get('estimate').value
     }
 
+    if (this.taskForm.get('estimate').value < 0) {
+      this.snackBar.open('Estimate must be greater than zero!', 'Ok', {
+        duration: 3000
+      });
+      return;
+    }
+
     this.http.post('http://localhost:8000/api/updateestimate', request).subscribe((res) => {
       console.log(res);
       this.location.back();

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { FormArray } from '@angular/forms';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,6 +41,13 @@ export class ModifyTeamEstimateComponent implements OnInit {
       estimate: this.taskForm.get('estimate').value
     }
 
+    if (this.taskForm.get('estimate').value < 0) {
+      this.snackBar.open('Estimate must be greater than zero!', 'Ok', {
+        duration: 3000
+      });
+      return;
+    }
+
     // Search for team estimate
     this.http.get('http://localhost:8000/api/getteamestimate/' + this.teamId).subscribe((res) => {
       if (res.json()  == -1) {
@@ -66,7 +72,9 @@ export class ModifyTeamEstimateComponent implements OnInit {
   onCancel() {
     this.location.back();
   }
+
 }
+
 
 interface TeamEstimate {
   teamid: number,

@@ -230,6 +230,14 @@ export class ModifyTaskComponent {
       assigneduserid: this.taskForm.get('assignedUser').value.id as number,
       criterian: this.taskForm.get('criterian').value
     }
+
+    if (this.taskForm.get('estimate').value < 0) {
+      this.snackBar.open('Estimate must be greater than zero!', 'Ok', {
+        duration: 3000
+      });
+      return;
+    }
+
     this.http.post('http://localhost:8000/api/modifytask/' + this.taskId, request, this.taskId).subscribe((res) => {
       this.router.navigateByUrl('/backlog');
     });
