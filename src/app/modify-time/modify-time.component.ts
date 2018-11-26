@@ -42,6 +42,13 @@ export class ModifyTimeComponent implements OnInit{
       time: this.taskForm.get('time').value
     }
 
+    if (this.taskForm.get('time').value < 0) {
+      this.snackBar.open('Estimate must be greater than zero!', 'Ok', {
+        duration: 3000
+      });
+      return;
+    }
+
     this.http.post('http://localhost:8000/api/updatetime', request).subscribe((res) => {
       console.log(res);
       this.location.back();
