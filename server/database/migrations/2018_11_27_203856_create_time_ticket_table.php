@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Favorite extends Migration
+class CreateTimeTicketTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class Favorite extends Migration
      */
     public function up()
     {
-        Schema::create('favorite', function (Blueprint $table) {
-            $table->increments('id'); // ID of favorite entry in DB
-            $table->integer('userid'); // ID of user who is favoriting
-            $table->integer('favoriteid'); // ID of favorite for the user
+        Schema::create('timeticket', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('taskid');
+            $table->integer('timespent');
+            $table->dateTime('created');
         });
     }
 
@@ -27,6 +28,6 @@ class Favorite extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorite');
+        Schema::dropIfExists('timeticket');
     }
 }

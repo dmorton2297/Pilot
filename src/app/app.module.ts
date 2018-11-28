@@ -51,6 +51,7 @@ import { ModifyTimeComponent } from './modify-time/modify-time.component';
 import { TaskDistributionComponent } from './task-distribution/task-distribution.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BurnUpComponent } from './burn-up/burn-up.component';
 
 
 
@@ -116,6 +117,7 @@ export function getGoogleConfigs() {
     PerformanceDashboardComponent,
     ModifyTimeComponent,
     TaskDistributionComponent,
+    BurnUpComponent,
     ],
   imports: [
   BrowserModule,

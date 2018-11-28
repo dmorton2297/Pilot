@@ -68,6 +68,7 @@ Route::post('addFavorite', 'FavoriteController@store');
 Route::get('removeFavorite/{userid}/{favoriteid}', 'FavoriteController@destroy');
 Route::get('getallfav', 'FavoriteController@index');
 Route::get('getuserfavorites/{userid}', 'FavoriteController@indexUser');
+Route::post('savetimeticket', 'TimeTicketController@store');
 
 
 // Statistics routes
@@ -76,5 +77,6 @@ Route::post('addFavorite', 'FavoriteController@store');
 Route::get('removeFavorite/{userid}/{favoriteid}', 'FavoriteController@destroy');
 Route::get('getallfav', 'FavoriteController@index');
 Route::get('checkfavorite/{userid}', 'FavoriteController@indexUser');
+Route::get('getSprintBurndownData/{sprintId}', 'StatisticsController@getSprintBurndownInfo');
 
 

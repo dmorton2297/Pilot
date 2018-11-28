@@ -70,6 +70,7 @@ export class BacklogComponent implements OnInit{
     this.sprints = [];
     this.sprintTasks = [];
     this.emptySprints = [];
+    
     if (this.state.getCurrentStateId() == 0) {
       console.log('here');
       this.http.get('http://localhost:8000/api/getusertasks/'+this.auth.id).subscribe((res) => {

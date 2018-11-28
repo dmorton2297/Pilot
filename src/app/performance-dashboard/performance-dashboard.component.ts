@@ -30,6 +30,10 @@ export class PerformanceDashboardComponent implements OnInit {
     console.log('Rendering performance dashboard');
   }
 
+  onTabChanged(event) {
+   // window.alert(event.index);
+  }
+
 }
 
 interface Sprint {
