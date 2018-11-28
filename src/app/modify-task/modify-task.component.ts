@@ -76,7 +76,8 @@ export class ModifyTaskComponent {
     this.selectedReqs = [];
     /* Getting ALL functional requirements associated with task */
     this.http.get('http://localhost:8000/api/getfuncreqs/' + this.state.getCurrentStateId()).subscribe((res) => {
-      if (res.json() != "") this.req = res.json() as FunctionalRequirement[];
+      if (res.json() != "" && res.json() != -1) { 
+        this.req = res.json() as FunctionalRequirement[];
         /* Get functional requirements selected for task */
         this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
           if (res.json() != -1) {
@@ -87,6 +88,7 @@ export class ModifyTaskComponent {
             this.selectedReqs = [];
           }
         });
+      }
     });
 
     /* Getting all acceptance criteria associated with team */
