@@ -6,20 +6,9 @@
             <h1 class="heading">Time Estimates</h1>
             <hr style="width: 100%" />
             <h4>{{teamName}}</h4>
-            <h6>Estimated Available Time: {{totalHours}} hours</h6>
             <h6>Estimated Planned Time: {{plannedHours}} hours</h6>
         </div>
-          <div class="col-md-4">
-              <mat-menu #appMenu="matMenu">
-                  <button mat-menu-item id="create-task" (click)="onSetTotal()">Set Total Hours Estimate</button>
-                </mat-menu>
-                
-                <button id="menuButton" mat-icon-button [matMenuTriggerFor]="appMenu">
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-          </div>
       </div>
-
     </mat-card>
 
 

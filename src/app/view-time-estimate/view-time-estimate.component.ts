@@ -16,7 +16,6 @@ export class ViewTimeEstimateComponent {
 
   public teamName = "Me";
   public teamId;
-  public totalHours;
   public plannedHours = 0;
   public displayedColumns: String[] = ['id', 'name', 'description', 'estimate', 'actions'];
   public tasks: Task[];
@@ -44,18 +43,6 @@ export class ViewTimeEstimateComponent {
       }
     });
 
-    this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.http.get('http://localhost:8000/api/getteamestimate/' + this.teamId).subscribe((res) => {
-      if (res.json() != -1 && res.json() != "") {
-        console.log("Team Estimate");
-        console.log(res.json());
-        var temp : TeamEstimate[] = res.json() as TeamEstimate[];
-        var t = temp[0];
-        this.totalHours = t.estimate;
-      } else {
-        this.totalHours = 0;
-      }
-    });
   }
   
   
@@ -63,9 +50,6 @@ export class ViewTimeEstimateComponent {
     this.router.navigateByUrl('/modifyestimate/' + id);
   }
 
-  onSetTotal(id) {
-    this.router.navigateByUrl('/modify-team-estimate/' + this.state.getCurrentStateId());
-  }
 
 }
 
@@ -84,10 +68,5 @@ interface Task {
   id: number,
   name: string,
   description: string,
-  estimate: number
-}
-
-interface TeamEstimate {
-  teamid: number,
   estimate: number
 }
