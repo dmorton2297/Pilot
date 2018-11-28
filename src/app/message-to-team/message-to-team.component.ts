@@ -25,41 +25,45 @@ export class MessageToTeamComponent implements OnInit {
   public options = [];
   public sender : number;
   public receiver : string;
-  public teams : Team[] = [];
-  public displayedUsers: Team[] = [];
+  public selectedTeam : Team[] = [];
+  public teamMembers : User[] = [];
   public messageForm : FormControl = new FormControl();
 
   constructor(private fb: FormBuilder, private http: Http, private activatedRoute: ActivatedRoute, private location: Location, private auth: AuthService, public snackBar: MatSnackBar, private router: Router) { 
-    let recieverId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.receiver = this.activatedRoute.snapshot.paramMap.get('teamid');
 
     this.sender = this.auth.getUserId();
-    //change to get teams of user
-    this.http.get('http://localhost:8000/api/getuser/' + recieverId).subscribe((res) => {
-      this.teams = res.json() as Team[];
-      this.name = this.teams[0].name + '  |  ' + this.teams[0].description;
-      this.displayName = this.teams[0].name;
+    //this.displayName = 
+    this.http.get('http://localhost:8000/api/teammembers/' + this.receiver).subscribe((res) => {
+      this.teamMembers = res.json() as User[];
     });
+    this.http.get('http://localhost:8000/api/getteamname/' + this.receiver).subscribe((res) => {
+      this.selectedTeam = res.json() as Team[];
+      this.displayName = this.selectedTeam[0].name;
+    }); 
   }
 
   ngOnInit() {}
 
-  ngOnSubmit() {
-    /*
-    let request : NewMessage = {
-      recipient: this.teams[0].id,
-      message: this.message.get('message').value as string,
-      sender: this.sender
-    }
-    if (this.users.find(x=>x.name == this.receiver) != undefined) {
-        //user is found in user table
-    }
-    this.http.post('http://localhost:8000/api/newmessage', request).subscribe((res) => {
+  onSubmit() {
+    let recipientId = -1;
+    for (var i = 0; i < this.teamMembers.length; i++) {
+      recipientId = this.teamMembers[i].id;
+      if (recipientId = this.sender) {
+        continue;
+      }
+      let request : NewMessage = {
+        recipient: recipientId,
+        message: this.message.get('message').value as string,
+        sender: this.sender
+      }
+      this.http.post('http://localhost:8000/api/newmessage', request).subscribe((res) => {
       console.log(res);
-      this.snackBar.open('Message sent', 'Ok', {
-        duration: 3000
-      });
     });
-    */
+    }
+    this.snackBar.open('Team message sent', 'Ok', {
+      duration: 3000
+    });   
   }
 }
 
@@ -73,6 +77,16 @@ interface Team {
   name: string,
   description: string,
   invitemsg: string,
-  creatorId: number,
-  color: string
+  color: any,
+  creatorId: number
+}
+
+interface User {
+  id: number,
+  name: string,
+  email: string,
+  email_verified_at: string,
+  remember_token: number,
+  created_at: string,
+  updated_at: string
 }
