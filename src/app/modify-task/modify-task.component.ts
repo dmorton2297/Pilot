@@ -35,7 +35,7 @@ export class ModifyTaskComponent {
   public priorities : string[] = ['1', '2', '3'];
   public task : Task;
   public req : FunctionalRequirement[];
-  public selectedReqs: FunctionalRequirement[];
+  public selectedReq: FunctionalRequirement;
   public taskId : string;
   public teamId = 0;
   public flag = 0;
@@ -70,26 +70,31 @@ export class ModifyTaskComponent {
           }
         } 
       });
+
     });  
 
-    this.req = [];
-    this.selectedReqs = [];
-    /* Getting ALL functional requirements associated with task */
-    this.http.get('http://localhost:8000/api/getfuncreqs/' + this.state.getCurrentStateId()).subscribe((res) => {
-      if (res.json() != "" && res.json() != -1) { 
-        this.req = res.json() as FunctionalRequirement[];
-        /* Get functional requirements selected for task */
-        this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
-          if (res.json() != -1) {
-            this.selectedReqs = res.json() as FunctionalRequirement[];
-            this.taskForm.patchValue({funcreq: this.selectedReqs});
-            this.removeDuplicate();
-          } else {
-            this.selectedReqs = [];
+    // Get the selected functional requirement and put it into taskForm.
+    this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
+      // Set the form value with the selected functional requirement.
+      if (res.json() != -1) {
+        this.selectedReq = res.json() as FunctionalRequirement;
+        this.taskForm.patchValue({funcreq: this.selectedReq});
+      } 
+      // Get all the functional requirments for the drop-down.
+      this.http.get('http://localhost:8000/api/getfuncreqs/' + this.state.getCurrentStateId()).subscribe((res) => {
+        if (res.json() != "" && res.json() != -1) { 
+          this.req = res.json() as FunctionalRequirement[];
+          // Patching the value wasn't working, this auto-fills functional req in the form.
+          for (var i = 0; i < this.req.length; i++) {
+            if (this.req[i].id == this.selectedReq.id) {
+              this.selectedReq = this.req[i];
+            }
           }
-        });
-      }
+        }
+      });
     });
+
+
 
     /* Getting all acceptance criteria associated with team */
     var criteria: string[];
@@ -150,22 +155,6 @@ export class ModifyTaskComponent {
     this.http.get('http://localhost:8000/api/getallusers').subscribe((res) => {
      // this.users = res.json() as User[];
     });
-  }
-
-  /**
-   *  This resolves the problem of selected functional requirements being
-   *  displayed twice.
-   */
-
-  removeDuplicate() {
-    for (var i = 0; i < this.req.length; i++) {
-      for (var j = 0; j < this.selectedReqs.length; j++) {
-        if (this.req[i].id == this.selectedReqs[j].id) {
-          this.req.splice(i, 1);
-        }
-      }
-    }
-    //this.taskForm.patchValue({funcreq: ms}); 
   }
 
   /**
