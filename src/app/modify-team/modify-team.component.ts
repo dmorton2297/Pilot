@@ -22,8 +22,9 @@ export class ModifyTeamComponent{
       color: ['', Validators.required]
 });
 
-  teamId : string;
-  team: Team;
+  public teamId : string;
+  public team: Team;
+  public toggle : string;
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
     this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
 
@@ -34,16 +35,15 @@ export class ModifyTeamComponent{
       this.teamForm.patchValue({description: this.team[0].description});
       this.teamForm.patchValue({invitemsg: this.team[0].invitemsg});
       this.teamForm.patchValue({color: this.team[0].color});
+      this.toggle = this.team[0].color;
+      console.log(res.json());
+      console.log(this.toggle);
     });  
   }
 
   setColor(c: string) {
     this.teamForm.patchValue({color: c});
-  }
-
-  fillerusers = ['Caden', 'Charlie', 'Dylan', 'John', 'Jackson'];
-  getUsers() {
-
+    this.toggle = c;
   }
 
   onSubmit() {
@@ -61,9 +61,7 @@ export class ModifyTeamComponent{
         duration: 3000
       });
     });
-
-    // Send Invites
-    
+    this.router.navigateByUrl('/teams');
   }
 
   onCancel() {

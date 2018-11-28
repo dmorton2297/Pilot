@@ -1,14 +1,14 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>
-      <h1>Modify Time Spent</h1>
+      <h1>Modify Task Estimate</h1>
     </mat-card-title>
   </mat-card-header>
 
   <mat-card-content>
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
       <!-- Time spent -->
-      <mat-form-field> <input matInput type="number" min="0" formControlName="time" placeholder="Time spent (hours)"></mat-form-field>
+      <mat-form-field> <input matInput type="number" formControlName="estimate" placeholder="Estimate (hours)"></mat-form-field>
 
       <!-- Submit and cancel buttons -->
       <div class="button-row">

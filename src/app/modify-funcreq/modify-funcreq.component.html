@@ -1,0 +1,17 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h1>Edit Functional Requirment</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="reqForm" (ngSubmit)="onSubmit()">
+        <mat-form-field> <input matInput type="text" formControlName="name" placeholder="Name" required> </mat-form-field>
+        <mat-form-field> <input matInput type="text" formControlName="description" placeholder="Description" required> </mat-form-field>
+        <div class="button-row">
+              <button  mat-raised-button color="primary"  (click)="onSubmit()">Modify</button>
+              <button  mat-raised-button color="primary" (click)="onBack()" type="button">Back</button>
+        </div>
+    </form>
+  </mat-card-content>
+  </mat-card>

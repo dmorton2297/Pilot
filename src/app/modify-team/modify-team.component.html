@@ -10,16 +10,16 @@
       <mat-form-field> <input matInput type="text" formControlName="description" [(ngModel)]="description" placeholder="Team Description" required> </mat-form-field>
       <mat-form-field> <input matInput type="text" formControlName="invitemsg" placeholder="Invitation Message"> </mat-form-field>
       <mat-card-subtitle style="padding-top: 0.3cm"> Team Color *</mat-card-subtitle>
-      <mat-button-toggle-group>
-          <mat-button-toggle style="background-color: #ee5253;" (click)="setColor('red')" >Red</mat-button-toggle>
-          <mat-button-toggle style="background-color: #ff9f43;" (click)="setColor('orange')" >Orange</mat-button-toggle>
-          <mat-button-toggle style="background-color: #feca57;" (click)="setColor('yellow')" >Yellow</mat-button-toggle>
-          <mat-button-toggle style="background-color: #1dd1a1;" (click)="setColor('green')" >Green</mat-button-toggle>
-          <mat-button-toggle style="background-color: #00d2d3;" (click)="setColor('turquoise')" >Torquise</mat-button-toggle>
-          <mat-button-toggle style="background-color: #54a0ff;" (click)="setColor('lblue')" >Light Blue</mat-button-toggle>
-          <mat-button-toggle style="background-color: #2e86de;" (click)="setColor('dblue')" >Dark Blue</mat-button-toggle>
-          <mat-button-toggle style="background-color: #5f27cd;" (click)="setColor('purple')" >Purple</mat-button-toggle>
-          <mat-button-toggle style="background-color: #222f3e;" (click)="setColor('gray')" >Gray</mat-button-toggle>
+      <mat-button-toggle-group #group="matButtonToggleGroup" [value]="toggle" (change)="setColor(group.value)">
+          <mat-button-toggle value="red" style="background-color: #ee5253;">Red</mat-button-toggle>
+          <mat-button-toggle value="orange" style="background-color: #ff9f43;">Orange</mat-button-toggle>
+          <mat-button-toggle value="yellow" style="background-color: #feca57;">Yellow</mat-button-toggle>
+          <mat-button-toggle value="green" style="background-color: #1dd1a1;">Green</mat-button-toggle>
+          <mat-button-toggle value="turquoise" style="background-color: #00d2d3;">Torquise</mat-button-toggle>
+          <mat-button-toggle value="lblue" style="background-color: #54a0ff;">Light Blue</mat-button-toggle>
+          <mat-button-toggle value="dblue" style="background-color: #2e86de;">Dark Blue</mat-button-toggle>
+          <mat-button-toggle value="purple" style="background-color: #5f27cd;">Purple</mat-button-toggle>
+          <mat-button-toggle value="gray" style="background-color: #222f3e;">Gray</mat-button-toggle>
       </mat-button-toggle-group>
       <div class="button-row" style="padding-top: 0.4cm">
           <button  mat-raised-button color="primary" [disabled]="!teamForm.valid" (click)="onSubmit">Modify</button>

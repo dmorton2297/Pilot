@@ -10,6 +10,8 @@
             <button mat-menu-item id="create-task" (click)="onCreateTask()">Create Task</button>
             <button mat-menu-item id="create-funcreq" (click)="onCreateFuncReq()">Create Functional Requirement</button>
             <button mat-menu-item id="create-sprint" (click)="onCreateSprint()">Create Sprint</button>
+            <button mat-menu-item id="view-funcreq" (click)="onViewFuncReq()">View Functional Requirements</button>
+            <button mat-menu-item id="view-estimates" (click)="onViewEstimates()">View Time Estimates</button>
           </mat-menu>
           
           <button id="menuButton" mat-icon-button [matMenuTriggerFor]="appMenu">
@@ -84,7 +86,8 @@
           </button>
           <button id="edit" (click)="onModifyPressed(element.id)"><i class="fa fa-pencil-square" aria-hidden="true"></i>
           </button>
-          <button id="delete" (click)="onDeletePressed(element.id)"><i class="fa fa-minus-square" aria-hidden="true"></i></button>
+          <button id="delete" (click)="onDeletePressed(element.id)"><i class="fa fa-minus-square" aria-hidden="true"></i>
+          </button>
           
         </td>
     </ng-container>

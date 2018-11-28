@@ -197,6 +197,17 @@ class TaskController extends Controller
         return $taskId;
     }
 
+    public function updateEstimate(Request $request) {
+        $taskId = $request -> input('taskId');
+        $estimate = $request -> input('estimate');
+
+        DB::table('task') 
+        -> where('id', $taskId)
+        -> update(['estimate' => $estimate]);
+
+        return $taskId;
+    }
+
     public function getTimeSpentForTask($id) {
         $timespent = DB::table('task')
         -> where('id', $id)
@@ -204,6 +215,15 @@ class TaskController extends Controller
         -> get();
 
         return $timespent;
+    }
+
+    public function getEstimate($id) {
+        $estimate = DB::table('task')
+        -> where('id', $id)
+        -> select ('task.estimate')
+        -> get();
+
+        return $estimate;
     }
 
     /**

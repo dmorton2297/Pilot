@@ -72,21 +72,21 @@ export class ModifyTaskComponent {
       });
     });  
 
-    // TODO: This is causing error.
-
+    this.req = [];
+    this.selectedReqs = [];
     /* Getting ALL functional requirements associated with task */
     this.http.get('http://localhost:8000/api/getfuncreqs/' + this.state.getCurrentStateId()).subscribe((res) => {
       if (res.json() != "") this.req = res.json() as FunctionalRequirement[];
-
-    });
-
-    /* Get functional requirements selected for task */
-    this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
-      if (res.json() != -1) {
-        this.selectedReqs = res.json() as FunctionalRequirement[];
-        this.taskForm.patchValue({funcreq: this.selectedReqs});
-        this.removeDuplicate();
-      }
+        /* Get functional requirements selected for task */
+        this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
+          if (res.json() != -1) {
+            this.selectedReqs = res.json() as FunctionalRequirement[];
+            this.taskForm.patchValue({funcreq: this.selectedReqs});
+            this.removeDuplicate();
+          } else {
+            this.selectedReqs = [];
+          }
+        });
     });
 
     /* Getting all acceptance criteria associated with team */
@@ -154,6 +154,7 @@ export class ModifyTaskComponent {
    *  This resolves the problem of selected functional requirements being
    *  displayed twice.
    */
+
   removeDuplicate() {
     for (var i = 0; i < this.req.length; i++) {
       for (var j = 0; j < this.selectedReqs.length; j++) {
@@ -162,6 +163,7 @@ export class ModifyTaskComponent {
         }
       }
     }
+    //this.taskForm.patchValue({funcreq: ms}); 
   }
 
   /**
@@ -230,6 +232,14 @@ export class ModifyTaskComponent {
       assigneduserid: this.taskForm.get('assignedUser').value.id as number,
       criterian: this.taskForm.get('criterian').value
     }
+
+    if (this.taskForm.get('estimate').value < 0) {
+      this.snackBar.open('Estimate must be greater than zero!', 'Ok', {
+        duration: 3000
+      });
+      return;
+    }
+
     this.http.post('http://localhost:8000/api/modifytask/' + this.taskId, request, this.taskId).subscribe((res) => {
       this.router.navigateByUrl('/backlog');
     });

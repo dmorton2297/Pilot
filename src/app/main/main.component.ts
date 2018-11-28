@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ScrumBoardComponent } from '../scrum-board/scrum-board.component';
-import { BacklogComponent } from '../backlog/backlog.component';
 import { Http } from '@angular/http';
 import { AuthService } from '../auth.service';
 import { StateService } from '../state.service';
 import { MatTabChangeEvent } from '@angular/material';
 
 import { PerformanceDashboardComponent } from '../performance-dashboard/performance-dashboard.component';
+import { ScrumBoardComponent } from '../scrum-board/scrum-board.component';
+import { BacklogComponent } from '../backlog/backlog.component';
+import { ViewFuncreqsComponent } from '../view-funcreqs/view-funcreqs.component';
 
 @Component({
   selector: 'app-main',

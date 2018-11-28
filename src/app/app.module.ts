@@ -53,6 +53,11 @@ import { TaskDistributionComponent } from './task-distribution/task-distribution
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BurnUpComponent } from './burn-up/burn-up.component';
 
+import { ViewFuncreqsComponent } from './view-funcreqs/view-funcreqs.component';
+import { ModifyFuncreqComponent } from './modify-funcreq/modify-funcreq.component';
+import { ModifyEstimateComponent } from './modify-estimate/modify-estimate.component';
+import { ViewTimeEstimateComponent } from './view-time-estimate/view-time-estimate.component';
+import { ModifyTeamEstimateComponent } from './modify-team-estimate/modify-team-estimate.component';
 
 
 const appRoutes: Routes = [
@@ -73,8 +78,13 @@ const appRoutes: Routes = [
   { path: 'newmessage', component: NewMessageComponent, canActivate: [AuthService] },
   { path: 'sendmessagetouser/:id', component: MessageToUserComponent, canActivate: [AuthService] },
   { path: 'managerole/:userid/:teamid', component: ManageTeamRoleComponent, canActivate: [AuthService]} ,
-  {  path: 'createsprint', component: CreateSprintComponent, canActivate: [AuthService] },
-  { path: 'modifytime/:taskId', component: ModifyTimeComponent, canActivate: [AuthService] }
+  { path: 'createsprint', component: CreateSprintComponent, canActivate: [AuthService] },
+  { path: 'modifytime/:taskId', component: ModifyTimeComponent, canActivate: [AuthService] },
+  { path: 'viewfuncreqs/:id', component: ViewFuncreqsComponent, canActivate: [AuthService] }, 
+  { path: 'modifyfuncreq/:id', component: ModifyFuncreqComponent, canActivate: [AuthService]},
+  { path: 'modifyestimate/:id', component: ModifyEstimateComponent, canActivate: [AuthService]}, 
+  { path: 'time-estimates/:id', component: ViewTimeEstimateComponent, canActivate: [AuthService]}, 
+  { path: 'modify-team-estimate/:id', component: ModifyTeamEstimateComponent, canActivate: [AuthService]}
 ];
 
 export function getGoogleConfigs() {
@@ -118,6 +128,11 @@ export function getGoogleConfigs() {
     ModifyTimeComponent,
     TaskDistributionComponent,
     BurnUpComponent,
+    ViewFuncreqsComponent,
+    ModifyFuncreqComponent,
+    ModifyEstimateComponent,
+    ViewTimeEstimateComponent,
+    ModifyTeamEstimateComponent,
     ],
   imports: [
   BrowserModule,
