@@ -54,7 +54,8 @@ export class ViewFuncreqsComponent {
         duration: 3000
       });
     });
-    this.updateSignal();
+    this.reqs = [];
+    this.loadData();
   }
 }
 

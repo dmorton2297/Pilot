@@ -17,7 +17,12 @@ export class TeamsComponent implements OnInit {
   public displayedColumns: String[] = ['id', 'name', 'description', 'created', 'actions'];
 
   @Output() signalEvent = new EventEmitter<string>();
-  constructor(public snackBar: MatSnackBar, private state: StateService, private router: Router, private http: Http, private auth: AuthService) { 
+  constructor(public snackBar: MatSnackBar, private state: StateService, private router: Router, private http: Http, private auth: AuthService) {
+    this.teams = []; 
+    this.loadData();
+  }
+
+  loadData() {
     this.http.get('http://localhost:8000/api/getjoinedteams/' + this.auth.getUserId()).subscribe((res) => {
       this.teams = res.json() as Team[];
     });
@@ -45,6 +50,8 @@ export class TeamsComponent implements OnInit {
         duration: 3000
       });
     });
+    this.teams = [];
+    this.loadData();
   }
 
   onModifyPressed(id: number) {
