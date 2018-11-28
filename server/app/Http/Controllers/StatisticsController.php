@@ -38,6 +38,33 @@ class StatisticsController extends Controller
         return '['.$p1.','.$p2.','.$p3.']';
     }
 
+    public function getStatusDistributionForTeamMember($userId, $teamId) {
+        $notStarted = DB::table('task')
+        ->where('status', 0)
+        ->where('assigneduserid', $userId)
+        ->where('teamid', $teamId)
+        ->count();
+
+        $started = DB::table('task')
+        ->where('status', 1)
+        ->where('assigneduserid', $userId)
+        ->where('teamid', $teamId)
+        ->count();
+
+        $complete = DB::table('task')
+        ->where('status', 2)
+        ->where('assigneduserid', $userId)
+        ->where('teamid', $teamId)
+        ->count();
+
+        $p1 = '{"name":"notStarted", "value":'.$notStarted.'}';
+        $p2 = '{"name":"started", "value":'.$started.'}';
+        $p3 = '{"name":"complete", "value":'.$complete.'}';
+
+
+        return '['.$p1.','.$p2.','.$p3.']';
+    }
+
     public function getSprintBurndownInfo($sprintId) {
 
         $totalEstimate = DB::table('sprinttask')
@@ -96,5 +123,59 @@ class StatisticsController extends Controller
         $data = $data.']';
     
         return $data;
+    }
+    public function getStatusDistributionForTeam($teamId) {
+        $request = '[';
+
+        $users = DB::table('teamassignment')
+        ->where('teamid',$teamId)
+        ->pluck('userid');
+
+        foreach($users as $user) {
+            $userName = DB::table('users')
+                        ->where('id', $user)
+                        ->value('name');
+            $request = $request.'{"name": "'.$userName.'", "series": ';
+            $request = $request.$this->getStatusDistributionForTeamMember($user, $teamId);
+            $request = $request.'},';
+        }
+
+
+        return substr($request,0,-1).']';
+    }
+
+
+    public function getTimeSpentForTeam($teamId) {
+        $request = '[';
+
+        $users = DB::table('teamassignment')
+        ->where('teamid',$teamid)
+        ->select('userid')
+        ->get();
+
+        foreach($users as $user) {
+            
+            $request = $request.getTimeSpentForUser($user).',';
+
+        }
+
+        return substr($request,0,-1).']';
+    }
+    public function getTimeSpentForUser($userId) {
+        $timeSpent = 0;
+
+        $userName = DB::table('users')
+        ->where('id', $userId)
+        ->value('name');
+
+        $taskTimes = DB::table('task')
+        ->where('creatorid', $userId)
+        ->where('teamid', 0)
+        ->pluck('timespent');
+        foreach($taskTimes as $time) {
+            $timeSpent = $timeSpent + $time;
+        }
+        $entry = '{"name":"'.$userName.'", "value":'.$timeSpent.'}';
+        return $entry;
     }
 }

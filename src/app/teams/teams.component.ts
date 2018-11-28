@@ -39,6 +39,10 @@ export class TeamsComponent implements OnInit {
     this.router.navigateByUrl('/invites');
   }
 
+  onStatusPressed(id: number) {
+    this.router.navigateByUrl('/getStatusDistributionForUser/' + id);
+  }
+
   onDeletePressed(id: number) {
     this.http.get('http://localhost:8000/api/deleteteam/' + id).subscribe((res) => {
       this.snackBar.open('Team deleted, but view isnt updating', 'Ok', {
