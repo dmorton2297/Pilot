@@ -14,6 +14,7 @@ export class PerformanceDashboardComponent implements OnInit {
 
   @Output() signalEvent = new EventEmitter<string>();
   visible: boolean = false;
+  teamView: boolean = false;
   public sprints: Sprint[] = [];
 
 
@@ -22,11 +23,13 @@ export class PerformanceDashboardComponent implements OnInit {
   }
 
   loadData() {
+    this.teamView = false;
     if (this.state.getCurrentStateId() == 0) {
       this.http.get('http://localhost:8000/api/getsprintsforuser/' + this.auth.getUserId()).subscribe((res) => {
         this.sprints = res.json() as Sprint[];
       });
     } else {
+      this.teamView = true;
       this.http.get('http://localhost:8000/api/getsprintsforteam/' + this.state.getCurrentStateId()).subscribe((res) => {
         this.sprints = res.json() as Sprint[];
       });

@@ -36,7 +36,7 @@ export class TeamTaskDistributionComponent implements OnInit {
   constructor(private http: Http, private auth: AuthService, private activatedRoute: ActivatedRoute, private router: Router) {
     this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
     this.view = [200, 500];
-    this.http.get('http://localhost:8000/api/getStatusDistributionForTeam/' + this.teamId).subscribe((res) => {
+    this.http.get('http://localhost:8000/api/getStatusDistributionForTeam/' + '1').subscribe((res) => {
       this.data = res.json();
 
     });

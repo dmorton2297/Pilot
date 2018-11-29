@@ -2,12 +2,14 @@
 <mat-tab-group *ngIf="visible" [selectedIndex]="0" (selectedTabChange)="onTabChanged($event)" #tabGroup>
   <mat-tab label="Overall">
     <div id="taskDist" >
-     <app-task-distribution height="250" width="600"></app-task-distribution> 
+     <app-task-distribution *ngIf="!teamView" height="250" width="600"></app-task-distribution> 
+     <app-team-task-distribution *ngIf="teamView" height="250" width="600"></app-team-task-distribution>
     </div>
   </mat-tab>
   <mat-tab *ngFor="let sprint of sprints" label="{{sprint.name}}" id="sprint.id">
     <div id="burn">
         <app-burn-up height="400" width="800" [sprintId]="sprint.id"></app-burn-up>
+        
     </div>
   </mat-tab>
 </mat-tab-group>
