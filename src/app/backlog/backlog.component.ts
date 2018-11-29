@@ -30,8 +30,10 @@ export class BacklogComponent implements OnInit{
 
   public animationState: string = 'visible';
   public slideInAnimationState: string = 'hidden';
+  public secondSlideInAnimationState: string = 'hidden';
   public sprintTasks: SprintTask[] = [];
   public viewSprintClicked = false;
+  public viewFuncReqClicked = false;
   public tasks: Task[] = [];
   public displayedColumns: String[] = ['name', 'description', 'priority', 'status', 'actions'];
   public sprints: Sprint[] = []; 
@@ -231,6 +233,13 @@ export class BacklogComponent implements OnInit{
     this.slideInAnimationState = (this.slideInAnimationState == 'visible' ? 'hidden' : 'visible');
   }
 
+  onSortFuncReqPressed() {
+    this.viewFuncReqClicked = true;
+    this.animationState = (this.animationState == 'visible' ? 'hidden' : 'visible');
+    this.secondSlideInAnimationState = (this.secondSlideInAnimationState == 'visible' ? 'hidden' : 'visible');
+
+  }
+
   
 	sortTableName() {
     var temp = this.tasks;
@@ -288,6 +297,12 @@ interface SprintTask {
   sprintName: string, 
   sprintDescription: string
 }
+
+interface FuncReqTask {
+  id: number,
+  name
+}
+
 interface ChangeStatusRequest {
     taskId: number,
     status: number

@@ -29,6 +29,13 @@ table {
       height: 100%;
   }
 
+  #funcReqsContainer {
+    display: none;
+    opacity: 0;
+    overflow-x: hidden;
+    height: 100%;  
+  }
+
   #sprint-content {
       height: 100%;
   }

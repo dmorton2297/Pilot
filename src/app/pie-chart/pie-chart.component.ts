@@ -36,8 +36,6 @@ export class PieChartComponent implements OnInit {
 
   loadData() {
     if (this.time == '0') {
-      this.message = 'Completed Task Breakdown';
-
       this.http.get('http://localhost:8000/api/getNumberOfCompletedSprintTasksPerTeamMember/' + this.state.getCurrentStateId()+'/'+this.sprint).subscribe((res) => {
       this.data = res.json();
       });
