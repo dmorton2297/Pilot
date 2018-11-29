@@ -54,7 +54,7 @@ export class ModifyEstimateComponent {
 
   }
   onCancel() {
-    this.router.navigateByUrl('/backlog');
+    this.location.back();
   }
 
 }
