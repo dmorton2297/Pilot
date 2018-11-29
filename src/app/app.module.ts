@@ -58,6 +58,8 @@ import { ModifyFuncreqComponent } from './modify-funcreq/modify-funcreq.componen
 import { ModifyEstimateComponent } from './modify-estimate/modify-estimate.component';
 import { ViewTimeEstimateComponent } from './view-time-estimate/view-time-estimate.component';
 import { ModifyTeamEstimateComponent } from './modify-team-estimate/modify-team-estimate.component';
+import { TimeDistributionComponent } from './time-distribution/time-distribution.component';
+import { TeamTaskDistributionComponent } from './team-task-distribution/team-task-distribution.component';
 
 
 const appRoutes: Routes = [
@@ -133,6 +135,8 @@ export function getGoogleConfigs() {
     ModifyEstimateComponent,
     ViewTimeEstimateComponent,
     ModifyTeamEstimateComponent,
+    TimeDistributionComponent,
+    TeamTaskDistributionComponent,
     ],
   imports: [
   BrowserModule,

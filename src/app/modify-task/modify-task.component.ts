@@ -90,7 +90,7 @@ export class ModifyTaskComponent {
               this.selectedReq = this.req[i];
             }
           }
-        }
+        } 
       });
     });
 

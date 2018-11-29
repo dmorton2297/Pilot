@@ -84,5 +84,9 @@ Route::get('removeFavorite/{userid}/{favoriteid}', 'FavoriteController@destroy')
 Route::get('getallfav', 'FavoriteController@index');
 Route::get('checkfavorite/{userid}', 'FavoriteController@indexUser');
 Route::get('getSprintBurndownData/{sprintId}', 'StatisticsController@getSprintBurndownInfo');
+Route::get('gettimespent/{teamid}', 'TaskController@getTimeSpentForTeam');
+Route::get('getStatusDistributionForUser/{userId}', 'StatisticsController@getStatusDistributionForUser');
+Route::get('getStatusDistributionForTeam/{teamId}', 'StatisticsController@getStatusDistributionForTeam');
+Route::get('getUserTimeSpent/{userId}', 'StatisticsController@getTimeSpentForUser');
 
 

@@ -3,30 +3,29 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { Http } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from '../auth.service';
-
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-task-distribution',
-  templateUrl: './task-distribution.component.html',
-  styleUrls: ['./task-distribution.component.css']
+  selector: 'app-team-task-distribution',
+  templateUrl: './team-task-distribution.component.html',
+  styleUrls: ['./team-task-distribution.component.css']
 })
-export class TaskDistributionComponent implements OnInit {
-
+export class TeamTaskDistributionComponent implements OnInit {
   @Input() height: string;
   @Input() width: string;
 
-  view: any[];
+  teamId: string;
 
+  view: any[];
   data: any[];
 
-  // options
   showXAxis = true;
   showYAxis = true;
   gradient = false;
   showLegend = true;
   showXAxisLabel = false;
-  xAxisLabel = 'Task Status';
+  xAxisLabel = 'User';
   showYAxisLabel = true;
   yAxisLabel = '# of tasks';
 
@@ -34,15 +33,18 @@ export class TaskDistributionComponent implements OnInit {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
-  constructor(private http: Http, private auth: AuthService) { 
+  constructor(private http: Http, private auth: AuthService, private activatedRoute: ActivatedRoute, private router: Router) {
+    this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
     this.view = [200, 500];
-    this.http.get('http://localhost:8000/api/getStatusDistributionForUser/' + this.auth.getUserId()).subscribe((res) => {
+    this.http.get('http://localhost:8000/api/getStatusDistributionForTeam/' + this.teamId).subscribe((res) => {
       this.data = res.json();
+
     });
+
+
   }
 
   ngOnInit() {
-
   }
 
 }
