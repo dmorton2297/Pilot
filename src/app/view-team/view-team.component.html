@@ -10,7 +10,7 @@
           <button mat-button id="invite" (click)="onInviteUsers()">Invite Users</button>
       </div>
       <div class="col-md-4">
-          <button mat-button id="message" (click)="onMessageTeam()">Message Team</button>
+          <button mat-button id="message" ng-show="hideMessageTeam()" (click)="onMessageTeam()">Message Team</button>
       </div>
     </div>
     

@@ -56,12 +56,18 @@ export class ViewTeamComponent implements OnInit {
         if (this.role == 'Owner') {
           this.canChangeRole = true;
           this.canKick = true;
+          this.canMessage = true;
         } else if (this.role == 'Manager') {
           this.canKick = true;
+          this.canMessage = true;
         } else {
         }
       }
     });
+  }
+
+  hideMessageTeam() {
+    return this.canMessage;
   }
 
   getTeamMembers() {

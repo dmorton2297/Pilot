@@ -65,6 +65,11 @@ export class MessageToTeamComponent implements OnInit {
       duration: 3000
     });   
   }
+
+  onCancel() {
+    this.router.navigateByUrl('/viewteam/' + this.receiver);
+  }
+
 }
 
 interface NewMessage {
