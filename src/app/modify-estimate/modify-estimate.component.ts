@@ -48,7 +48,7 @@ export class ModifyEstimateComponent {
       this.location.back();
     });
 
-    this.snackBar.open('Task modified', 'Ok', {
+    this.snackBar.open('Estimate modified', 'Ok', {
       duration: 3000
     });
 
