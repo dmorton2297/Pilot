@@ -71,9 +71,6 @@ export class CreateTeamComponent{
   }
 
   onCancel() {
-    this.snackBar.open('Team Creation Canceled', 'Ok', {
-      duration: 3000
-    });
     this.teamForm.reset();
     this.router.navigateByUrl('/teams');
   }     
