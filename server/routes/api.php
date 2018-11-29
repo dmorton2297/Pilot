@@ -86,7 +86,12 @@ Route::get('checkfavorite/{userid}', 'FavoriteController@indexUser');
 Route::get('getSprintBurndownData/{sprintId}', 'StatisticsController@getSprintBurndownInfo');
 Route::get('gettimespent/{teamid}', 'TaskController@getTimeSpentForTeam');
 Route::get('getStatusDistributionForUser/{userId}', 'StatisticsController@getStatusDistributionForUser');
+Route::get('getStatusDistributionForUserSprint/{userId}/{sprintId}', 'StatisticsController@getStatusDistributionForUserSprint');
 Route::get('getStatusDistributionForTeam/{teamId}', 'StatisticsController@getStatusDistributionForTeam');
+Route::get('getStatusDistributionForTeamSprint/{teamId}/{sprintId}', 'StatisticsController@getStatusDistributionForTeamSprint');
 Route::get('getUserTimeSpent/{userId}', 'StatisticsController@getTimeSpentForUser');
+Route::get('getStatusDistributionForTeamMembersInSprint/{teamId}/{sprintId}', 'StatisticsController@getStatusDistributionForTeamMembersInSprint');
+Route::get('getNumberOfCompletedSprintTasksPerTeamMember/{teamId}/{sprintId}', 'StatisticsController@getNumberOfCompletedSprintTasksPerTeamMember');
+Route::get('getTimeSpentDistributionForSprint/{teamId}/{sprintId}', 'StatisticsController@getTimeSpentDistributionForSprint');
 
 

@@ -2,13 +2,38 @@
 <mat-tab-group *ngIf="visible" [selectedIndex]="0" (selectedTabChange)="onTabChanged($event)" #tabGroup>
   <mat-tab label="Overall">
     <div id="taskDist" >
-     <app-task-distribution *ngIf="!teamView" height="250" width="600"></app-task-distribution> 
-     <app-team-task-distribution *ngIf="teamView" height="250" width="600"></app-team-task-distribution>
+     <app-task-distribution *ngIf="!teamView" height="250" width="600" sprint="0" team="0"></app-task-distribution> 
+     <app-team-task-distribution *ngIf="teamView" height="250" width="600" sprint="0"></app-team-task-distribution>
     </div>
   </mat-tab>
   <mat-tab *ngFor="let sprint of sprints" label="{{sprint.name}}" id="sprint.id">
-    <div id="burn">
-        <app-burn-up height="400" width="800" [sprintId]="sprint.id"></app-burn-up>
+    <div class="container-fluid">
+      <div class="table">
+          <div class="row">
+              <div class="col-lg-5">
+                  <app-burn-up height="500" width="500" [sprintId]="sprint.id"></app-burn-up>
+              </div>
+              <div class="col-lg-5">
+                <div class="row">
+                    <app-task-distribution height="200" width="500" sprint="{{sprint.id}}" team="{{teamId}}"></app-task-distribution> 
+                </div>
+                <hr style="width: 90%"/>
+                <div class="row">
+                      <app-team-task-distribution *ngIf="teamView" height="200" width="500" sprint="{{sprint.id}}"></app-team-task-distribution>
+                </div>
+              </div>
+          </div>
+          <hr style="width: 100%" />
+          <div class="row">
+            <div class="col-md-5">
+                <app-pie-chart *ngIf="teamView" height="225" width="600" sprint="{{sprint.id}}" time="0"></app-pie-chart>
+            </div>
+            <div class="col-md-5">
+                <app-pie-chart *ngIf="teamView" height="225" width="600" sprint="{{sprint.id}}" time="1"></app-pie-chart>
+            </div>
+
+          </div>
+      </div>
         
     </div>
   </mat-tab>

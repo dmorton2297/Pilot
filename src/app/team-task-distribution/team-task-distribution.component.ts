@@ -4,6 +4,7 @@ import { Http } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StateService } from '../state.service';
 
 
 @Component({
@@ -14,37 +15,52 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TeamTaskDistributionComponent implements OnInit {
   @Input() height: string;
   @Input() width: string;
+  @Input() sprint: string;
 
-  teamId: string;
-
+  message = 'Task Status Distribution';
   view: any[];
   data: any[];
 
+ 
   showXAxis = true;
   showYAxis = true;
   gradient = false;
   showLegend = true;
   showXAxisLabel = false;
-  xAxisLabel = 'User';
+  xAxisLabel = 'Task Status';
   showYAxisLabel = true;
   yAxisLabel = '# of tasks';
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  };
+};
 
-  constructor(private http: Http, private auth: AuthService, private activatedRoute: ActivatedRoute, private router: Router) {
-    this.teamId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.view = [200, 500];
-    this.http.get('http://localhost:8000/api/getStatusDistributionForTeam/' + '1').subscribe((res) => {
-      this.data = res.json();
+  constructor(private http: Http, private state: StateService, private activatedRoute: ActivatedRoute, private router: Router) {
+  }
 
-    });
+  loadData() {
+    if (this.sprint == '0') {
+      this.message = 'Task Status Distribution';
+      this.http.get('http://localhost:8000/api/getStatusDistributionForTeam/' + this.state.getCurrentStateId()).subscribe((res) => {
+        this.data = res.json();
+        this.view = [200, 500];
 
+  
+      });
+    } else {
+      this.message = 'Team Member Status Distribution';
+      this.http.get('http://localhost:8000/api/getStatusDistributionForTeamMembersInSprint/' + this.state.getCurrentStateId() + '/' + this.sprint).subscribe((res) => {
+        this.data = res.json();
+        this.view = [200, 500];
 
+      });
+    }
+    
   }
 
   ngOnInit() {
+    this.loadData();
+
   }
 
 }

@@ -60,6 +60,7 @@ import { ViewTimeEstimateComponent } from './view-time-estimate/view-time-estima
 import { ModifyTeamEstimateComponent } from './modify-team-estimate/modify-team-estimate.component';
 import { TimeDistributionComponent } from './time-distribution/time-distribution.component';
 import { TeamTaskDistributionComponent } from './team-task-distribution/team-task-distribution.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 
 const appRoutes: Routes = [
@@ -137,6 +138,7 @@ export function getGoogleConfigs() {
     ModifyTeamEstimateComponent,
     TimeDistributionComponent,
     TeamTaskDistributionComponent,
+    PieChartComponent,
     ],
   imports: [
   BrowserModule,

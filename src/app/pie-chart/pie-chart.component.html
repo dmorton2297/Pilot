@@ -1,0 +1,13 @@
+<h3>{{message}}</h3>
+
+<ngx-charts-pie-chart *ngIf="view"
+      [view]="[width, height]"
+      [scheme]="colorScheme"
+      [results]="data"
+      [legend]="showLegend"
+      [explodeSlices]="explodeSlices"
+      [labels]="showLabels"
+      [doughnut]="doughnut"
+      [gradient]="gradient"
+      (select)="onSelect($event)">
+    </ngx-charts-pie-chart>

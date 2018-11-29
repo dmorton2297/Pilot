@@ -16,6 +16,8 @@ export class PerformanceDashboardComponent implements OnInit {
   visible: boolean = false;
   teamView: boolean = false;
   public sprints: Sprint[] = [];
+  teamId = 0;
+
 
 
   constructor(private http: Http, private auth: AuthService, private state: StateService) {
@@ -30,6 +32,7 @@ export class PerformanceDashboardComponent implements OnInit {
       });
     } else {
       this.teamView = true;
+      this.teamId = this.state.getCurrentStateId();
       this.http.get('http://localhost:8000/api/getsprintsforteam/' + this.state.getCurrentStateId()).subscribe((res) => {
         this.sprints = res.json() as Sprint[];
       });
@@ -46,7 +49,6 @@ export class PerformanceDashboardComponent implements OnInit {
   }
 
   onTabChanged(event) {
-   // window.alert(event.index);
   }
 
 }
