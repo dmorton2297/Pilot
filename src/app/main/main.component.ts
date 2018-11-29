@@ -24,6 +24,7 @@ export class MainComponent implements OnInit {
   @ViewChild(ScrumBoardComponent) scrum;
   @ViewChild(BacklogComponent) backlog;
   @ViewChild(PerformanceDashboardComponent) performanceDashboard;
+
   constructor(private http: Http, private auth: AuthService, private state: StateService) { 
     this.http.get('http://localhost:8000/api/getjoinedteams/' + this.auth.getUserId()).subscribe((res) => {
       this.teams = res.json() as Team[];
@@ -70,6 +71,7 @@ export class MainComponent implements OnInit {
   receiveSignal($event) {
     this.backlog.loadData();
     this.scrum.loadData();
+    this.performanceDashboard.loadData();
   }
 
 }

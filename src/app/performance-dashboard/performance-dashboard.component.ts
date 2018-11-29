@@ -2,6 +2,7 @@ import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 import { AuthService } from '../auth.service';
+import { StateService } from '../state.service';
 
 
 @Component({
@@ -16,10 +17,21 @@ export class PerformanceDashboardComponent implements OnInit {
   public sprints: Sprint[] = [];
 
 
-  constructor(private http: Http, private auth: AuthService) {
-    this.http.get('http://localhost:8000/api/getsprintsforuser/' + this.auth.getUserId()).subscribe((res) => {
-      this.sprints = res.json() as Sprint[];
-    });
+  constructor(private http: Http, private auth: AuthService, private state: StateService) {
+    this.loadData();
+  }
+
+  loadData() {
+    if (this.state.getCurrentStateId() == 0) {
+      this.http.get('http://localhost:8000/api/getsprintsforuser/' + this.auth.getUserId()).subscribe((res) => {
+        this.sprints = res.json() as Sprint[];
+      });
+    } else {
+      this.http.get('http://localhost:8000/api/getsprintsforteam/' + this.state.getCurrentStateId()).subscribe((res) => {
+        this.sprints = res.json() as Sprint[];
+      });
+    }
+    
   }
 
   updateSignal() {

@@ -27,6 +27,7 @@ class TimeTicketController extends Controller
      */
     public function store(Request $request)
     {
+        date_default_timezone_set("America/Chicago");
         $taskid= $request -> input('taskid');
         $timespent = $request -> input('timespent');
         $today = new DateTime();
