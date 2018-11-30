@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Task Details</h1>
+<hr />
+<div mat-dialog-content>
+    <p>Task name: {{data.name}}</p>
+    <p>Task Description: {{data.description}} </p>
+    <p>Priority: {{data.priority}}</p>
+    <p>Status: {{data.status}}</p> 
+    <p>Estimated time: {{data.estimate}} </p>
+    <p>Time spent: {{data.timespent}}</p>
+    <p>Requirements: {{data.funcreq}}</p>
+
+    <button mat-button (click)="onOkClick()">Ok</button>
+</div>

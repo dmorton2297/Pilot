@@ -28,6 +28,11 @@ class TeamController extends Controller
         return 0;
     }
 
+    public function getName($teamId) {
+        $name = DB::table('team')->where('id', $teamId)->get();
+        return $name;
+    }
+
     public function userIndex($userId) {
         $tasks = DB::table('team')->where('creatorId', $userId)->get();
         return $tasks;
