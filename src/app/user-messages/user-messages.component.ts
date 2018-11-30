@@ -15,7 +15,7 @@ export class UserMessagesComponent {
 
   public uID : number;
   public messages : Message[] = [];
-  displayedColumns: string[] = ['sender', 'message', 'actions'];
+  displayedColumns: string[] = ['sender', 'message', 'actions', 'save'];
 
 
   constructor(private fb: FormBuilder, private http: Http, private auth: AuthService, public snackBar: MatSnackBar, private activatedRoute: ActivatedRoute, private router: Router) { 
@@ -24,7 +24,7 @@ export class UserMessagesComponent {
     //this.uID = 1;
     //alert(this.uID);
     this.loadMessages();
-  }
+    }
 
   loadMessages() {
     this.http.get('http://localhost:8000/api/getmessages/' + this.uID).subscribe((res) => {
@@ -38,10 +38,14 @@ export class UserMessagesComponent {
 
   checkExpiredMessages() {
     for (var i = 0; i < this.messages.length; i++) {
+      if (this.messages[i].saved == 1) {
+        continue;
+      }
       console.log(this.messages[i].created_at);
       let date = new Date(this.messages[i].created_at);
       let todayDate = new Date(Date.parse(Date()));
       var seconds = (todayDate.getTime() - date.getTime()) / 1000;
+
 
       // on week delete condition
       if (seconds > 604800) {
@@ -54,8 +58,8 @@ export class UserMessagesComponent {
     this.router.navigateByUrl('/newmessage');
   }
 
-  onReplyPressed($id) {
-    this.router.navigateByUrl('/sendmessagetouser/' + $id);
+  onReplyPressed(id) {
+    this.router.navigateByUrl('/sendmessagetouser/' + id);
   }
 
   onDeletePressed(id) {
@@ -64,6 +68,18 @@ export class UserMessagesComponent {
     });
   }
 
+  onSavePressed(id) {
+    var saved = 0;
+    for (var i =0; i < this.messages.length; i++) {
+      if (this.messages[i].id == id && this.messages[i].saved == 0) {
+        console.log(this.messages);
+        saved = 1;
+      }
+    }
+    this.http.get('http://localhost:8000/api/savemessage/' + id + '/' + saved).subscribe((res) => {
+      this.loadMessages();
+    });
+  }
 
 }
 
@@ -76,5 +92,6 @@ interface Message {
   receiver: number,
   team: number,
   created_at: number,
-  updated_at: number
+  updated_at: number,
+  saved: number
 }

@@ -35,6 +35,7 @@ class MessageController extends Controller
                 'sender'=> $sender,
                 'recipient'=> $receiver,
                 'team'=> $team,
+                'saved'=> false,
                 'created_at' => $createdAt,
                 'updated_at' => $updatedAt
             ]
@@ -44,12 +45,33 @@ class MessageController extends Controller
     public function getMessages($id) {
         $messages = DB::table('message')
         ->join('users', 'message.sender', '=', 'users.id')
-        ->select('message.id','users.name as sender','users.email as senderEmail','message.sender as senderId', 'message.message','message.recipient','message.team', 'message.created_at', 'message.updated_at')
+        ->select('message.id','users.name as sender','users.email as senderEmail','message.sender as senderId', 'message.message','message.recipient','message.team', 'message.created_at', 'message.updated_at', 
+        'message.saved')
         ->where('recipient', $id)->get();
         return $messages;
     }
+
+    public function saveMessage($messageId, $save) {
+        DB::table('message')
+			->where('id', $messageId)
+			->update(
+			['saved' => $save,
+            ]);
+        return 'good';
+    }
+
     public function delete($id) 
     {
         DB::table('message')->where('id','=',$id)->delete();
     }
+
+    /*public function getUserInvitations($id) {
+		$result = DB::table('message') 
+		-> join('users', 'message.senderid', '=', 'users.id')
+		-> select('message.id', 'users.email', 'users.name as From')
+		-> where('message.receiver', $id)
+		-> get();
+
+		return $result;
+	}*/
 }

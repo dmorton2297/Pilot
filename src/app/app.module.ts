@@ -62,6 +62,7 @@ import { TimeDistributionComponent } from './time-distribution/time-distribution
 import { TeamTaskDistributionComponent } from './team-task-distribution/team-task-distribution.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 
+import { MessageToTeamComponent } from './message-to-team/message-to-team.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -87,7 +88,8 @@ const appRoutes: Routes = [
   { path: 'modifyfuncreq/:id', component: ModifyFuncreqComponent, canActivate: [AuthService]},
   { path: 'modifyestimate/:id', component: ModifyEstimateComponent, canActivate: [AuthService]}, 
   { path: 'time-estimates/:id', component: ViewTimeEstimateComponent, canActivate: [AuthService]}, 
-  { path: 'modify-team-estimate/:id', component: ModifyTeamEstimateComponent, canActivate: [AuthService]}
+  { path: 'modify-team-estimate/:id', component: ModifyTeamEstimateComponent, canActivate: [AuthService]},
+  { path: 'sendmessagetoteam/:teamid', component: MessageToTeamComponent, canActivate: [AuthService]}
 ];
 
 export function getGoogleConfigs() {
@@ -139,6 +141,7 @@ export function getGoogleConfigs() {
     TimeDistributionComponent,
     TeamTaskDistributionComponent,
     PieChartComponent,
+    MessageToTeamComponent,
     ],
   imports: [
   BrowserModule,

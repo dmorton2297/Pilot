@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 |
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| is assig  d the "api" middleware group. Enjoy building your API!
 |
 */
 
@@ -33,21 +33,23 @@ Route::get('getfuncreqs/{id}', 'FunctionalRequirementController@teamIndex');
 Route::get('delfuncreq/{id}', 'FunctionalRequirementController@destroy');
 Route::post('modifyfuncreq/{id}', 'FunctionalRequirementController@update');
 Route::get('funcreq/{id}', 'FunctionalRequirementController@show');
-Route::get('getuserid/{username}', 'UserController@getUserId');
+Route::get('getuserid/{email}', 'UserController@getUserId');
+Route::post('getuseridfromname', 'UserController@getUserIdFromName');
 Route::get('getcriterian/{id}', 'TaskController@showCriterian');
 Route::post('createteam', 'TeamController@store');
 Route::get('getteam/{id}', 'TeamController@show');
 Route::get('findteam/{name}', 'TeamController@nameIndex');
+Route::get('getteamname/{teamid}', 'TeamController@getName');
 Route::get('getusersteams/{userId}', 'TeamController@userIndex');
 Route::post('modifyteam/{id}', 'TeamController@update');
 Route::post('savecriteria', 'CriteriaController@store');
 Route::get('addteammember/{userid}/{teamid}', 'TeamAssignmentController@add');
 Route::get('teammembers/{teamid}', 'TeamAssignmentController@index');
 Route::get('teamremove/{userid}/{teamid}', 'TeamAssignmentController@kick');
-Route::post('newmessage', 'MessageController@store');
 Route::get('getmessages/{id}', 'MessageController@getMessages');
+Route::post('newmessage', 'MessageController@store');
 Route::get('getallusers', 'UserController@index');
-Route::get('teaminvites/{userid}', 'TeamInvitationController@index');
+Route::get('teams/{userid}', 'TeamInvitationController@index');
 Route::get('deleteinvite/{id}', 'TeamInvitationController@remove');
 Route::post('inviteuser', 'TeamInvitationController@invite');
 Route::get('allsentinvites/{id}', 'TeamInvitationController@detailedUserIndex');
@@ -75,6 +77,7 @@ Route::get('removeFavorite/{userid}/{favoriteid}', 'FavoriteController@destroy')
 Route::get('getallfav', 'FavoriteController@index');
 Route::get('getuserfavorites/{userid}', 'FavoriteController@indexUser');
 Route::post('savetimeticket', 'TimeTicketController@store');
+Route::get('savemessage/{messageId}/{save}', 'MessageController@saveMessage');
 
 
 // Statistics routes

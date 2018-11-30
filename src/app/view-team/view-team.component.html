@@ -9,6 +9,9 @@
       <div class="col-md-4">
           <button mat-button id="invite" (click)="onInviteUsers()">Invite Users</button>
       </div>
+      <div class="col-md-4">
+          <button mat-button id="message" *ngIf="hideMessageTeam()" (click)="onMessageTeam()">Message Team</button>
+      </div>
     </div>
   </mat-card>
 

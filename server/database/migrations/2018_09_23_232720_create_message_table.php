@@ -19,6 +19,7 @@ class CreateMessageTable extends Migration
             $table->unsignedInteger('sender');
             $table->unsignedInteger('recipient');
             $table->unsignedInteger('team');
+            $table->boolean('saved');
 
             $table->foreign('sender')->references('id')->on('users')
             ->onDelete('cascade');
