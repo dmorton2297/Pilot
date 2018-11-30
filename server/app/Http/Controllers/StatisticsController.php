@@ -180,7 +180,7 @@ class StatisticsController extends Controller
             }
 
             $entry = '{"name":"Estimated", "value":'.$projectedWorkDone.'}';
-            $entry2 = '{"name":"Actual", "value":'.($actual).'}';
+            $entry2 = '{"name":"Actual", "value":'.($totalEstimate-$timespent).'}';
             $entry3 = '{"name":"'.$temp_date->format('Y-m-d').'", "series": ['.$entry.','.$entry2.']}';
             $last = $projectedWorkDone;
             $today = new DateTime();

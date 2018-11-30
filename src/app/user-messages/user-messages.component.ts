@@ -48,7 +48,7 @@ export class UserMessagesComponent {
 
 
       // on week delete condition
-      if (seconds > 604800) {
+      if (Math.abs(seconds) > 10) {
         this.onDeletePressed(this.messages[i].id);
       }
     }
