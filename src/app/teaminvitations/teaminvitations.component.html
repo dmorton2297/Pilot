@@ -45,8 +45,8 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element"> 
-          <button mat-button id="element.id" (click)="onAcceptPressed(element.id)">Accept</button>
-          <button mat-button id="element.id" (click)="onDeclinePressed(element.id)">Decline</button>
+          <button mat-button id="element.id" style="background-color: lightgreen" (click)="onAcceptPressed(element.id)">Accept</button>
+          <button mat-button id="element.id" style="background-color: lightcoral"(click)="onDeclinePressed(element.id)">Decline</button>
         </td>
     </ng-container>
 

@@ -45,7 +45,8 @@ export class InviteToTeamComponent implements OnInit {
         for (var i = 0; i < this.favorites.length; i++) {
           
           this.http.get('http://localhost:8000/api/getuser/' + this.favorites[i].favoriteid).subscribe((res) => {
-            this.user = res.json() as User;
+            var temp = res.json() as User[];
+            this.user = temp[0];
             console.log("User found");
             console.log(this.user);
             this.users.push(this.user);

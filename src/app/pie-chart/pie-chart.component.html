@@ -1,13 +1,17 @@
-<h3>{{message}}</h3>
+<div *ngIf="data.length > 0">
+            <hr style="width: 100%"/>
+            <h3>{{message}}</h3>
 
-<ngx-charts-pie-chart *ngIf="view"
-      [view]="[width, height]"
-      [scheme]="colorScheme"
-      [results]="data"
-      [legend]="showLegend"
-      [explodeSlices]="explodeSlices"
-      [labels]="showLabels"
-      [doughnut]="doughnut"
-      [gradient]="gradient"
-      (select)="onSelect($event)">
-</ngx-charts-pie-chart>
+            <ngx-charts-pie-chart *ngIf="view"
+                  [view]="[width, height]"
+                  [scheme]="colorScheme"
+                  [results]="data"
+                  [legend]="showLegend"
+                  [explodeSlices]="explodeSlices"
+                  [labels]="showLabels"
+                  [doughnut]="doughnut"
+                  [gradient]="gradient"
+                  (select)="onSelect($event)">
+            </ngx-charts-pie-chart>
+</div>
+

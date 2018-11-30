@@ -11,11 +11,11 @@
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
       <label>Recipient Email</label>
       <mat-form-field> 
-        <input matInput type="text" formControlName="email" placeholder="recipient@email.com" [matAutocomplete]="auto" required> 
+        <input matInput type="text" formControlName="email" [matAutocomplete]="auto"> 
         <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let u of users; let i=index" [value]="u[i].email">
-              <span>{{u[0].name}}</span> |
-              <small>{{u[0].email}}</small>
+            <mat-option *ngFor="let u of users;" [value]="u.email">
+              <span>{{u.name}}</span> |
+              <small>{{u.email}}</small>
             </mat-option>
         </mat-autocomplete>
       </mat-form-field>
