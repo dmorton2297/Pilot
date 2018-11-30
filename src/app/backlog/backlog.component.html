@@ -122,16 +122,13 @@
 </mat-card>
 
 <mat-card [@slideOutAnimation]='slideInAnimationState' id="sprintContainer">
-  <mat-card *ngIf="sprints.length == 0">
+  <mat-card *ngIf="emptySprints.length == 0 && sprints.length == 0">
     <p>You have no planned sprints.</p>
     <button mat-button (click)="onSortSprintPressed()">View backlog</button>
 
   </mat-card>
-  <mat-card *ngIf="sprints.length != 0" id="sprint-content">
-    <h1>Sprint Planning</h1>
-    <button mat-button (click)="onSortSprintPressed()">View backlog</button>
 
-    <mat-card *ngIf="emptySprints.length > 0">
+  <mat-card *ngIf="emptySprints.length > 0">
       <h3>Empty Sprints</h3>
       <div *ngFor="let sprint of emptySprints" class="row">
           <div class="col-md-9">
@@ -143,6 +140,12 @@
       </div>
      
     </mat-card>
+
+  <mat-card *ngIf="sprints.length != 0" id="sprint-content">
+    <h1>Sprint Planning</h1>
+    <button mat-button (click)="onSortSprintPressed()">View backlog</button>
+
+    
 
     <mat-card id="sprint-tables">
         <h3>Planned Sprints</h3>

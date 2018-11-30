@@ -358,7 +358,13 @@ interface SprintTask {
 
 interface FuncReqTask {
   id: number,
-  name
+  name: string,
+  description: string,
+  priority: number, 
+  estimate: number, 
+  status: number,
+  funcId: number,
+  funcName: string, 
 }
 
 interface ChangeStatusRequest {
