@@ -26,7 +26,7 @@ export class ViewFuncreqsComponent {
 
   loadData() {
     this.reqs = [];
-    this.http.get('http://localhost:8000/api/getfuncreqs/' + this.state.getCurrentStateId()).subscribe((res) => {
+    this.http.get('http://localhost:8000/api/getfuncreqsforteam/' + this.state.getCurrentStateId()).subscribe((res) => {
       if (res.json() != -1) {
         this.reqs = res.json() as FunctionalRequirement[];
         console.log(res.json());

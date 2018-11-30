@@ -64,16 +64,21 @@ class TaskController extends Controller
     }
 
     public function funcReqTasksForUser($id) {
-        $tasks = DB::table('task') 
-        -> join('sprinttask', 'task.id', '=','sprinttask.taskid')
-        -> join('funcreqs', 'funcreq.sprintid', '=', 'sprint.id')
-        -> where ('task.teamid', $teamId)
-        -> select('task.id', 'task.name', 'task.description', 'task.priority', 'task.estimate', 'task.status', 'sprint.id as sprintId', 'sprint.name as sprintName', 'sprint.description as sprintDescription')
-        -> get();
+        return $tasks = DB::table('task') 
+        -> join('funcreqs', 'task.funcreq', '=', 'funcreqs.id')
+        -> where('task.creatorid', $id)
+        ->where('task.teamid', 0)
+        -> select('task.id', 'task.name', 'task.description', 'task.priority', 'task.estimate', 'task.status', 'task.funcreq', 'funcreqs.name as funcReqName', 'funcreqs.description as funcReqDescription')
+
+        ->get();
     }
 
     public function funcReqTasksForTeam($id) {
-
+        return $tasks = DB::table('task') 
+        -> join('funcreqs', 'task.funcreq', '=', 'funcreqs.id')
+        -> where ('task.teamid', $id)
+        -> select('task.id', 'task.name', 'task.description', 'task.priority', 'task.estimate', 'task.status', 'task.funcreq', 'funcreqs.name as funcReqName', 'funcreqs.description as funcReqDescription')
+        ->get();
     }
 
 
@@ -146,9 +151,16 @@ class TaskController extends Controller
      */
     public function showReqs($id) 
     {
-        $funcreqs = json_decode(DB::table('task')->where('id', $id)->value('funcreq'), true);
-        if ($funcreqs == NULL) return -1;
-        return $funcreqs;
+        //$funcreqs = json_decode(DB::table('task')->where('id', $id)->value('funcreq'), true);
+        //if ($funcreqs == NULL) return -1;
+
+        return DB::table('funcreqs')
+        ->join('task', 'funcreqs.id', '=','task.funcreq')
+        ->where('task.id', $id)
+        ->select('funcreqs.id as id', 'funcreqs.name as name', 'funcreqs.description as description')
+        ->get();
+
+ //       return $funcreqs;
     }
 
 

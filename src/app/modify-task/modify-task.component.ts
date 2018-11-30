@@ -40,6 +40,7 @@ export class ModifyTaskComponent {
   public teamId = 0;
   public flag = 0;
   public assigneduser: User;
+  
 
   constructor(private fb: FormBuilder, private http: Http, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router, private state: StateService, private auth: AuthService) { 
     this.taskId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -76,21 +77,20 @@ export class ModifyTaskComponent {
     // Get the selected functional requirement and put it into taskForm.
     this.http.get('http://localhost:8000/api/getSelectedReqs/' + this.taskId).subscribe((res) => {
       // Set the form value with the selected functional requirement.
-      if (res.json() != -1) {
-        this.selectedReq = res.json() as FunctionalRequirement;
-       // this.taskForm.patchValue({funcreq: this.selectedReq});
-      } 
+      if (res.json() != '') {
+        var temp = res.json() as FunctionalRequirement[];
+        this.selectedReq = temp[0] as FunctionalRequirement;
+        console.log(this.selectedReq);
+      } else {
+        this.selectedReq = {
+          id: '0',
+          name: '',
+          description: ''
+        };
+      }
       // Get all the functional requirments for the drop-down.
-      this.http.get('http://localhost:8000/api/getfuncreqs/' + this.state.getCurrentStateId()).subscribe((res) => {
-        if (res.json() != "" && res.json() != -1) { 
+      this.http.get('http://localhost:8000/api/getfuncreqsforteam/' + this.state.getCurrentStateId()).subscribe((res) => {
           this.req = res.json() as FunctionalRequirement[];
-          // Patching the value wasn't working, this auto-fills functional req in the form.
-          for (var i = 0; i < this.req.length; i++) {
-            if (this.req[i].id == this.selectedReq.id) {
-              this.selectedReq = this.req[i];
-            }
-          }
-        } 
       });
     });
 
@@ -210,7 +210,10 @@ export class ModifyTaskComponent {
   onSubmit() {
     this.cleanCriteria();
     var req = this.taskForm.get('funcreq').value as FunctionalRequirement;
-    var reqId = req.id;
+    var reqId : number = +req.id;
+    if (!reqId) {
+      reqId = 0;
+    }
     let request : Task = {
       id: this.taskId,
       name: this.taskForm.get('name').value as string,
@@ -234,7 +237,7 @@ export class ModifyTaskComponent {
     }
 
     this.http.post('http://localhost:8000/api/modifytask/' + this.taskId, request, this.taskId).subscribe((res) => {
-      this.router.navigateByUrl('/backlog');
+      this.location.back();
     });
     this.snackBar.open('Task modified', 'Ok', {
       duration: 3000
@@ -250,12 +253,12 @@ export class ModifyTaskComponent {
       this.snackBar.open('Task deleted', 'Ok', {
         duration: 3000
       });
-      this.router.navigateByUrl('/');
+      this.location.back();
     });
   }
 
   onCancel() {
-    this.router.navigateByUrl('/backlog');
+    this.location.back();
   }
 
 }

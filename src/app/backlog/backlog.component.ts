@@ -34,20 +34,23 @@ export class BacklogComponent implements OnInit {
   public slideInAnimationState: string = 'hidden';
   public secondSlideInAnimationState: string = 'hidden';
   public sprintTasks: SprintTask[] = [];
+  public funcReqTasks: FuncReqTask[] = [];
   public viewSprintClicked = false;
   public viewFuncReqClicked = false;
   public tasks: Task[] = [];
   public task: Task[] = [];
   public displayedColumns: String[] = ['name', 'priority', 'status', 'actions', 'view'];
   public sprints: Sprint[] = []; 
+  public funcReqs: FuncReq[] = [];
   public emptySprints: _Sprint[] = [];
+  public emptyFuncReqs: _FuncReq[] = [];
   public sortByName = true;
   public sortByPriority = false;
 
   @Output() signalEvent = new EventEmitter<string>();
 
   constructor(private http: Http, private router: Router, private auth: AuthService, private state: StateService, public dialog: MatDialog) {
-    this.loadData();
+    
   }
 
   ngOnInit() {
@@ -69,6 +72,7 @@ export class BacklogComponent implements OnInit {
 
   onManageSprintPressed(sprintId) {
     this.router.navigateByUrl('/manageSprint/' + sprintId);
+    this.state.sprintView = true;
   }
 
   onViewEstimates() {
@@ -83,6 +87,8 @@ export class BacklogComponent implements OnInit {
     this.sprints = [];
     this.sprintTasks = [];
     this.emptySprints = [];
+
+    this.loadFuncReqData();
     
     if (this.state.getCurrentStateId() == 0) {
       console.log('here');
@@ -100,14 +106,10 @@ export class BacklogComponent implements OnInit {
         this.sortSprintTasks();
         this.http.get('http://localhost:8000/api/getsprintsforuser/' + this.auth.getUserId()).subscribe((ress) => {
           let temp : _Sprint[] = ress.json() as _Sprint[];
-          console.log('THE NUMBER OF EMPTY SPRINTS IS ' + temp.length);
-
           for (var i = 0; i < temp.length; i++) {
             var f = false
-            console.log('LOOKING ' + i);
             for (var j = 0; j < this.sprints.length; j++) {
               if (temp[i].id == this.sprints[j].sprintId) {
-                console.log('SP ' + i)
                 f = true;
               }
             }
@@ -116,8 +118,6 @@ export class BacklogComponent implements OnInit {
               this.emptySprints.push(temp[i]);
             }
           }
-
-          console.log(this.emptySprints);
         });
       });
     } else {
@@ -154,16 +154,37 @@ export class BacklogComponent implements OnInit {
         });
         
       });
-
-      
-
     }
+  }
 
+  loadFuncReqData() {
+    if (this.state.getCurrentStateId() == 0) {
+      this.http.get('http://localhost:8000/api/getreqtasks/' + this.auth.getUserId()).subscribe((res) => {
+      this.funcReqTasks = res.json() as FuncReqTask[];
+      this.sortFuncReqTasks();  
+      });
+    } else {
+      this.http.get('http://localhost:8000/api/getteamreqtasks/' + this.state.getCurrentStateId()).subscribe((res) => {
+        this.funcReqTasks = res.json() as FuncReqTask[];
+        this.sortFuncReqTasks();  
+        });
+    }
+    
   }
 
   emptySprintExists(sprintId) {
     for (var i = 0; i < this.emptySprints.length; i ++) {
       if (this.emptySprints[i].id == sprintId) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  emptyFuncReqExists(funcReqId) {
+    for (var i = 0; i < this.emptyFuncReqs.length; i ++) {
+      if (this.emptyFuncReqs[i].id == funcReqId) {
         return true;
       }
     }
@@ -200,12 +221,43 @@ export class BacklogComponent implements OnInit {
         }
         this.sprints.push(sprint);
         knownSprintIds.push(this.sprintTasks[i].sprintId);
-        console.log(sortedSprints);
       }
     }
 
 
 
+  }
+
+  sortFuncReqTasks() {
+    this.funcReqs = [];
+    // find sprint 
+    var sortedFuncReqs: FuncReq[] = [];
+    var knownFuncReqIds: number[] = [];
+    for (var i = 0; i < this.funcReqTasks.length; i++) {
+      var exists = false;
+      for (var j = 0; j < knownFuncReqIds.length; j++) {
+        exists = (knownFuncReqIds[j] == this.funcReqTasks[i].funcreq);
+        if (exists) {
+          break;
+        }
+      }
+      if (!exists) {
+        var foundTasks: FuncReqTask[] = [];
+        for (var j = 0; j < this.funcReqTasks.length; j++) {
+          if (this.funcReqTasks[j].funcreq == this.funcReqTasks[i].funcreq) {
+            foundTasks.push(this.funcReqTasks[j]);
+          }
+        }
+        var funcReq: FuncReq = {
+          id: this.funcReqTasks[i].id,
+          name: this.funcReqTasks[i].funcReqName,
+          description: this.funcReqTasks[i].funcReqDescription,
+          tasks: foundTasks
+        }
+        this.funcReqs.push(funcReq);
+        knownFuncReqIds.push(this.funcReqTasks[i].funcreq);
+      }
+    }
   }
 
   onStatusClicked(taskId: number) {
@@ -289,6 +341,11 @@ export class BacklogComponent implements OnInit {
     this.viewSprintClicked = true;
     this.animationState = (this.animationState == 'visible' ? 'hidden' : 'visible');
     this.slideInAnimationState = (this.slideInAnimationState == 'visible' ? 'hidden' : 'visible');
+    if (this.animationState == 'visible'){
+      this.state.sprintView = true;
+    } else {
+      this.state.sprintView = false;
+    }
   }
 
   onSortFuncReqPressed() {
@@ -363,13 +420,21 @@ interface FuncReqTask {
   priority: number, 
   estimate: number, 
   status: number,
-  funcId: number,
-  funcName: string, 
+  funcreq: number,
+  funcReqName: string, 
+  funcReqDescription: string
 }
 
 interface ChangeStatusRequest {
     taskId: number,
     status: number
+}
+
+interface FuncReq {
+  id: number,
+  name: string,
+  description: string,
+  tasks: FuncReqTask[];
 }
 
 interface Sprint {
@@ -380,6 +445,12 @@ interface Sprint {
 }
 
 interface _Sprint {
+  id: number,
+  name: string,
+  description: string
+}
+
+interface _FuncReq {
   id: number,
   name: string,
   description: string

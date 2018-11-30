@@ -26,6 +26,9 @@ export class MainComponent implements OnInit {
   @ViewChild(PerformanceDashboardComponent) performanceDashboard;
 
   constructor(private http: Http, private auth: AuthService, private state: StateService) { 
+    if (this.state.teamView) {
+      this.selectedViewOption = this.state.selectedTeam;
+    }
     this.http.get('http://localhost:8000/api/getjoinedteams/' + this.auth.getUserId()).subscribe((res) => {
       this.teams = res.json() as Team[];
       for (var i = 0; i < this.teams.length; i++) {
@@ -56,6 +59,7 @@ export class MainComponent implements OnInit {
         this.state.updateState(stateId);
         console.log(stateId);
         this.selectedViewOption = teamName;
+        this.state.selectedTeam = teamName;
         this.receiveSignal("update");
         return;
 

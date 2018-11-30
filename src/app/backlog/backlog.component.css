@@ -7,6 +7,11 @@ table {
 
   }
 
+  #funcreq-tables {
+      height: 100%;
+      margin-top: 8px;
+  }
+
   #create-task {
       float: right;
   }
@@ -48,7 +53,6 @@ table {
   }
 
   #manageButton {
-      background-color: lightslategray;
       float: right;
   }
 

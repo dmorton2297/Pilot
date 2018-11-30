@@ -98,13 +98,13 @@ export class NewMessageComponent implements OnInit {
         //user is found in user table
     }
     this.http.post('http://localhost:8000/api/newmessage', request).subscribe((res) => {
-      console.log(res);
+      this.location.back();
     });
   }
 
   onCancel() {
     this.newMessage.reset();
-    this.router.navigateByUrl('/messages');
+    this.location.back();
   }
 
   private filterUsers(exp: string) {

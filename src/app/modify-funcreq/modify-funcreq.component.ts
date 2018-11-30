@@ -46,11 +46,11 @@ constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder, pri
       this.snackBar.open('Functional Requirement Modified', 'Ok', {
         duration: 3000
     });
-    this.router.navigateByUrl('/backlog');
+    this.location.back();
   }
 
   onBack() {
-    this.router.navigateByUrl('/backlog');
+    this.location.back();
   }
 }
 

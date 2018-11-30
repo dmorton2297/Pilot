@@ -27,11 +27,12 @@
         </mat-form-field> 
 
       <!-- Function requirement drop down box -->
-      <mat-form-field>
-         <mat-select formControlName="funcreq" [(ngModel)]="selectedReq" placeholder="Function Requirement"> 
+      <mat-form-field *ngIf="selectedReq">
+         <mat-select formControlName="funcreq" value="{{selectedReq.name}}" placeholder="Function Requirement"> 
              <mat-option *ngFor="let g of req" [value]="g">{{g.name}}</mat-option>
          </mat-select>  
       </mat-form-field> 
+      <p *ngIf="selectedReq">Current Functional Requirement: {{selectedReq.name}}</p>
 
     <!-- Acceptance Critera Section-->
     <mat-card-header>

@@ -95,6 +95,12 @@ class SprintController extends Controller
         ->pluck('taskid');
     }
 
+    public function getFuncReqTasks($id) {
+        return DB::table('task')
+        -> where('funcreq', $id)
+        -> pluck('id');
+    }
+
     /**
      * Display the specified resource.
      *

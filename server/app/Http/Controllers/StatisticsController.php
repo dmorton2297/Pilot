@@ -158,6 +158,8 @@ class StatisticsController extends Controller
         $looping = true;
         $temp_date = $start;
         $last = $totalEstimate;
+        $today = new DateTime();
+
         $counter = 0;
          while ($temp_date <= $end) {            
             $timespent = DB::table('timeticket')
@@ -171,10 +173,18 @@ class StatisticsController extends Controller
             if ($projectedWorkDone < 0) {
                 $projectedWorkDone = 0;
             }
+
+            $actual = 0;
+            if ($temp_date < $today) {
+                $actual = $totalEstimate-$timespent;
+            }
+
             $entry = '{"name":"Estimated", "value":'.$projectedWorkDone.'}';
-            $entry2 = '{"name":"Actual", "value":'.($totalEstimate-$timespent).'}';
+            $entry2 = '{"name":"Actual", "value":'.($actual).'}';
             $entry3 = '{"name":"'.$temp_date->format('Y-m-d').'", "series": ['.$entry.','.$entry2.']}';
             $last = $projectedWorkDone;
+            $today = new DateTime();
+            
             if ($counter == 0) {
                 $counter = $counter + 1;
             }

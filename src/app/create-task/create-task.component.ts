@@ -40,7 +40,7 @@ export class CreateTaskComponent {
   public taskId : string;
 
   constructor(private fb: FormBuilder, private http: Http, private state: StateService, private auth: AuthService, public snackBar: MatSnackBar, private location: Location, private activatedRoute: ActivatedRoute, private router: Router) {
-    this.http.get('http://localhost:8000/api/getfuncreqs/' + this.state.getCurrentStateId()).subscribe((res) => {
+    this.http.get('http://localhost:8000/api/getfuncreqsforteam/' + this.state.getCurrentStateId()).subscribe((res) => {
       if (res.json() != -1) {
         this.req = res.json() as FunctionalRequirement[];
         console.log("func req");
@@ -139,6 +139,9 @@ export class CreateTaskComponent {
     this.cleanCriteria();
     var req = this.taskForm.get('funcreq').value as FunctionalRequirement;
     var reqId = req.id;
+    if (!reqId) {
+      reqId = 0;
+    }
     let request : TaskRequest = {
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,

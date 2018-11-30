@@ -8,6 +8,11 @@ export class StateService {
   public teamView: boolean = false;
   public teamId: number = 0;
 
+  public funcReqView: boolean = false;
+  public sprintView: boolean = false;
+
+  public selectedTeam = '';
+
   public userView: boolean = true;
 
   constructor() { }

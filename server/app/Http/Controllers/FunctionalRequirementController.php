@@ -31,6 +31,13 @@ class FunctionalRequirementController extends Controller
         return $reqs;
     }
 
+    public function userIndex($id) {
+        $reqs = DB::table('funcreqs')->where('creatorid', $id)
+        ->where('teamid', 0)
+         ->get();
+        return $reqs;
+    }
+
     /**
      * Store a newly created resource in storage.
      *

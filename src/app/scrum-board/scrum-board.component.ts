@@ -43,6 +43,17 @@ export class ScrumBoardComponent {
     
   }
 
+  onUpdateStatus(id, status) {
+    let request: any = {
+      taskId: id,
+      status: status
+    }
+
+    this.http.post('http://localhost:8000/api/changestatus', request).subscribe((res) => {
+      this.updateSignal();
+    });
+  }
+
 
   processTableData() {
     this.notStartedTasks = [];

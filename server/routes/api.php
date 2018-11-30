@@ -81,6 +81,11 @@ Route::post('savetimeticket', 'TimeTicketController@store');
 Route::get('savemessage/{messageId}/{save}', 'MessageController@saveMessage');
 
 
+Route::get('getreqtasks/{id}', 'TaskController@funcReqTasksForUser');
+Route::get('getteamreqtasks/{id}', 'TaskController@funcReqTasksForTeam');
+Route::get('getfuncreqsforuser/{userid}', 'FunctionalRequirementController@userIndex');
+Route::get('getfuncreqsforteam/{id}', 'FunctionalRequirementController@teamIndex');
+
 // Statistics routes
 Route::get('getStatusDistributionForUser/{userId}', 'StatisticsController@getStatusDistributionForUser');
 Route::post('addFavorite', 'FavoriteController@store');
