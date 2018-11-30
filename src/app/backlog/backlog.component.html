@@ -82,14 +82,35 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td id="actions" mat-cell *matCellDef="let element"> 
-          <button id="time" (click)="onTimePressed(element.id)"><i class="fa fa-clock-o" aria-hidden="true"></i>
-          </button>
-          <button id="edit" (click)="onModifyPressed(element.id)"><i class="fa fa-pencil-square" aria-hidden="true"></i>
-          </button>
-          <button id="delete" (click)="onDeletePressed(element.id)"><i class="fa fa-minus-square" aria-hidden="true"></i>
-          </button>
+          <div class="row">
+            <div class="col-md-3">
+                <button id="time" (click)="onTimePressed(element.id)"><i class="fa fa-clock-o" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="col-md-3">
+                <button id="edit" (click)="onModifyPressed(element.id)"><i class="fa fa-pencil-square" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="col-md-3">
+                <button id="delete" (click)="onDeletePressed(element.id)"><i class="fa fa-minus-square" aria-hidden="true"></i>
+                </button>
+            </div>
+          </div>
+          
+          
+          
+          
           
         </td>
+    </ng-container>
+    <ng-container matColumnDef="view">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td id="view" mat-cell *matCellDef="let element"> 
+        <button id="detail" (click)="onDetailPressed(element.id)"><i class="fa fa-eye" aria-hidden="true"></i></button>
+        </td>
+
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

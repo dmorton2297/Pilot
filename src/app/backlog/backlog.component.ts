@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit, Inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { StateService } from '../state.service';
 import {trigger, state, style, transition, animate, keyframes} from '@angular/animations';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-backlog',
@@ -26,14 +28,15 @@ import {trigger, state, style, transition, animate, keyframes} from '@angular/an
     ]),
   ]
 })
-export class BacklogComponent implements OnInit{
+export class BacklogComponent implements OnInit {
 
   public animationState: string = 'visible';
   public slideInAnimationState: string = 'hidden';
   public sprintTasks: SprintTask[] = [];
   public viewSprintClicked = false;
   public tasks: Task[] = [];
-  public displayedColumns: String[] = ['name', 'description', 'priority', 'status', 'actions'];
+  public task: Task[] = [];
+  public displayedColumns: String[] = ['name', 'priority', 'status', 'actions', 'view'];
   public sprints: Sprint[] = []; 
   public emptySprints: _Sprint[] = [];
   public sortByName = true;
@@ -41,7 +44,7 @@ export class BacklogComponent implements OnInit{
 
   @Output() signalEvent = new EventEmitter<string>();
 
-  constructor(private http: Http, private router: Router, private auth: AuthService, private state: StateService) { 
+  constructor(private http: Http, private router: Router, private auth: AuthService, private state: StateService, public dialog: MatDialog) {
     this.loadData();
   }
 
@@ -77,7 +80,7 @@ export class BacklogComponent implements OnInit{
     
     if (this.state.getCurrentStateId() == 0) {
       console.log('here');
-      this.http.get('http://localhost:8000/api/getusertasks/'+this.auth.id).subscribe((res) => {
+      this.http.get('http://localhost:8000/api/getusertasks/' + this.auth.id).subscribe((res) => {
         this.tasks = res.json() as Task[];
         if (this.sortByName) {
           this.sortTableName();
@@ -91,7 +94,7 @@ export class BacklogComponent implements OnInit{
         this.sortSprintTasks();
       });
     } else {
-      this.http.get('http://localhost:8000/api/getteamtasks/'+this.state.getCurrentStateId()).subscribe((res) => {
+      this.http.get('http://localhost:8000/api/getteamtasks/' + this.state.getCurrentStateId()).subscribe((res) => {
         this.tasks = res.json() as Task[];
         if (this.sortByName) {
           this.sortTableName();
@@ -127,19 +130,19 @@ export class BacklogComponent implements OnInit{
       
 
     }
-    
+
   }
 
   sortSprintTasks() {
     this.sprints = [];
     console.log("invoked");
     // find sprint 
-    var sortedSprints : Sprint[] = [];
+    var sortedSprints: Sprint[] = [];
     var knownSprintIds: number[] = [];
     for (var i = 0; i < this.sprintTasks.length; i++) {
       var exists = false;
       for (var j = 0; j < knownSprintIds.length; j++) {
-        exists = (knownSprintIds[j] == this.sprintTasks[i].sprintId) ;
+        exists = (knownSprintIds[j] == this.sprintTasks[i].sprintId);
         if (exists) {
           break;
         }
@@ -151,7 +154,7 @@ export class BacklogComponent implements OnInit{
             foundTasks.push(this.sprintTasks[j]);
           }
         }
-        var sprint : Sprint = {
+        var sprint: Sprint = {
           sprintId: this.sprintTasks[i].sprintId,
           sprintName: this.sprintTasks[i].sprintName,
           sprintDescription: this.sprintTasks[i].sprintDescription,
@@ -173,15 +176,15 @@ export class BacklogComponent implements OnInit{
       if (this.tasks[i].id == taskId) {
         if (this.tasks[i].status == 0) {
           newStatus = 1;
-        } else if (this.tasks[i].status == 1){
+        } else if (this.tasks[i].status == 1) {
           newStatus = 2;
         } else {
           newStatus = 0;
         }
       }
     }
-    let request : ChangeStatusRequest = {
-      taskId : taskId,
+    let request: ChangeStatusRequest = {
+      taskId: taskId,
       status: newStatus
     }
 
@@ -213,6 +216,19 @@ export class BacklogComponent implements OnInit{
     this.router.navigateByUrl('/viewfuncreqs/' + this.state.getCurrentStateId());
   }
 
+  onDetailPressed(id) {
+    this.http.get('http://localhost:8000/api/gettask/' + id).subscribe((res) => {
+      this.task = res.json() as Task[];
+      console.log(this.task[0]);
+
+      this.dialog.open(DialogComponent, {
+        width: '400px',
+        data: this.task[0]
+      });
+    });
+    
+  }
+  
   onSortNamePressed(){
     this.sortByName = true;
     this.sortByPriority = false;
@@ -304,4 +320,10 @@ interface _Sprint {
   id: number,
   name: string,
   description: string
+@Component({
+  selector: 'dialog-task-detail',
+  templateUrl: 'dialog-task-detail.html',
+})
+export class DialogTaskDetail {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Task) { }
 }
