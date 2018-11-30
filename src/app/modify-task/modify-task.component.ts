@@ -78,7 +78,7 @@ export class ModifyTaskComponent {
       // Set the form value with the selected functional requirement.
       if (res.json() != -1) {
         this.selectedReq = res.json() as FunctionalRequirement;
-        this.taskForm.patchValue({funcreq: this.selectedReq});
+       // this.taskForm.patchValue({funcreq: this.selectedReq});
       } 
       // Get all the functional requirments for the drop-down.
       this.http.get('http://localhost:8000/api/getfuncreqs/' + this.state.getCurrentStateId()).subscribe((res) => {
@@ -209,17 +209,19 @@ export class ModifyTaskComponent {
 
   onSubmit() {
     this.cleanCriteria();
+    var req = this.taskForm.get('funcreq').value as FunctionalRequirement;
+    var reqId = req.id;
     let request : Task = {
       id: this.taskId,
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
       priority: this.taskForm.get('priority').value as number,
       status: 0,
-      funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
+      funcreq: reqId,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
       creatorid: this.taskForm.get('creatorID').value as number,
-      teamid: 0,
+      teamid: this.state.getCurrentStateId(),
       assigneduserid: this.taskForm.get('assignedUser').value.id as number,
       criterian: this.taskForm.get('criterian').value
     }

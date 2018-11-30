@@ -32,7 +32,8 @@ export class FuncReqFormComponent {
     let request : FunctionalRequirement = {
       name: this.reqForm.get('name').value as string,
       description: this.reqForm.get('description').value as string,
-      teamid: this.state.getCurrentStateId()
+      teamid: this.state.getCurrentStateId(),
+      creatorid: this.auth.getUserId()
     }
     this.http.post('http://localhost:8000/api/savereq', request).subscribe();
       this.snackBar.open('Functional Requirement Created', 'Ok', {
@@ -50,6 +51,7 @@ interface FunctionalRequirement {
   name: string,
   description: string,
   teamid: number
+  creatorid: number
 }
 
 interface Task {

@@ -17,7 +17,8 @@ class CreateFunctionalRequirementTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->integer('teamid');
+            $table->unsignedInteger('teamid');
+            $table->unsignedInteger('creatorid');
             $table->timestamps();
         });
     }

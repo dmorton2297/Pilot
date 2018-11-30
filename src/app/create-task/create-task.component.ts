@@ -137,12 +137,14 @@ export class CreateTaskComponent {
 
   onSubmit() {
     this.cleanCriteria();
+    var req = this.taskForm.get('funcreq').value as FunctionalRequirement;
+    var reqId = req.id;
     let request : TaskRequest = {
       name: this.taskForm.get('name').value as string,
       description: this.taskForm.get('description').value as string,
       priority: this.taskForm.get('priority').value as number,
       status: 0,
-      funcreq: this.taskForm.get('funcreq').value as FunctionalRequirement,
+      funcreq: reqId,
       estimate: this.taskForm.get('estimate').value as number,
       timespent: 0,
       creatorid: this.auth.getUserId(),
@@ -188,6 +190,7 @@ interface TeamMember {
 }
 
 interface FunctionalRequirement {
+  id: number,
   name: string,
   description: string,
   teamid: number
