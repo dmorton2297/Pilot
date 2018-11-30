@@ -64,6 +64,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 import { MessageToTeamComponent } from './message-to-team/message-to-team.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { ManageSprintComponent } from './manage-sprint/manage-sprint.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'backlog', pathMatch: 'full' },
@@ -90,7 +91,8 @@ const appRoutes: Routes = [
   { path: 'modifyestimate/:id', component: ModifyEstimateComponent, canActivate: [AuthService]}, 
   { path: 'time-estimates/:id', component: ViewTimeEstimateComponent, canActivate: [AuthService]}, 
   { path: 'modify-team-estimate/:id', component: ModifyTeamEstimateComponent, canActivate: [AuthService]},
-  { path: 'sendmessagetoteam/:teamid', component: MessageToTeamComponent, canActivate: [AuthService]}
+  { path: 'sendmessagetoteam/:teamid', component: MessageToTeamComponent, canActivate: [AuthService]},
+  { path: 'manageSprint/:sprintid', component: ManageSprintComponent, canActivate: [AuthService]}
 ];
 
 export function getGoogleConfigs() {
@@ -144,6 +146,7 @@ export function getGoogleConfigs() {
     PieChartComponent,
     MessageToTeamComponent,
     DialogComponent,
+    ManageSprintComponent,
     ],
     entryComponents: [DialogComponent],
   imports: [

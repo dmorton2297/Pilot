@@ -22,6 +22,7 @@ class SprintController extends Controller
         $results = DB::table('sprint') 
         -> where('creatorid', $userId)
         -> where('teamid', 0)
+        -> where('teamid', 0)
         -> get();
 
         return $results;
@@ -88,6 +89,12 @@ class SprintController extends Controller
         return $sprintId;
     }
 
+    public function getSprintTasks($sprintId) {
+        return DB::table('sprinttask')
+        -> where('sprintid', $sprintId)
+        ->pluck('taskid');
+    }
+
     /**
      * Display the specified resource.
      *
@@ -96,7 +103,9 @@ class SprintController extends Controller
      */
     public function show($id)
     {
-        //
+        return DB::table('sprint')
+        ->where('id', $id)
+        ->get();
     }
 
     /**
@@ -117,9 +126,48 @@ class SprintController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request -> input('id');
+        $name = $request -> input('name');
+        $description = $request -> input    ('description');
+        $start = $request -> input('start');
+        $end = $request -> input('end');
+        $tasks = $request -> input('tasks');
+        $creatorId = $request -> input('creatorid');
+        $teamId = $request -> input('teamid');
+
+        DB::table('sprint')
+        ->where('id', $id)
+        ->update(
+            [
+                'name' => $name,
+                'description' => $description,
+                'start_date' => $start,
+                'end_date' => $end,
+                'creatorid' => $creatorId,
+                'teamid' => $teamId
+            ]
+        );
+
+        DB::table('sprinttask')
+        ->where('sprintid', $id)
+        ->delete();
+
+        // loop through each task recieved and add
+        // the to the sprint task table
+        for ($x = 0; $x < count($tasks); $x++) {
+            $tId = $tasks[$x];
+            // insert task into sprint task here
+            DB::table('sprinttask')->insert(
+                [
+                    'sprintid' => $id,
+                    'taskId' => $tId
+                ]
+            );
+        }
+
+
     }
 
     /**
@@ -130,6 +178,8 @@ class SprintController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('sprint')
+        ->where('id', $id)
+        ->delete();
     }
 }

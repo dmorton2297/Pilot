@@ -1,0 +1,70 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h1>Manage Sprint</h1>
+      </mat-card-title>
+    </mat-card-header>
+  
+    <!-- Form for creating new sprint -->
+    <mat-card-content>
+      <form [formGroup]="sprintForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <input matInput type="text" formControlName="name" placeholder="Sprint Name" required>
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input matInput type="text" formControlName="description" placeholder="Sprint Description" required>
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input matInput formControlName="start" [matDatepicker]="startPicker" placeholder="Choose a sprint start date">
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field>
+            <input matInput formControlName="end" [matDatepicker]="endPicker" placeholder="Choose a sprint end date">
+            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+          </mat-form-field>
+  
+        <div class="button-row">
+          <button  mat-raised-button color="primary" [disabled]="!sprintForm.valid" (click)="onSubmit">Update Sprint</button>
+          <button  mat-raised-button color="primary" (click)="onCancel()" type="button">Done</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>Select Tasks to Include in Sprint</h2>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Table to select tasks to associate to sprint -->
+      <table mat-table [dataSource]="tasks" class="mat-elevation-z0">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let task">{{ task.name }}</td>
+          </ng-container>
+    
+          <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef>Description</th>
+              <td mat-cell *matCellDef="let task">{{ task.description }}</td>
+          </ng-container>
+    
+          <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>Include in Sprint</th>
+              <td mat-cell *matCellDef="let task" >
+                <button mat-button *ngIf="selectedTasks.includes(task.id)" style="width: 120px; background-color: lightgreen" id="{{task.id}}" class="example-margin" (click)="onTaskChecked(task.id)">In sprint</button>
+                <button mat-button *ngIf="!selectedTasks.includes(task.id)" style="width: 120px; background-color: lightyellow" id="{{task.id}}" class="example-margin" (click)="onTaskChecked(task.id)">Not Planned</button>
+              </td>
+          </ng-container>
+    
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </mat-card-content>
+  </mat-card>

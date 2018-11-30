@@ -38,12 +38,18 @@ table {
 
   #sprint-content {
       height: 100%;
+      overflow: hidden;
   }
 
   #sprint-tables {
       margin-top: 8px;
       height: 80%;
       overflow: scroll;
+  }
+
+  #manageButton {
+      background-color: lightslategray;
+      float: right;
   }
 
   #time {

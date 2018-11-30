@@ -67,6 +67,10 @@ export class BacklogComponent implements OnInit {
     this.router.navigateByUrl('/createsprint');
   }
 
+  onManageSprintPressed(sprintId) {
+    this.router.navigateByUrl('/manageSprint/' + sprintId);
+  }
+
   onViewEstimates() {
     this.router.navigateByUrl('/time-estimates/' + this.state.getCurrentStateId());
   }
@@ -94,6 +98,27 @@ export class BacklogComponent implements OnInit {
       this.http.get('http://localhost:8000/api/getsprinttasks/' + this.auth.getUserId()).subscribe((res) => {
         this.sprintTasks = res.json() as SprintTask[];
         this.sortSprintTasks();
+        this.http.get('http://localhost:8000/api/getsprintsforuser/' + this.auth.getUserId()).subscribe((ress) => {
+          let temp : _Sprint[] = ress.json() as _Sprint[];
+          console.log('THE NUMBER OF EMPTY SPRINTS IS ' + temp.length);
+
+          for (var i = 0; i < temp.length; i++) {
+            var f = false
+            console.log('LOOKING ' + i);
+            for (var j = 0; j < this.sprints.length; j++) {
+              if (temp[i].id == this.sprints[j].sprintId) {
+                console.log('SP ' + i)
+                f = true;
+              }
+            }
+
+            if (!f && !this.emptySprintExists(temp[i].id)) {
+              this.emptySprints.push(temp[i]);
+            }
+          }
+
+          console.log(this.emptySprints);
+        });
       });
     } else {
       this.http.get('http://localhost:8000/api/getteamtasks/' + this.state.getCurrentStateId()).subscribe((res) => {
@@ -119,7 +144,8 @@ export class BacklogComponent implements OnInit {
               }
             }
 
-            if (!f) {
+            if (!f && !this.emptySprintExists(temp[i])) {
+              
               this.emptySprints.push(temp[i]);
             }
           }
@@ -133,6 +159,16 @@ export class BacklogComponent implements OnInit {
 
     }
 
+  }
+
+  emptySprintExists(sprintId) {
+    for (var i = 0; i < this.emptySprints.length; i ++) {
+      if (this.emptySprints[i].id == sprintId) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   sortSprintTasks() {
@@ -208,6 +244,12 @@ export class BacklogComponent implements OnInit {
 
   onModifyPressed(id) {
     this.router.navigateByUrl('/modifytask/' + id);
+  }
+
+  onDeleteSprintPressed(id) {
+    this.http.get('http://localhost:8000/api/deleteSprint/' + id).subscribe((res) => {
+      this.loadData();
+    });
   }
 
   onEstimatePressed(id) {
@@ -335,6 +377,8 @@ interface _Sprint {
   id: number,
   name: string,
   description: string
+}
+
 @Component({
   selector: 'dialog-task-detail',
   templateUrl: 'dialog-task-detail.html',

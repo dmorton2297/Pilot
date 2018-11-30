@@ -19,8 +19,8 @@
       </div>
       <button mat-button (click)="onSortNamePressed()">Sort by Name</button>
       <button mat-button (click)="onSortPrioPressed()">Sort by Priority</button>
-      <button mat-button (click)="onSortFuncReqPressed()">Sory by Functional Requirement</button>
-      <button mat-button (click)="onSortSprintPressed()">Sory by Sprints</button>
+      <button mat-button (click)="onSortFuncReqPressed()">View by Functional Requirement</button>
+      <button mat-button (click)="onSortSprintPressed()">View Sprints</button>
     </div>
 
   </mat-card>
@@ -122,20 +122,41 @@
 </mat-card>
 
 <mat-card [@slideOutAnimation]='slideInAnimationState' id="sprintContainer">
-  <mat-card id="sprint-content">
+  <mat-card *ngIf="sprints.length == 0">
+    <p>You have no planned sprints.</p>
+    <button mat-button (click)="onSortSprintPressed()">View backlog</button>
+
+  </mat-card>
+  <mat-card *ngIf="sprints.length != 0" id="sprint-content">
     <h1>Sprint Planning</h1>
     <button mat-button (click)="onSortSprintPressed()">View backlog</button>
 
+    <mat-card *ngIf="emptySprints.length > 0">
+      <h3>Empty Sprints</h3>
+      <div *ngFor="let sprint of emptySprints" class="row">
+          <div class="col-md-9">
+              <p style="margin-top: 5px;"><strong>Sprint Name:</strong> {{sprint.name}}</p>
+            </div>
+            <div class="col-md-2">
+                <button id="manageButton" (click)="onManageSprintPressed(sprint.id)"mat-button>Manage</button>
+            </div>
+      </div>
+     
+    </mat-card>
 
     <mat-card id="sprint-tables">
+        <h3>Planned Sprints</h3>
+
       <div *ngFor="let sprint of sprints">
-        <mat-card style="margin-top: 5px; margin-bottom: 5px;">
+        <mat-card class="mat-elevation-z1" style="margin-top: 5px; margin-bottom: 5px;">
           <div class="row">
             <div class="col-md-6">
               <h3 value="test">{{sprint.sprintName}}</h3>
             </div>
             <div class="col-md-6">
-              <button mat-button style="float: right">Modify Sprint</button>
+              <button mat-button id="manageButton" style="float: right" (click)="onManageSprintPressed(sprint.sprintId)">Manage</button>
+              <button style="float:right; background-color: lightcoral" mat-button (click)="onDeleteSprintPressed(sprint.sprintId)">Delete</button>
+
             </div>
           </div>
           <table mat-table [dataSource]="sprint.tasks" class="mat-elevation-z0">
@@ -176,11 +197,9 @@
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef> Actions </th>
               <td id="actions" mat-cell *matCellDef="let element">
-
+                  <button id="detail" (click)="onDetailPressed(element.id)"><i class="fa fa-eye" aria-hidden="true"></i></button>
               </td>
             </ng-container>
-
-
             <tr mat-header-row *matHeaderRowDef="['id', 'name', 'description', 'status', 'actions']"></tr>
             <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'description', 'status', 'actions'];"></tr>
           </table>

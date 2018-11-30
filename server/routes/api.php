@@ -65,6 +65,7 @@ Route::get('getsprinttasks/{userId}', 'TaskController@sprintTasksForUser');
 Route::get('getsprintsforuser/{userId}', 'SprintController@userIndex');
 Route::get('getsprintsforteam/{teamId}', 'SprintController@teamIndex');
 Route::get('getteamsprinttasks/{sprintId}', 'TaskController@sprintTasksForTeam');
+Route::get('getsprint/{id}', 'SprintController@show');
 Route::post('updatetime', 'TaskController@updateTime');
 Route::post('updateestimate', 'TaskController@updateEstimate');
 Route::get('gettimespent/{id}', 'TaskController@getTimeSpentForTask');
@@ -96,5 +97,8 @@ Route::get('getUserTimeSpent/{userId}', 'StatisticsController@getTimeSpentForUse
 Route::get('getStatusDistributionForTeamMembersInSprint/{teamId}/{sprintId}', 'StatisticsController@getStatusDistributionForTeamMembersInSprint');
 Route::get('getNumberOfCompletedSprintTasksPerTeamMember/{teamId}/{sprintId}', 'StatisticsController@getNumberOfCompletedSprintTasksPerTeamMember');
 Route::get('getTimeSpentDistributionForSprint/{teamId}/{sprintId}', 'StatisticsController@getTimeSpentDistributionForSprint');
+Route::get('gettasksforsprint/{sprintId}', 'SprintController@getSprintTasks');
+Route::post('updateSprint', 'SprintController@update');
+Route::get('deleteSprint/{id}', 'SprintController@destroy');
 
 
