@@ -48,13 +48,13 @@ export class ModifyEstimateComponent {
       this.location.back();
     });
 
-    this.snackBar.open('Task modified', 'Ok', {
+    this.snackBar.open('Estimate modified', 'Ok', {
       duration: 3000
     });
 
   }
   onCancel() {
-    this.router.navigateByUrl('/backlog');
+    this.location.back();
   }
 
 }

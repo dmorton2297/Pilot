@@ -41,7 +41,7 @@ export class ModifyTimeComponent implements OnInit{
     let temp = this.taskId;
     let enteredTime = this.taskForm.get('time').value as number;
     let timeSpent = enteredTime - this.initTime;
-    window.alert(timeSpent);
+    //window.alert(timeSpent);
     let request: ModifyTimeRequest = {
       taskId: +this.taskId,
       time: this.taskForm.get('time').value
@@ -66,7 +66,7 @@ export class ModifyTimeComponent implements OnInit{
       })
     });
 
-    this.snackBar.open('Task modified', 'Ok', {
+    this.snackBar.open('Time modified', 'Ok', {
       duration: 3000
     });
 
